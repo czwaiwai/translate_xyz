@@ -1,0 +1,84 @@
+@import './base.css';
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  min-width: 1280px;
+  min-height: 100%;
+}
+
+.main_sub {
+  flex: 1;
+  overflow: auto;
+}
+
+.h100 {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.bold {
+  font-weight: bold;
+}
+.flex-box {
+  display: flex;
+}
+.flex-item {
+  flex: 1;
+}
+
+.tl {
+  text-align: left;
+}
+.tc {
+  text-align: center;
+}
+.tr {
+  text-align: right;
+}
+.red {
+  color: red;
+}
+.color_fff {
+  color: #fff;
+}
+.color_yellow {
+  color: yellow;
+}
+// 生成padding
+.generate-padding(@i: 2) when (@i <= 60) {
+  .p@{i} {
+    padding: @i * 1px;
+  }
+  .pl@{i} {
+    padding-left: @i * 1px;
+  }
+  .pr@{i} {
+    padding-right: @i * 1px;
+  }
+  .pt@{i} {
+    padding-top: @i * 1px;
+  }
+  .pb@{i} {
+    padding-bottom: @i * 1px;
+  }
+  .m@{i} {
+    margin: @i * 1px;
+  }
+  .ml@{i} {
+    margin-left: @i * 1px;
+  }
+  .mr@{i} {
+    margin-right: @i * 1px;
+  }
+  .mt@{i} {
+    margin-top: @i * 1px;
+  }
+  .mb@{i} {
+    margin-bottom: @i * 1px;
+  }
+  .generate-padding(@i + 2);
+}
+
+.generate-padding();
