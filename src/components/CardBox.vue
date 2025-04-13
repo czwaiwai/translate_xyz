@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue';
 defineOptions({
   name: 'CardBox'
 })
@@ -9,9 +10,10 @@ const props = defineProps({
   },
   padding: {
     type: String,
-    default: '0'
+    default: '4px'
   },
-  titleLeft: Boolean,
+  blue: Boolean,
+  center: Boolean,
   hideHead: {
     type: Boolean,
     default: false
@@ -21,13 +23,23 @@ const props = defineProps({
     default: false
   }
 })
+const headClass = computed(() => {
+  let tmp = ''
+  if (!props.hideBorder) {
+    tmp += 'card-box-hd-line '
+  }
+  if (props.blue) {
+    tmp += 'card-box-hd-blue '
+  }
+  return tmp
+})
 </script>
 
 <template>
   <div class="card-box" :class="!props.hideBorder ? 'card-box-border' : ''">
-    <div v-if="!hideHead" class="card-box-hd" :class="!props.hideBorder ? 'card-box-hd-line' : ''">
+    <div v-if="!hideHead" class="card-box-hd" :class="headClass">
       <slot name="header">
-        <div class="card-box-title" :class="titleLeft ? 'tl' : ''">{{ props.title }}</div>
+        <div class="card-box-title" :class="center ? 'tc' : ''">{{ props.title }}</div>
       </slot>
     </div>
     <div class="card-box-bd">
@@ -41,11 +53,23 @@ const props = defineProps({
 
 
 <style lang="less" scoped>
+.card-box+.card-box {
+  margin-top: 10px;
+}
+
 .card-box {
+  :deep(.arco-form-layout-inline .arco-form-item) {
+    margin-bottom: 0;
+  }
+
   &-hd {
     background: #52b731;
     height: 28px;
-    text-align: center;
+    padding: 0 4px;
+
+    &-blue {
+      background-image: linear-gradient(to bottom, #52a5c5, #1698cc 20%);
+    }
   }
 
   &-hd-line {
@@ -53,7 +77,6 @@ const props = defineProps({
   }
 
   &-title {
-    text-align: center;
     color: #FFF;
     line-height: 28px;
     font-size: 12px;
@@ -62,7 +85,8 @@ const props = defineProps({
 
   &-bd {
     padding: v-bind(padding);
-    min-height: 80px;
+    background: #FFF;
+    // min-height: 80px;
   }
 
   &-border {

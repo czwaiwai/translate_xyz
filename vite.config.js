@@ -12,6 +12,15 @@ import { viteMockServe } from 'vite-plugin-mock'
 export default defineConfig(({ command }) => {
   console.log(command)
   return {
+    base: './',
+    build: {
+      rollupOptions: {
+        input: {
+          main: fileURLToPath(new URL('./index.html', import.meta.url)),
+          admin: fileURLToPath(new URL('./admin/index.html', import.meta.url)),
+        },
+      },
+    },
     css: {
       preprocessorOptions: {
         less: {
