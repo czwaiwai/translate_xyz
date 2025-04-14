@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 // import HomeView from '../admin/HomeView.vue'
 import { useUserStore } from '@/stores'
 import AdminLay from '../admin/AdminLay.vue'
@@ -6,7 +6,7 @@ import RouteNext from '@/components/RouteNext.vue'
 const router = createRouter({
   linkActiveClass: 'link-active',
   linkExactActiveClass: 'link-active-sub',
-  history: createWebHistory(import.meta.env.BASE_URL + 'admin/index.html'),
+  history: createWebHashHistory('/admin/'),
   routes: [
     {
       path: '/',
@@ -30,7 +30,16 @@ const router = createRouter({
           path: 'report-class',
           name: 'ReportClass',
           meta: { title: '分类账' },
-          component: () => import('../admin/ReportClass.vue'),
+          component: RouteNext,
+          redirect: '/report-class/report-class-day',
+          children: [
+            {
+              path: 'report-class-day',
+              name: 'ReportClassDay',
+              meta: { title: '日分类账' },
+              component: () => import('../admin/ReportClassDay.vue'),
+            },
+          ],
         },
         {
           path: 'report-info',

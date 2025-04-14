@@ -1,11 +1,11 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 // import HomeView from '../views/HomeView.vue'
 import { useUserStore } from '@/stores'
 import IndexLay from '../views/IndexLay.vue'
 const router = createRouter({
   linkActiveClass: 'link-active',
   linkExactActiveClass: 'link-active-sub',
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory('/'),
   routes: [
     {
       path: '/',

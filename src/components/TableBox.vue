@@ -53,18 +53,31 @@ const formatData = computed(() => {
     const newItem = {
       list: []
     };
-    newItem.list = props.title.map(titleItem => {
-      return {
+    props.title.forEach(titleItem => {
+      if (titleItem.colspan && titleItem.colspan.length) {
+        return titleItem.colspan.forEach(col => {
+          newItem.list.push({
+            name: col,
+            value: item[col],
+          });
+        });
+      }
+      newItem.list.push({
         name: titleItem.name,
         value: item[titleItem.name],
-      }
+      });
     });
     return newItem;
   });
 });
 const withOutProp = (item) => {
-  const { name, value, ...rest } = item;
-  return rest;
+  const { name, value, colspan, ...rest } = item;
+  if (colspan && colspan.length) {
+    rest.colspan = colspan.length;
+  }
+  return {
+    ...rest,
+  };
 }
 </script>
 
@@ -86,11 +99,13 @@ const withOutProp = (item) => {
         <template v-if="data.length">
           <template v-for="(item, index) in formatData" :key="index">
             <tr class="table-bd-tr">
-              <template v-for="(sub, sindex) in item.list" :key="sindex">
-                <td class="table-bd-td">
-                  <slot name="data" :item="sub" :index="index">{{ sub.value }}</slot>
-                </td>
-              </template>
+              <slot name="data" :item="item.list" :index="index">
+                <template v-for="(sub, sindex) in item.list" :key="sindex">
+                  <td class="table-bd-td">
+                    <slot :name="sub.name" :item="sub" :index="index">{{ sub.value }}</slot>
+                  </td>
+                </template>
+              </slot>
             </tr>
           </template>
         </template>

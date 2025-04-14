@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+// import { ref } from 'vue';
 // DrawNum is 开奖号码
 defineOptions({
   name: "DrawNum"
@@ -77,16 +77,20 @@ const tableData = [
           {{ item.value }}
         </div>
       </template>
-      <template #data="{ item, index }">
-        <template v-if="['qian', 'bai', 'shi', 'ge'].includes(item.name)">
-          <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
-        </template>
-        <template v-else-if="item.name === 'ball5'">
-          <Ball>{{ item.value }}</Ball>
-        </template>
-        <template v-else>
-          {{ item.value }}
-        </template>
+      <template #qian="{ item, index }">
+        <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
+      </template>
+      <template #bai="{ item, index }">
+        <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
+      </template>
+      <template #shi="{ item, index }">
+        <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
+      </template>
+      <template #ge="{ item, index }">
+        <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
+      </template>
+      <template #ball5="{ item }">
+        <Ball>{{ item.value }}</Ball>
       </template>
     </TableBox>
   </PageLay>

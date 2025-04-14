@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 defineOptions({
   name: 'CardBox'
 })
@@ -14,14 +14,9 @@ const props = defineProps({
   },
   blue: Boolean,
   center: Boolean,
-  hideHead: {
-    type: Boolean,
-    default: false
-  },
-  hideBorder: {
-    type: Boolean,
-    default: false
-  }
+  hideHead: Boolean,
+  hideBorder: Boolean,
+  hideContent: Boolean
 })
 const headClass = computed(() => {
   let tmp = ''
@@ -33,6 +28,12 @@ const headClass = computed(() => {
   }
   return tmp
 })
+const toggle = ref(true);
+const toggleCont = () => {
+  toggle.value = !toggle.value;
+  return toggle.value;
+}
+defineExpose({toggleCont})
 </script>
 
 <template>
@@ -42,7 +43,7 @@ const headClass = computed(() => {
         <div class="card-box-title" :class="center ? 'tc' : ''">{{ props.title }}</div>
       </slot>
     </div>
-    <div class="card-box-bd">
+    <div v-show="toggle" class="card-box-bd">
       <slot></slot>
     </div>
     <div v-if="$slots.footer" class="card-box-ft">
@@ -66,6 +67,10 @@ const headClass = computed(() => {
     background: #52b731;
     height: 28px;
     padding: 0 4px;
+    color: #FFF;
+    line-height: 28px;
+    font-size: 12px;
+    font-weight: bold;
 
     &-blue {
       background-image: linear-gradient(to bottom, #52a5c5, #1698cc 20%);

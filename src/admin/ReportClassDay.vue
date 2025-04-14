@@ -2,13 +2,13 @@
 import { ref } from 'vue';
 // ReportClass is 分类账
 defineOptions({
-  name: "ReportClass"
+  name: "ReportClassDay"
 });
 const tableTitle = [
   {
     name: 'date',
     value: '日期',
-    width: '12%',
+    width: '30',
   },
   {
     name: 'shareholder',
@@ -56,9 +56,16 @@ const tableData = ref([])
 
 <template>
   <PageLay class="report-class">
-    <CardBox title="贡献度" blue>
-      <TableBox :data="tableData" :title="tableTitle"></TableBox>
-    </CardBox>
+    <TableBox :data="tableData" :title="tableTitle" >
+      <template #header>
+        <thead class="table-hd">
+          <tr class="table-hd-tr">
+            <th class="table-hd-th" colspan="5">分类账 期号25095</th>
+            <th class="table-hd-th" colspan="2"></th>
+          </tr>
+        </thead>
+      </template>
+    </TableBox>
   </PageLay>
 </template>
 

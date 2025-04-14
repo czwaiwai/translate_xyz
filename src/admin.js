@@ -2,6 +2,7 @@ import './assets/main.less'
 import '@arco-design/web-vue/es/notification/style/css.js'
 import '@arco-design/web-vue/es/modal/style/css.js'
 import '@arco-design/web-vue/es/message/style/css.js'
+
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
