@@ -84,7 +84,7 @@ const withOutProp = (item) => {
 <template>
   <div class="table-box">
     <table class="table-wrap">
-      <slot name="header">
+      <slot name="header" :title="title">
         <thead class="table-hd">
           <tr class="table-hd-tr">
             <template v-for="(item, index) in title" :key="index">

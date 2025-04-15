@@ -22,7 +22,8 @@ const routes = route.matched.map(item => {
     path: path,
     name: item.name
   }
-})
+}).filter(item => item.label)
+
 const clickHandle = (route) => {
   console.log(route)
   router.push({

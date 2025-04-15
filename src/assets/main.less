@@ -12,6 +12,9 @@ body,
   flex: 1;
   overflow: auto;
 }
+.w60 {
+  width: 60px;
+}
 .w90 {
   width: 90px;
 }
@@ -29,6 +32,12 @@ body,
 .flex-item {
   flex: 1;
 }
+.flex-center-v {
+  align-items: center;
+}
+.flex-center-h {
+  justify-content: center;
+}
 .gap10 {
   gap: 10px;
 }
@@ -42,7 +51,7 @@ body,
   text-align: left;
 }
 .tc {
-  text-align: center;
+  text-align: center !important;
 }
 .tr {
   text-align: right;
@@ -114,6 +123,40 @@ table {
       height: 30px;
       font-size: 12px;
       padding: 0 4px;
+    }
+    .table-hd-th2 {
+      text-align: left;
+      background: #F0F0F0;
+      font-weight: bold;
+      height: 30px;
+      font-size: 12px;
+      padding:  4px;
+    }
+    td,
+    th {
+      text-align: left;
+      border: 1px solid #a4d4f9;
+    }
+
+  }
+
+}
+.table-ft {
+  td,
+  th {
+    padding: 4px;
+    outline: none;
+    font-weight: bold;
+    text-align: left;
+    border: 1px solid #a4d4f9;
+  }
+  tr {
+    background: #d1ebff;
+  }
+  tr:hover {
+    td {
+      background: #fffeaa;
+      color: red;
     }
   }
 }

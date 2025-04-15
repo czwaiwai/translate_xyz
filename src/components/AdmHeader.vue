@@ -14,7 +14,7 @@ const valueStyle = {
 }
 const curPage = ref('1')
 const headList = [
-  { key: "TotalDetails", title: "总货明细", path: '/total-details' },
+  { key: "TotalDetails", title: "总货明细", path: '/total-tab' },
   { key: "ReportClass", title: "分类账", path: '/report-class' },
   { key: "ReportInfo", title: "报表", path: '/report-info' },
   { key: "DrawNum", title: "开奖号码", path: '/draw-num' },
@@ -144,7 +144,7 @@ const logoutHandle = () => {
     text-decoration: underline;
   }
 
-  .link-active-sub {
+  .link-active {
     :deep(.arco-btn) {
       color: #002f63;
       background-color: transparent;

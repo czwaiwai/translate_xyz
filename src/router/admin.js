@@ -21,15 +21,22 @@ const router = createRouter({
           component: () => import('../admin/AdminHome.vue'),
         },
         {
-          path: 'total-details',
-          name: 'TotalDetails',
-          meta: { title: '总货明细' },
-          component: () => import('../admin/TotalDetails.vue'),
+          path: 'total-tab',
+          name: 'TotalTab',
+          meta: { title: '' },
+          component: RouteNext,
+          redirect: '/total-tab/total-details',
+          children: [{
+            path: 'total-details',
+            name: 'TotalDetails',
+            meta: { title: '总货明细' },
+            component: () => import('../admin/TotalDetails.vue'),
+          }]
         },
         {
           path: 'report-class',
           name: 'ReportClass',
-          meta: { title: '分类账' },
+          meta: { title: '' },
           component: RouteNext,
           redirect: '/report-class/report-class-day',
           children: [
@@ -44,8 +51,29 @@ const router = createRouter({
         {
           path: 'report-info',
           name: 'ReportInfo',
-          meta: { title: '报表' },
-          component: () => import('../admin/ReportInfo.vue'),
+          meta: { title: '' },
+          component: RouteNext,
+          redirect: '/report-info/report-info-day',
+          children: [
+            {
+              path: 'report-info-day',
+              name: 'ReportInfoDay',
+              meta: { title: '日报表' },
+              component: () => import('../admin/ReportInfoDay.vue'),
+            },
+            {
+              path: 'report-info-month',
+              name: 'ReportInfoMonth',
+              meta: { title: '月报表' },
+              component: () => import('../admin/ReportInfoMonth.vue'),
+            },
+            {
+              path: 'report-info-week',
+              name: 'ReportInfoWeek',
+              meta: { title: '周报表' },
+              component: () => import('../admin/ReportInfoWeek.vue'),
+            },
+          ],
         },
         {
           path: 'draw-num',

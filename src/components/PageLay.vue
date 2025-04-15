@@ -6,7 +6,11 @@ import { ref } from 'vue';
 <template>
   <div class="page-lay">
     <div class="page-lay-content">
-      <AdmBread />
+      <AdmBread >
+        <template #extra>
+          <slot name="extra"></slot>
+        </template>
+      </AdmBread>
       <slot></slot>
     </div>
   </div>
