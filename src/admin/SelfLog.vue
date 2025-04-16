@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from 'vue';
-// AdminLog is 日志
+// SelfLog is
 defineOptions({
-  name: "AdminLog"
+  name: "SelfLog"
 });
+const selfLog = ref();
+console.log(selfLog);
 const form = ref({
   account: "",
   startdate: "",
@@ -38,11 +40,11 @@ const tableData = ref([])
 </script>
 
 <template>
-  <PageLay class="admin-log">
+  <PageLay ref="selfLog" class="self-log">
     <template #extra>
       <LogSubTab></LogSubTab>
     </template>
-    <CardBox title="越级操作日志" blue>
+    <CardBox title="自己操作日志" blue>
       <a-form :model="form" layout="inline" size="small">
         <a-form-item class="w90" field="account" label="被操作账号">
           <a-input v-model="form.account" />
@@ -64,7 +66,7 @@ const tableData = ref([])
 </template>
 
 <style lang="less" scoped>
-.admin-log {
+.self-log {
   /* Add your styles here */
 }
 </style>

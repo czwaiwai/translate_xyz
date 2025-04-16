@@ -18,6 +18,9 @@ const tableData = ref([])
 
 <template>
   <PageLay class="report-class">
+    <template #extra>
+      <ReportSubTab></ReportSubTab>
+    </template>
     <TableBox :data="tableData" :title="tableTitle" >
       <template #header="{title}">
         <thead class="table-hd">
@@ -26,7 +29,7 @@ const tableData = ref([])
             <th class="table-hd-th" colspan="2"></th>
           </tr>
           <tr class="table-hd-tr">
-            <th class="table-hd-th2" v-for="item in title" :key="item.name">{{ item.value }}</th>
+            <th class="table-hd-th2" :width="item.width" v-for="item in title" :key="item.name">{{ item.value }}</th>
           </tr>
         </thead>
       </template>

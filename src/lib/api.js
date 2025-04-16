@@ -27,6 +27,22 @@ export const emnum = {
     { label: 'txt导入', value: '103' },
     { label: '二定', value: '104' },
     { label: '汇总表', value: '107' },
+  ],
+  topCate: [
+    { label: '全部', value: '0' },
+    { label: '二定位', value: '20' },
+    { label: '三定位', value: '30' },
+    { label: '四定位', value: '40' },
+    { label: '二字现', value: '21' },
+    { label: '三字现', value: '31' },
+    { label: '四字现', value: '41' },
+  ],
+  package: [
+    { label: '全部', value: '-1' },
+    { label: '散伙', value: '0' },
+    { label: '包牌', value: '1' },
+    { label: '包牌+散货', value: '2' },
+    { label: '汇总表', value: '3' }
   ]
 }
 export const login = (data) => {

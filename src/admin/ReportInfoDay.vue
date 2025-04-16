@@ -29,7 +29,7 @@ const tableTitleFormat = computed(() => {
 <template>
   <PageLay ref="reportInfoDay" class="report-info-day">
     <template #extra>
-
+      <ReportInfoTab></ReportInfoTab>
     </template>
     <TableBox :title="tableTitle" :data="tableData">
       <template #header>

@@ -31,7 +31,20 @@ const router = createRouter({
             name: 'TotalDetails',
             meta: { title: '总货明细' },
             component: () => import('../admin/TotalDetails.vue'),
-          }]
+          },
+          {
+            path: 'win-details',
+            name: 'WinDetails',
+            meta: { title: '中奖明细' },
+            component: () => import('../admin/WinDetails.vue'),
+          },
+          {
+            path: 'handicap-details',
+            name: 'HandicapDetails',
+            meta: { title: '拦货明细' },
+            component: () => import('../admin/HandicapDetails.vue'),
+          }
+          ]
         },
         {
           path: 'report-class',
@@ -45,6 +58,18 @@ const router = createRouter({
               name: 'ReportClassDay',
               meta: { title: '日分类账' },
               component: () => import('../admin/ReportClassDay.vue'),
+            },
+            {
+              path: 'contribution',
+              name: 'Contribution',
+              meta: { title: '贡献度' },
+              component: () => import('../admin/Contribution.vue'),
+            },
+            {
+              path: 'report-class-month',
+              name: 'ReportClassMonth',
+              meta: { title: '月分类账' },
+              component: () => import('../admin/ReportClassMonth.vue'),
             },
           ],
         },
@@ -96,7 +121,7 @@ const router = createRouter({
         {
           path: 'admin-log',
           name: 'Log',
-          meta: { title: '日志' },
+          meta: { title: '' },
           component: RouteNext,
           redirect: '/admin-log/log',
           children: [
@@ -105,6 +130,24 @@ const router = createRouter({
               name: 'AdminLog',
               meta: { title: '越级操作日志' },
               component: () => import('../admin/AdminLog.vue'),
+            },
+            {
+              path: 'self-log',
+              name: 'SelfLog',
+              meta: { title: '自己操作日志' },
+              component: () => import('../admin/SelfLog.vue'),
+            },
+            {
+              path: 'handicp-log',
+              name: 'HandicapLog',
+              meta: { title: '拦货金额日志' },
+              component: () => import('../admin/HandicapLog.vue'),
+            },
+            {
+              path: 'vip-quick-log',
+              name: 'VipQuickLog',
+              meta: { title: '会员快选日志' },
+              component: () => import('../admin/VipQuickLog.vue'),
             },
           ],
         },
@@ -117,8 +160,35 @@ const router = createRouter({
         {
           path: 'admin-setting',
           name: 'AdminSetting',
-          meta: { title: '设置' },
-          component: () => import('../admin/AdminSetting.vue'),
+          meta: { title: '' },
+          component: RouteNext,
+          redirect: '/admin-setting/admin-info',
+          children: [
+            {
+              path: 'admin-info',
+              name: 'AdminInfo',
+              meta: { title: '基本资料' },
+              component: () => import('../admin/AdminInfo.vue'),
+            },
+            {
+              path: 'admin-change-pwd',
+              name: 'AdminChangePwd',
+              meta: { title: '修改密码' },
+              component: () => import('../admin/AdminChangePwd.vue'),
+            },
+            {
+              path: 'sub-account-list',
+              name: 'SubAccountList',
+              meta: { title: '子账号' },
+              component: () => import('../admin/SubAccountList.vue'),
+            },
+            {
+              path: 'create-sub-account',
+              name: 'CreateSubAccount',
+              meta: { title: '新增子账号' },
+              component: () => import('../admin/CreateSubAccount.vue'),
+            },
+          ]
         },
         {
           path: 'handicap-dealer',

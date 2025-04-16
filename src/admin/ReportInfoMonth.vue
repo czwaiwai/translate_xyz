@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 // ReportInfoMonth is
 defineOptions({
   name: "ReportInfoMonth"
@@ -29,19 +29,15 @@ const tableTitleFormat = computed(() => {
 <template>
   <PageLay ref="reportInfoMonth" class="report-info-month">
     <template #extra>
-
+      <ReportInfoTab></ReportInfoTab>
     </template>
     <TableBox :title="tableTitle" :data="tableData">
       <template #header>
         <thead class="table-hd">
           <tr class="table-hd-tr">
-            <th class="table-hd-th" colspan="8">日报表</th>
+            <th class="table-hd-th" colspan="8">月报表</th>
             <th class="table-hd-th" colspan="3"></th>
             <th class="table-hd-th" ><a>打印</a></th>
-          </tr>
-          <tr class="table-hd-tr">
-            <th class="table-hd-th" colspan="5">分类账 期号25095</th>
-            <th class="table-hd-th" colspan="2"></th>
           </tr>
           <tr class="tc">
             <td rowspan="2" class="bg2" width="150">股东</td>
@@ -55,7 +51,6 @@ const tableTitleFormat = computed(() => {
           </tr>
         </thead>
       </template>
-
     </TableBox>
   </PageLay>
 </template>

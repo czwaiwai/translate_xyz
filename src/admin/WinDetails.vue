@@ -1,18 +1,20 @@
 <script setup>
-import { ref, h } from 'vue';
-import { Modal } from '@arco-design/web-vue';
-import TotalSubTab from '@/components/TotalSubTab.vue';
-// TotalDetails is 总货明细
+import { ref } from 'vue';
+import {emnum} from '@/lib/api'
+// WinDetails is 中奖明细
 defineOptions({
-  name: "TotalDetails"
+  name: "WinDetails"
 });
+const winDetails = ref();
+console.log(winDetails);
+const selectAll = ref('0')
 const dateOpt = ref([
  { label: "04-14(25094)", value: "25094" },
   { label: "04-13(25093)", value: "25093" },
   { label:"04-12(25092)", value: "25092" },
 ])
 const tableTitle = ref([
-  { value: "注单编号", name: "orderNumber", width: "10%" },
+  { value: "小票编号", name: "orderNumber", width: "10%" },
   { value: "会员", name: "member", width: "8%" },
   { value: "下单时间", name: "orderTime", width: "8%" },
   { value: "号码", name: "number", width: "5%" },
@@ -33,16 +35,19 @@ const selectDate = ref("25093")
 </script>
 
 <template>
-  <PageLay class="total-details">
+  <PageLay ref="winDetails" class="win-details">
     <template #extra>
       <TotalSubTab></TotalSubTab>
     </template>
-    <TotalSearch></TotalSearch>
+    <TotalSearch>
+      <button class="sub-btn mr10" type="submit">汇总</button>
+      <SelectBox v-model="selectAll" :options="emnum.category"></SelectBox>
+    </TotalSearch>
     <TableBox class="mt10" :title="tableTitle" :data="tableData">
       <template #header="{title}">
         <thead class="table-hd">
           <tr class="table-hd-tr">
-            <th class="table-hd-th" colspan="2">总货明细（红色为退码）</th>
+            <th class="table-hd-th" colspan="2">中奖明细</th>
             <th class="table-hd-th" colspan="11"></th>
             <th class="table-hd-th tr" colspan="2">
               <SelectBox v-model="selectDate" :options="dateOpt"></SelectBox>
@@ -81,7 +86,7 @@ const selectDate = ref("25093")
 </template>
 
 <style lang="less" scoped>
-.total-details {
+.win-details {
   /* Add your styles here */
 }
 </style>
