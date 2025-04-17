@@ -1,34 +1,33 @@
 <script setup>
 import { ref } from 'vue';
-// AdminChangePwd is 修改密码
+// CreateSubLevel is 新增下级
 defineOptions({
-  name: "AdminChangePwd"
+  name: "CreateSubLevel"
 });
-const adminChangePwd = ref();
-console.log(adminChangePwd);
+const createSubLevel = ref();
+console.log(createSubLevel);
 
 </script>
 
 <template>
-  <PageLay ref="adminChangePwd" class="admin-change-pwd">
+  <PageLay ref="createSubLevel" class="create-sub-level">
     <template #extra>
-      <SettingSubTab></SettingSubTab>
+      <OperaSubTab></OperaSubTab>
     </template>
-    <CardBox title="账户修改密码" blue padding="0">
+   <CardBox title="信息提示" blue>
+    <div>现金余额：</div>
+   </CardBox>
+   <CardBox title="" blue padding="0">
     <form>
       <table class="table-form">
         <tbody>
-          <tr>
-          <td>原密码：</td>
-          <td><input class="w90" type="password" /></td>
+        <tr>
+          <td>账号：</td>
+          <td><input class="w90" type="text" /></td>
         </tr>
         <tr>
-          <td>新密码：</td>
-          <td><input class="w90" type="password" /></td>
-        </tr>
-        <tr>
-          <td>确认新密码：</td>
-          <td><input class="w90" type="password" /></td>
+          <td>密码：</td>
+          <td><input class="w90" type="text" /></td>
         </tr>
         <tr>
           <td>密码规则：</td>
@@ -53,7 +52,7 @@ console.log(adminChangePwd);
 </template>
 
 <style lang="less" scoped>
-.admin-change-pwd {
+.create-sub-level {
   /* Add your styles here */
 }
 </style>

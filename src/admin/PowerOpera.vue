@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue';
-// AdminOpera is
+// PowerOpera is 越级操作列表
 defineOptions({
-  name: "AdminOpera"
+  name: "PowerOpera"
 });
 const adminOpera = ref();
 console.log(adminOpera);
@@ -14,7 +14,10 @@ const submitHandle = () => { }
 </script>
 
 <template>
-  <PageLay ref="adminOpera" class="admin-opera">
+  <PageLay ref="powerOpera" class="power-opera">
+    <template #extra>
+      <OperaSubTab showCreate></OperaSubTab>
+    </template>
     <AdmInfoBox></AdmInfoBox>
     <CardBox title="级别查询" blue>
       <div class="flex-box">

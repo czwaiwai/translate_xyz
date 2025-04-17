@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 // LevelManage is 下级管理
 defineOptions({
-  name: "LevelManage"
+  name: "LevelManageList"
 });
 const tableTitle = [{
   name: 'no',
@@ -74,6 +74,9 @@ const tableData = ref([
 
 <template>
   <PageLay class="level-manage">
+    <template #extra>
+      <OperaSubTab showCreate></OperaSubTab>
+    </template>
     <AdmInfoBox></AdmInfoBox>
     <CardBox title="查询模式" blue>
       <div class="flex-box">

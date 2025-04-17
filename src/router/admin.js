@@ -109,14 +109,58 @@ const router = createRouter({
         {
           path: 'admin-opera',
           name: 'AdminOpera',
-          meta: { title: '越级操作' },
-          component: () => import('../admin/AdminOpera.vue'),
+          meta: { title: '' },
+          component: RouteNext,
+          redirect: '/admin-opera/power-opera',
+          children: [
+            {
+              path: 'create-sub-level',
+              name: 'CreateSubLevel',
+              meta: { title: '新增' },
+              component: () => import('../admin/CreateSubLevel.vue'),
+              alias: '/level-manage/create-sub-level',
+            },
+            {
+              path: 'update-sub-level',
+              name: 'UpdateSubLevel',
+              meta: { title: '编辑' },
+              component: () => import('../admin/UpdateSubLevel.vue'),
+              alias: '/level-manage/update-sub-level',
+            },
+            {
+              path: 'power-opera',
+              name: 'PowerOpera',
+              meta: { title: '越级操作' },
+              component:  () => import('../admin/PowerOpera.vue'),
+            },
+          ],
         },
         {
           path: 'level-manage',
           name: 'LevelManage',
           meta: { title: '下级管理' },
-          component: () => import('../admin/LevelManage.vue'),
+          component: RouteNext,
+          redirect: '/level-manage/level-manage-list',
+          children: [
+            // {
+            //   path: 'create-sub-level',
+            //   name: 'CreateSubLevel',
+            //   meta: { title: '新增' },
+            //   component: () => import('../admin/CreateSubLevel.vue'),
+            // },
+            // {
+            //   path: 'update-sub-level',
+            //   name: 'UpdateSubLevel',
+            //   meta: { title: '编辑' },
+            //   component: () => import('../admin/UpdateSubLevel.vue'),
+            // },
+            {
+              path: 'level-manage-list',
+              name: 'LevelManageList',
+              meta: { title: '下级管理' },
+              component:  () => import('../admin/LevelManageList.vue'),
+            },
+          ],
         },
         {
           path: 'admin-log',
@@ -179,7 +223,7 @@ const router = createRouter({
             {
               path: 'sub-account-list',
               name: 'SubAccountList',
-              meta: { title: '子账号' },
+              meta: { title: '子账号列表' },
               component: () => import('../admin/SubAccountList.vue'),
             },
             {
@@ -194,7 +238,47 @@ const router = createRouter({
           path: 'handicap-dealer',
           name: 'HandicapDealer',
           meta: { title: '拦货盘' },
-          component: () => import('../admin/HandicapDealer.vue'),
+          component: RouteNext,
+          redirect: '/handicap-dealer/handicap-four-position',
+          children: [
+            {
+              path: 'handicap-two-position',
+              name: 'HandicapTwoPosition',
+              meta: { title: '', info: '二定位' },
+              component: () => import('../admin/HandicapTwoPosition.vue'),
+            },
+            {
+              path: 'handicap-three-position',
+              name: 'HandicapThreePosition',
+              meta: { title: '', info: '三定位' },
+              component: () => import('../admin/HandicapThreePosition.vue'),
+            },
+            {
+              path: 'handicap-four-position',
+              name: 'HandicapFourPosition',
+              meta: { title: '', info: '四定位' },
+              component: () => import('../admin/HandicapFourPosition.vue'),
+            },
+            {
+              path: 'handicap-two-present',
+              name: 'HandicapTwoPresent',
+              meta: { title: '', info: '二字现' },
+              component: () => import('../admin/HandicapTwoPresent.vue'),
+            },
+            {
+              path: 'handicap-three-present',
+              name: 'HandicapThreePresent',
+              meta: { title: '', info: '三字现' },
+              component: () => import('../admin/HandicapThreePresent.vue'),
+            },
+            {
+              path: 'handicap-four-present',
+              name: 'HandicapFourPresent',
+              meta: { title: '', info: '四字现' },
+              component: () => import('../admin/HandicapFourPresent.vue'),
+            },
+          ]
+          // component: () => import('../admin/HandicapDealer.vue'),
         },
       ],
     },
