@@ -6,7 +6,6 @@ defineOptions({
 });
 const handicapThreePosition = ref();
 console.log(handicapThreePosition);
-const message = ref('Hello, HandicapThreePosition');
 </script>
 
 <template>
