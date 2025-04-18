@@ -15,7 +15,9 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
 app.use(router)
-
+app.provide('app', app)
+app.provide('theme', 'blue')
+app.provide('breadcrumb', true)
 router.isReady().then(() => {
   app.mount('#app')
 })

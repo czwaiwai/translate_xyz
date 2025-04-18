@@ -1,12 +1,12 @@
 <script setup>
-import { ref } from 'vue';
-
+import { inject } from 'vue';
+const showBreadcrumb = inject('breadcrumb', true)
 </script>
 
 <template>
   <div class="page-lay">
     <div class="page-lay-content">
-      <AdmBread >
+      <AdmBread v-if="showBreadcrumb" >
         <template #extra>
           <slot name="extra"></slot>
         </template>

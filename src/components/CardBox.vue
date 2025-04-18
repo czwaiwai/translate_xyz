@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 defineOptions({
   name: 'CardBox'
 })
@@ -18,12 +18,13 @@ const props = defineProps({
   hideBorder: Boolean,
   hideContent: Boolean
 })
+const color = inject('theme')
 const headClass = computed(() => {
   let tmp = ''
   if (!props.hideBorder) {
     tmp += 'card-box-hd-line '
   }
-  if (props.blue) {
+  if (props.blue || color === 'blue') {
     tmp += 'card-box-hd-blue '
   }
   return tmp

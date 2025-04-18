@@ -4,12 +4,13 @@ import { ref } from 'vue';
 defineOptions({
   name: "PackageOddView"
 });
-const message = ref("package-odd-view");
 </script>
 
 <template>
   <PageLay class="package-odd-view">
-    <h1>{{ message }}</h1>
+    <CardBox title="包牌赔率">
+      暂无数据
+    </CardBox>
   </PageLay>
 </template>
 

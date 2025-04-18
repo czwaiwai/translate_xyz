@@ -1,9 +1,10 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, inject } from 'vue';
 // TableBox is
 defineOptions({
   name: "TableBox"
 });
+let theme = inject('theme', 'blue')
 const props = defineProps({
   title: {
     type: Array,
@@ -46,7 +47,8 @@ const props = defineProps({
   data: {
     type: Array,
     default: () => []
-  }
+  },
+  center: Boolean,
 });
 const formatData = computed(() => {
   return props.data.map(item => {
@@ -79,13 +81,23 @@ const withOutProp = (item) => {
     ...rest,
   };
 }
+const frontClass = computed(() => {
+  let tmp = ''
+  if(theme === 'green') {
+    tmp += 'front'
+  }
+  if(props.center) {
+    tmp += ' center'
+  }
+  return tmp
+})
 </script>
 
 <template>
-  <div class="table-box">
+  <div class="table-box" :class="frontClass">
     <table class="table-wrap">
       <slot name="header" :title="title">
-        <thead class="table-hd">
+        <thead class="table-hd" >
           <tr class="table-hd-tr">
             <template v-for="(item, index) in title" :key="index">
               <th class="table-hd-th" v-bind="withOutProp(item)">
@@ -136,8 +148,6 @@ const withOutProp = (item) => {
 
     // #5cafcf
     background-image: linear-gradient(to bottom, #52a5c5, #1698cc 20%);
-
-    // background-color: #1698cc;
     .table-hd-th {
       text-align: left;
       color: #FFF;
@@ -145,6 +155,8 @@ const withOutProp = (item) => {
       height: 30px;
       padding: 0 4px;
     }
+    // background-color: #1698cc;
+
   }
 
   td,
@@ -152,8 +164,6 @@ const withOutProp = (item) => {
     text-align: left;
     border: 1px solid #a4d4f9;
   }
-
-
 
   .table-bd {
     td {
@@ -174,6 +184,48 @@ const withOutProp = (item) => {
         background: #fffeaa;
         color: red;
       }
+    }
+  }
+  &.front {
+    .table-hd {
+      background:#F0F0F0;
+      background-image:none;
+      .table-hd-th {
+        text-align: center;
+        color: #333;
+        font-weight: bold;
+        height: 30px;
+        padding: 0 4px;
+      }
+    }
+    :slotted(.table-ft) {
+      tr {
+        background:#F0F0F0;
+        background-image:none;
+      }
+      td {
+        text-align: center;
+        color: #333;
+        font-weight: bold;
+        height: 30px;
+        padding: 0 4px;
+      }
+      tr:hover {
+        td {
+          background: #fffeaa;
+          color: red;
+        }
+      }
+    }
+    td,
+    th {
+      border: 1px solid #bdf0bc;
+    }
+  }
+  &.center {
+    td,
+    th {
+      text-align: center;
     }
   }
 }
