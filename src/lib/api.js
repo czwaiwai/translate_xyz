@@ -4,6 +4,14 @@ export const api = {
   LOGIN: '/login',
 }
 export const emnum = {
+  twoCate: [
+    { label: '口口XX', value: '1' },
+    { label: '口X口X', value: '2' },
+    { label: '口XX口', value: '3' },
+    { label: 'X口X口', value: '4' },
+    { label: 'X口口X', value: '5' },
+    { label: 'XX口口', value: '6' },
+  ],
   category: [
     { label: '全部', value: '0' },
     { label: '二定位', value: '20' },

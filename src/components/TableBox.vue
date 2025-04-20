@@ -101,7 +101,7 @@ const frontClass = computed(() => {
           <tr class="table-hd-tr">
             <template v-for="(item, index) in title" :key="index">
               <th class="table-hd-th" v-bind="withOutProp(item)">
-                <slot name="title" :item="item">{{ item.value }}</slot>
+                <slot :name="'title_'+item.name" :item="item">{{ item.value }}</slot>
               </th>
             </template>
           </tr>

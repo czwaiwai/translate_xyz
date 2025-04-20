@@ -72,11 +72,11 @@ const tableData = [
 <template>
   <PageLay class="draw-num">
     <TableBox :title="tableTitle" :data="tableData">
-      <template #title="{ item }">
+      <!-- <template #title="{ item }">
         <div class="table-title">
           {{ item.value }}
         </div>
-      </template>
+      </template> -->
       <template #qian="{ item, index }">
         <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
       </template>

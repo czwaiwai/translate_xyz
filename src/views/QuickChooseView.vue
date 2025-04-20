@@ -8,8 +8,23 @@ defineOptions({
 
 <template>
   <PageLay class="quick-choose-view">
-    <div class="flex-box">
-      <CardBox class="flex-item" title="生成号码框"></CardBox>
+    <div class="flex-box gap6">
+      <div class="flex-item">
+        <CardBox class="flex-item" title="生成号码框"></CardBox>
+        <CardBox class="flex-item" title="发送框" flexBox padding="0">
+          <form class="flex-item flex-box ">
+            <label>金额 <input class="w60"></label>
+            <button class="pri-btn">下注</button>
+            <button class="pri-btn">包牌</button>
+            <button class="pri-btn">录入汇总表</button>
+          </form>
+          <div class="div-green-border">
+            <div class="gbb">笔数：0</div>
+            <div>金额：0元</div>
+          </div>
+        </CardBox>
+      </div>
+
       <CardBox class="flex-item" hideHead>
         <a-tabs type="capsule" size="large" justify>
           <a-tab-pane key="1" title="二字定">

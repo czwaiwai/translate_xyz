@@ -7,7 +7,9 @@ body,
   min-width: 1280px;
   min-height: 100%;
 }
-
+[type='checkbox'], [type='radio'] {
+  vertical-align: -0.15em;
+}
 .main_sub {
   flex: 1;
   overflow: auto;
@@ -40,6 +42,15 @@ body,
 }
 .flex-center-h {
   justify-content: center;
+}
+.gap4 {
+  gap:4px;
+}
+.gap6 {
+  gap:6px;
+}
+.gap8 {
+  gap: 8px;
 }
 .gap10 {
   gap: 10px;
@@ -259,6 +270,19 @@ table {
       color:#FFF;
       background-image: linear-gradient(to bottom, #7bb263, #52b731 20%) !important;
     }
+    &.subhead {
+      td,
+      th {
+        padding: 4px;
+        outline: none;
+        font-weight: bold;
+        text-align: left;
+        border: 1px solid #bdf0bc;
+        color:#333;
+        background:#f0f0f0;
+        background-image: none !important;
+      }
+    }
   }
 }
 
@@ -278,4 +302,54 @@ table {
     background:#FFF;
     border: 1px solid #a4d4f9;
   }
+}
+
+.div-green-border {
+  border: 1px solid #bdf0bc;
+  padding: 4px;
+}
+.gbt {
+  border-top:1px solid #bdf0bc;
+}
+.gbb {
+  border-bottom: 1px solid #bdf0bc;
+}
+.gbl {
+  border-left: 1px solid #bdf0bc;
+}
+.gbr {
+  border-right: 1px solid #bdf0bc;
+}
+.gbd {
+  border: 1px solid #bdf0bc;
+}
+.bc_333 {
+  border-color: #333;
+}
+.page-view {
+  width:100%;
+  height:100%;
+  overflow: auto;
+}
+.wp200 {
+  width:200px;
+}
+
+.print-table {
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+    td,
+    th {
+      border: 1px solid #333;
+      padding: 4px 8px;
+    }
+
+    th {
+      width: 60px;
+    }
+  }
+
 }

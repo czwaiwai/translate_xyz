@@ -15,7 +15,8 @@ export const useGameStore = defineStore('game', () => {
   const gameInfo = ref({
     name: '',
     serialNum: '25089',
-    status: 'open', // open or close
+    status: 'close', // open or close
+    statusTxt: '正在开盘中...',
     datetime: '',
   })
 
