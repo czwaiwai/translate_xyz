@@ -1,5 +1,13 @@
-import {range, chunk} from 'lodash-es'
+import {range, chunk, padStart} from 'lodash-es'
 
+console.log(Array.from(new Set([1,2,3,4,12,3,4,5])))
+
+console.log(typeof padStart(1200, 4, '0'))
+
+// const a1 = 'aaa'
+// const aa = new Map()
+// console.log(aa)
+// console.log((['a1']))
 // console.log(chunk(range(100),10))
 // console.log(range(100))
 // let n = -1
@@ -23,13 +31,13 @@ import {range, chunk} from 'lodash-es'
 // });
 
 // console.log(result); // 输出：1b2c3d
-const units = ['仟','佰','拾','个']
-export function getZhUnit(chars = '口X口X') {
-  return chars.split('').reduce((before, char, index) => {
-    if(char === '口') {
-      before.push(units[index])
-    }
-    return before
-  }, [])
-}
-console.log(getZhUnit())
+// const units = ['仟','佰','拾','个']
+// export function getZhUnit(chars = '口X口X') {
+//   return chars.split('').reduce((before, char, index) => {
+//     if(char === '口') {
+//       before.push(units[index])
+//     }
+//     return before
+//   }, [])
+// }
+// console.log(getZhUnit())

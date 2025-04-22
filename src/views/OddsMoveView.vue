@@ -10,9 +10,9 @@ defineOptions({
 <template>
   <PageLay class="odds-move-view">
     <!-- <h1>{{ message }}</h1> -->
-    <CardBox title="赔率变动">
+    <CardBox title="赔率变动" padding="0">
       <template #header>
-        <div class="card-box-title tc">
+        <div class="card-box-title tc mode_radio">
           <a-radio-group default-value="1">
               <a-radio value="1">
                 <template #radio="{ checked }">
@@ -48,7 +48,36 @@ defineOptions({
         </div>
       </template>
       <div class="odds-move-content">
-        <!-- Odds move content goes here -->
+        <table class="table_num">
+          <thead>
+            <tr>
+              <th width="10%">号码</th>
+              <th width="10%">赔率</th>
+              <th width="10%">号码</th>
+              <th width="10%">赔率</th>
+              <th width="10%">号码</th>
+              <th width="10%">赔率</th>
+              <th width="10%">号码</th>
+              <th width="10%">赔率</th>
+              <th width="10%">号码</th>
+              <th width="10%">赔率</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in 10" :key="item">
+              <td>46XX</td>
+              <td>99.2</td>
+              <td>42XX</td>
+              <td>99.2</td>
+              <td>46XX</td>
+              <td>99.2</td>
+              <td>42XX</td>
+              <td>99.2</td>
+              <td>42XX</td>
+              <td>99.2</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       </CardBox>
   </PageLay>
@@ -56,6 +85,38 @@ defineOptions({
 
 <style lang="less" scoped>
 .odds-move-view {
-  /* Add your styles here */
+  .table_num {
+    width:100%;
+    text-align: center;
+    td,th {
+      border: 1px solid #bdf0bc;
+      height: 22px;
+      border-width: 0 1px 1px 0;
+      padding: 2px 4px;
+    }
+    th {
+      background:#F0F0F0;
+    }
+    th:nth-child(4n+3), th:nth-child(4n+4) {
+      background: #fffeaa;
+    }
+    td:nth-child(4n+3), td:nth-child(4n+4) {
+      background: #fffeaa;
+    }
+  }
+  .mode_radio {
+    :deep(.arco-radio) {
+      margin-right:6px;
+      .arco-link {
+        color:#fff;
+        &.arco-link-status-warning{
+          color:red;
+        }
+        &:hover {
+          background:transparent;
+        }
+      }
+    }
+  }
 }
 </style>

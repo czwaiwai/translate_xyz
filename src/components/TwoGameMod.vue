@@ -43,15 +43,19 @@ const hHandle = (posiH) => {
 const clickHandle = (gameItem) => {
   dataMap.get(gameItem.num).toggle()
 }
-const containValue = ref('')
+const posiValues = ref([])
 const listFormat = computed(() => {
+  console.log(posiValues.value, '????')
   list.value.forEach(item => {
-    if(containValue.value && item.num.includes(containValue.value)) {
-      item.active = true
-    } else {
-      item.active = false
-    }
+    item.active = posiValues.value.includes(item.num)
   })
+  // list.value.forEach(item => {
+  //   if(containValue.value && item.num.includes(containValue.value)) {
+  //     item.active = true
+  //   } else {
+  //     item.active = false
+  //   }
+  // })
   return chunk(list.value, 10)
 })
 const getValues = () => {
@@ -64,13 +68,6 @@ const restActive = () => {
 // 获取所有选中
 const getActives = () => {
   return Array.from(dataMap.values()).filter(item => item.active)
-}
-const posiClickHandle = (btn) => {
-  console.log(btn)
-}
-const containClickHandle = (btn) => {
-  console.log(btn)
-  containValue.value = btn.value
 }
 defineExpose({getActives, restActive})
 </script>
@@ -168,7 +165,7 @@ defineExpose({getActives, restActive})
         <td colspan="11">
           <div class="flex-box ">
             <div class="flex-item p4 gbr bc_333">
-              <PosiBtns :gameType="gameType" @posiClick="posiClickHandle" @containClick="containClickHandle" ></PosiBtns>
+              <PosiBtns v-model="posiValues" :gameType="gameType" ></PosiBtns>
             </div>
             <div class="sub-form">
               <form>

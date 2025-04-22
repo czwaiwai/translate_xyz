@@ -1,18 +1,22 @@
 <script setup>
 import { ref, computed } from 'vue';
 import {range} from 'lodash-es'
-import {getZhUnit, getTwoLabel} from '@/lib/utils'
+import {getZhUnit, getTwoLabel, twoPosi2Nums, twoContain2Nums} from '@/lib/utils'
 // FourPackageView is  四字定包牌汇总表
 defineOptions({
   name: "PosiBtns"
 });
+const model = defineModel({
+  type: Array,
+  default: () => []
+})
+
 const props = defineProps({
   gameType: {
     type: String,
     default: '3'
   }
 })
-const emit = defineEmits(['posiClick', 'containClick'])
 const btns = [
   ...range(10).map(num => {
     return {label: num + '', value: num + '' }
@@ -35,15 +39,42 @@ const containBtns = [
 const units = computed(() => {
   return  getZhUnit(getTwoLabel(props.gameType))
 })
-const posiClickHandle = (btn) => {
-  emit('posiClick', btn)
+
+const posiObj = ref({
+  posi0: [],
+  posi1: []
+})
+const containArr = ref([])
+const posiClickHandle = (btn, index) => {
+  const findIndex = posiObj.value['posi' + index].indexOf(btn.value)
+  if (findIndex === -1) {
+    posiObj.value['posi' +index].push(btn.value)
+  } else {
+    posiObj.value['posi' +index].splice(findIndex, 1)
+  }
+  getAllComb()
 }
-const posiClass = () => {}
+const posiClass = (btn, index) => {
+  return posiObj.value['posi' +index].includes(btn.value)? 'active': ''
+}
 const containClickHandle = (btn) => {
-  emit('containClick', btn)
+  const findIndex = containArr.value.indexOf(btn.value)
+  if (findIndex === -1) {
+    containArr.value.push(btn.value)
+  } else {
+    containArr.value.splice(findIndex, 1)
+  }
+  getAllComb()
+  // emit('containClick', btn)
 }
 // 选中样式
-const containClass = (btn) => {}
+const containClass = (btn) => {
+  return containArr.value.includes(btn.value)? 'active': ''
+}
+// 转换成所有组合
+const getAllComb = () => {
+  model.value =  Array.from(new Set([...twoPosi2Nums(posiObj.value['posi0'], posiObj.value['posi1']), ...twoContain2Nums(containArr.value)]))
+}
 </script>
 
 <template>
@@ -53,9 +84,9 @@ const containClass = (btn) => {}
         定位置
       </div>
       <div class="flex-item">
-        <div v-for="item in units" class="posi-btn-wrap" :key="item.value">
+        <div v-for="(item, index) in units" class="posi-btn-wrap" :key="item.value">
           {{item.label }}
-          <button @click="posiClickHandle(btn)" v-for="btn in btns" :class="posiClass(btn)"  :key="btn.value">{{ btn.label }}</button>
+          <button @click="posiClickHandle(btn, index ,item.value)" v-for="btn in btns" :class="posiClass(btn, index)"  :key="btn.value">{{ btn.label }}</button>
         </div>
       </div>
     </div>
@@ -75,6 +106,9 @@ const containClass = (btn) => {}
   box-sizing: border-box;
   display:flex;
   border:1px solid #333;
+  .active {
+    background:red;
+  }
   .posi-hd {
     box-sizing: border-box;
     background:orange;

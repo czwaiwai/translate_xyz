@@ -21,54 +21,17 @@ const tableData = ref([
   <PageLay class="two-package-view" isBox>
     <!-- <h1>{{ message }}</h1> -->
     <div class="page-view flex-item">
-     <CardBox>
-      <template #header>
-        <a-radio-group default-value="1">
-          <a-radio value="1">
-            <template #radio="{ checked }">
-              <a-link :status="checked?'warning':''" >二定位</a-link>
-            </template>
-          </a-radio>
-          <a-radio value="2">
-            <template #radio="{ checked }">
-              <a-link :status="checked?'warning':''" >三定位</a-link>
-            </template>
-          </a-radio>
-          <a-radio value="3">
-            <template #radio="{ checked }">
-              <a-link :status="checked?'warning':''" >四定位</a-link>
-            </template>
-          </a-radio>
-          <a-radio value="4">
-            <template #radio="{ checked }">
-              <a-link :status="checked?'warning':''" >二字现</a-link>
-            </template>
-          </a-radio>
-          <a-radio value="5">
-            <template #radio="{ checked }">
-              <a-link :status="checked?'warning':''" >三字现</a-link>
-            </template>
-          </a-radio>
-          <a-radio value="6">
-            <template #radio="{ checked }">
-              <a-link :status="checked?'warning':''" >四字现</a-link>
-            </template>
-          </a-radio>
-          <a-radio value="7">
-            <template #radio="{ checked }">
-              <a-link :status="checked?'warning':''" >全部</a-link>
-            </template>
-          </a-radio>
-        </a-radio-group>
-      </template>
-     </CardBox>
+     <!-- <CardBox title="" close="正在开盘中...">
+
+     </CardBox> -->
+     <TwoPackageGame></TwoPackageGame>
     </div>
     <div class="page-view wp200">
-      <CardBox title="包牌" padding="0">
+      <CardBox title="包牌" center padding="0">
         <TableBox :title="tableTitle" :data="tableData" center>
         </TableBox>
       </CardBox>
-      <CardBox class="print-table" title="预下注项" padding="0">
+      <CardBox class="print-table" title="预下注项" center padding="0">
         <div class="tr">单位：元</div>
         <div class="tc bold gbt bc_333 red">排列五</div>
         <div class="p4 gbt bc_333">
