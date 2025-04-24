@@ -25,6 +25,7 @@ export function getTwoTypeObj() {
     return before
   }, {})
 }
+// 用于得到数字和XX的组合，适用于两位数
 export function getTwoLabelNum(nums, type = '3') {
   if(typeof nums !== 'string') new Error('getTwoLabelNum 入参nums必须为字符串！')
   if(nums.length > 3) new Error(`nums is ${nums}, 太长了无法转换！`)

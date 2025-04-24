@@ -156,7 +156,7 @@ defineExpose({getActives, restActive})
       <tr  v-for="(items, index) in listFormat" :key="index">
         <td @click="hHandle(index)" class="btn-h"></td>
         <td v-for="(item,sIndex) in  items" :key="sIndex">
-          <GameBox @click="clickHandle" :index="item.index" :odds="item.odds" :num="item.num" v-model:active="item.active" :posiH="index" :posiV="sIndex" :type="props.gameType"></GameBox>
+          <GameBox @click="clickHandle" :index="item.index" :odds="item.odds" :num="item.num" v-model:active="item.active" :posiH="sIndex" :posiV="index" :type="props.gameType"></GameBox>
         </td>
       </tr>
     </tbody>

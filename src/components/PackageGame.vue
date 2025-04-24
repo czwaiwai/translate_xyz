@@ -1,52 +1,48 @@
 <script setup>
-import { ref, computed, provide} from 'vue';
-import { emnum } from '@/lib/api';
-import {range, chunk, padStart} from 'lodash-es'
-// TwoPackageGame is 二字定包牌
+import { ref, computed } from 'vue';
+import { useGameStore } from '@/stores';
+import {emnum} from '@/lib/api.js'
+import {chunk} from 'lodash-es'
+// PackageGame is
 defineOptions({
-  name: "TwoPackageGame"
+  name: "PackageGame"
 });
-const twoPackageGame = ref();
-console.log(twoPackageGame);
-// const message = ref('Hello, TwoPackageGame');
-const gameType = ref('1')
-const arr = range(100)
-let data = arr.map((num, index) => {
-  return {
-      index: index,
-      num: padStart(num,2,'0'),
-      value: '',
-      active: false,
-      // gameType: props.gameType,
-      odds: '98.9',
-      // posiH:0, // 横向
-      // posiV:0, // 纵向
+const gameType = defineModel({
+  default: '7'
+})
+defineProps({
+  packageType: {
+    type: String,
+    default: 'three'
   }
 })
-let list = ref(data)
+const gameStore = useGameStore()
+const packageGame = ref();
+// const gameType = ref('7')
+console.log(packageGame);
+const list = computed(() => {
+  return gameStore.packageInfo.threeArr
+})
 const listFormat = computed(() => {
   return chunk(list.value, 10)
-})
-let dataMap = new Map()
-provide('addPgBox', function(gameBox) {
-  // console.log(gameBox)
-  dataMap.set(gameBox.num, gameBox)
 })
 </script>
 
 <template>
-  <CardBox ref="twoPackageGame" class="two-package-game" padding="0">
+    <CardBox ref="packageGame"  class="package-game" padding="0">
     <template #header>
-      <div class="mode_radio">
-        <a-radio-group v-model="gameType" >
-          <a-radio v-for="(item, index) in emnum.twoCate" :key="index" :value="item.value">
-            <template #radio="{ checked }">
-              <a-link :status="checked?'warning':''" >{{ item.label }}</a-link>
-            </template>
-          </a-radio>
-        </a-radio-group>
-        <span class="yellow">总金额: 0</span>
-      </div>
+      <slot name="header">
+        <div class="mode_radio">
+          <a-radio-group v-model="gameType" >
+            <a-radio v-for="(item, index) in emnum.threeCate" :key="index" :value="item.value">
+              <template #radio="{ checked }">
+                <a-link :status="checked?'warning':''" >{{ item.label }}</a-link>
+              </template>
+            </a-radio>
+          </a-radio-group>
+          <span class="yellow">总金额: 0</span>
+        </div>
+      </slot>
     </template>
     <table class="package_table">
       <thead>
@@ -65,12 +61,12 @@ provide('addPgBox', function(gameBox) {
     <div>
 
     </div>
-    <template #footer> <PackageBetForm></PackageBetForm></template>
+    <template #footer> <PackageBetForm :packageType="packageType"></PackageBetForm></template>
   </CardBox>
 </template>
 
 <style lang="less" scoped>
-.two-package-game {
+.package-game {
   .mode_radio {
     text-align:center;
     :deep(.arco-radio) {
@@ -88,6 +84,7 @@ provide('addPgBox', function(gameBox) {
   }
   .package_table {
     width: 100%;
+    min-height: 346px;
     border-spacing: 0;
     border-collapse: collapse;
     border: 0;

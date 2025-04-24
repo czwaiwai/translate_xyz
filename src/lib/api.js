@@ -12,6 +12,15 @@ export const emnum = {
     { label: 'X口口X', value: '5' },
     { label: 'XX口口', value: '6' },
   ],
+  threeCate: [
+    { label: '口口口X', value: '7' },
+    { label: '口口X口', value: '8' },
+    { label: '口X口口', value: '9' },
+    { label: 'X口口口', value: '10' },
+  ],
+  fourCate: [
+    { label: '四字定', value: '11' },
+  ],
   category: [
     { label: '全部', value: '0' },
     { label: '二定位', value: '20' },

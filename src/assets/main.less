@@ -34,6 +34,9 @@ body,
 .flex-box {
   display: flex;
 }
+.flex-inline {
+  display: inline-flex;
+}
 .flex-item {
   flex: 1;
 }
@@ -42,6 +45,15 @@ body,
 }
 .flex-center-h {
   justify-content: center;
+}
+.flex-cv {
+  align-items: center;
+}
+.flex-ch {
+  justify-content: center;
+}
+.gap2 {
+  gap:2px;
 }
 .gap4 {
   gap:4px;
@@ -60,6 +72,11 @@ body,
 }
 .gap30 {
   gap: 30px;
+}
+.input_h36 {
+  height:36px;
+  line-height:36px;
+  font-size:22px;
 }
 .tl {
   text-align: left;
@@ -93,6 +110,9 @@ body,
 }
 // 生成padding
 .generate-padding(@i: 2) when (@i <= 60) {
+  .fs@{i} {
+    font-size: @i * 1px;
+  }
   .p@{i} {
     padding: @i * 1px;
   }
@@ -160,6 +180,27 @@ body,
   font-size: 13px;
   border-radius: 4px;
   color: #255207;
+  cursor: pointer;
+}
+.pri-btn-h36  {
+  border: 1px solid #41a102;
+  background-image: linear-gradient(to bottom, #91d91b, #74c02b);
+  padding: 0 8px;
+  font-size: 13px;
+  border-radius: 4px;
+  color: #255207;
+  cursor: pointer;
+  line-height: 34px;
+  height: 36px;
+}
+.pri-btn-v {
+  border: 1px solid #41a102;
+  background-image: linear-gradient(to bottom, #91d91b, #74c02b);
+  padding: 0 8px;
+  font-size: 13px;
+  border-radius: 4px;
+  color: #255207;
+  cursor: pointer;
 }
 table {
   .table-hd {
@@ -310,6 +351,26 @@ table {
 .div-green-border {
   border: 1px solid #bdf0bc;
   padding: 4px;
+}
+.bt {
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+.bb {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+.bl {
+  border-left-width: 1px;
+  border-left-style: solid;
+}
+.br {
+  border-right-width: 1px;
+  border-right-style: solid;
+}
+.bd {
+  border-width: 1px;
+  border-style: solid;
 }
 .gbt {
   border-top:1px solid #bdf0bc;

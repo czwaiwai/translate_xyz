@@ -12,6 +12,11 @@ export const useCounterStore = defineStore('counter', () => {
 })
 
 export const useGameStore = defineStore('game', () => {
+  const packageInfo = ref({
+    twoArr: [],
+    threeArr: [],
+    fourArr: []
+  })
   const gameInfo = ref({
     name: '',
     serialNum: '25089',
@@ -25,8 +30,13 @@ export const useGameStore = defineStore('game', () => {
     gameInfo.value.serialNum = serialNum
     gameInfo.value.datetime = datetime
   }
-
-  return { gameInfo, setGameInfo }
+  function setPackageData(type, arr) {
+    packageInfo.value[type] = arr
+  }
+  function clearPackageData(type) {
+    packageInfo.value[type] = []
+  }
+  return { gameInfo, setGameInfo, packageInfo, setPackageData, clearPackageData }
 })
 export const useUserStore = defineStore(
   'user',

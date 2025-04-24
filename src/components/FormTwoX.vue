@@ -6,17 +6,39 @@ defineOptions({
 });
 const formTwoX = ref();
 console.log(formTwoX);
-const message = ref('Hello, FormTwoX');
+
 </script>
 
 <template>
-  <PageLay ref="formTwoX" class="form-two-x">
-    <h1>{{ message }}</h1>
-  </PageLay>
+  <form class="form-flex">
+    <div class="flex-box">
+      <div class="flex-item flex-inline flex-ch "><span class="red bold">定位置</span> <SwitchGroup></SwitchGroup></div>
+      <div class="flex-item flex-inline flex-ch bold"><span class="red bold">配数全转</span> <SwitchGroup></SwitchGroup></div>
+    </div>
+    <div class="flex-box flex-ch">
+      <div class="flex-item tc">仟</div>
+      <div class="flex-item tc">佰</div>
+      <div class="flex-item tc">拾</div>
+      <div class="flex-item tc">个</div>
+    </div>
+    <div class="flex-box flex-ch">
+      <div class="flex-item tc"><input class="w90" /></div>
+      <div class="flex-item tc"><input class="w90" /></div>
+      <div class="flex-item tc"><input class="w90" /></div>
+      <div class="flex-item tc"><input class="w90" /></div>
+    </div>
+    <div class="flex-box">
+      <div class="flex-item bold flex-inline flex-ch">合 分 <SwitchGroup></SwitchGroup></div>
+    </div>
+  </form>
+
 </template>
 
 <style lang="less" scoped>
-.form-two-x {
+.form-flex {
+  .flex-item {
+    border:1px solid #bdf0bc;
+  }
   /* Add your styles here */
 }
 </style>

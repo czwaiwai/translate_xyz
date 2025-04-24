@@ -1,11 +1,16 @@
 <script setup>
-import { ref } from 'vue';
+import { ref,computed } from 'vue';
 import { emnum } from '@/lib/api';
 // QuickChooseView is
 defineOptions({
   name: "QuickChooseView"
 });
-const gameType = ref('1')
+const gameType = ref('20')
+
+const topCate = computed(() => {
+  const [all, ...arr] = emnum.topCate
+  return arr
+})
 </script>
 
 <template>
@@ -14,11 +19,11 @@ const gameType = ref('1')
       <div class="flex-item">
         <CardBox class="flex-item" title="生成号码框"></CardBox>
         <CardBox class="flex-item" title="发送框" flexBox padding="0">
-          <form class="flex-item flex-box ">
-            <label>金额 <input class="w60"></label>
-            <button class="pri-btn">下注</button>
-            <button class="pri-btn">包牌</button>
-            <button class="pri-btn">录入汇总表</button>
+          <form class="flex-item flex-inline ptb6 plr4 flex-cv gap10">
+            <label class="fs22 flex-inline flex-cv ">金额 <input class="mlr4 w60 input_h36"></label>
+            <button class="pri-btn-h36 ">下注</button>
+            <button class="pri-btn-h36 ">包牌</button>
+            <button class="pri-btn-h36 ">录入汇总表</button>
           </form>
           <div class="div-green-border">
             <div class="gbb">笔数：0</div>
@@ -31,20 +36,20 @@ const gameType = ref('1')
         <template #header>
           <div>
             <a-radio-group  class="tab_radio" v-model="gameType" >
-              <a-radio v-for="(item, index) in emnum.twoCate" :key="index" :value="item.value">
+              <a-radio v-for="(item, index) in topCate" :key="index" :value="item.value">
                 <template #radio="{ checked }">
-                  <div class="radio-btn" :class="checked?'active':''" >二定位</div>
+                  <div class="radio-btn" :class="checked?'active':''" >{{ item.label }}</div>
                 </template>
               </a-radio>
             </a-radio-group>
           </div>
         </template>
-        <FormTwoP v-if="gameType==='1'"></FormTwoP>
-        <FormThreeP  v-if="gameType==='2'"></FormThreeP>
-        <FormFourP  v-if="gameType==='3'"></FormFourP>
-        <FormTwoX  v-if="gameType==='4'"></FormTwoX>
-        <FormThreeX  v-if="gameType==='5'"></FormThreeX>
-        <FormFourX  v-if="gameType==='6'"></FormFourX>
+        <FormTwoP v-if="gameType==='20'"></FormTwoP>
+        <FormThreeP  v-if="gameType==='30'"></FormThreeP>
+        <FormFourP  v-if="gameType==='40'"></FormFourP>
+        <FormTwoX  v-if="gameType==='21'"></FormTwoX>
+        <FormThreeX  v-if="gameType==='31'"></FormThreeX>
+        <FormFourX  v-if="gameType==='41'"></FormFourX>
       </CardBox>
     </div>
   </PageLay>
