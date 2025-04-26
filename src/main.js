@@ -2,7 +2,8 @@ import './assets/main.less'
 import '@arco-design/web-vue/es/notification/style/css.js'
 import '@arco-design/web-vue/es/modal/style/css.js'
 import '@arco-design/web-vue/es/message/style/css.js'
-import { createApp, provide } from 'vue'
+import { Modal } from '@arco-design/web-vue';
+import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
@@ -17,6 +18,7 @@ app.use(router)
 app.provide('app', app)
 app.provide('theme', 'green')
 app.provide('breadcrumb', false)
+Modal._context = app._context
 router.isReady().then(() => {
   app.mount('#app')
 })

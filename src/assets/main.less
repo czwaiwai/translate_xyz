@@ -10,9 +10,25 @@ body,
 [type='checkbox'], [type='radio'] {
   vertical-align: -0.15em;
 }
+input[type=text], input[type=password] {
+  padding: 1px;
+  outline: none;
+  -webkit-appearance: none;
+  border: none;
+  border: 1px solid #bababa;
+}
 .main_sub {
   flex: 1;
   overflow: auto;
+}
+.w30 {
+  width: 30px;
+}
+.w40 {
+  width:40px;
+}
+.w50 {
+  width:50px;
 }
 .w60 {
   width: 60px;
@@ -22,6 +38,12 @@ body,
 }
 .w100 {
   width:100%;
+}
+.w80 {
+  width: 80px;
+}
+.w130 {
+  width: 130px;
 }
 .h100 {
   width: 100%;
@@ -73,7 +95,7 @@ body,
 .gap30 {
   gap: 30px;
 }
-.input_h36 {
+.input-h36 {
   height:36px;
   line-height:36px;
   font-size:22px;
@@ -89,6 +111,9 @@ body,
 }
 .red {
   color: red;
+}
+.red2 {
+  color:#990033;
 }
 .blue {
   color: blue;
@@ -203,6 +228,9 @@ body,
   cursor: pointer;
 }
 table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
   .table-hd {
     // #5cafcf
     background-image: linear-gradient(to bottom, #52a5c5, #1698cc 20%);
@@ -416,4 +444,32 @@ table {
     }
   }
 
+}
+
+
+.form-quick-choose {
+  table {
+    width: 100%;
+    background: #fff;
+    border-spacing: 1px;
+    border-width: 1px 0 0 1px;
+    margin: 0px;
+    padding: 0px;
+    font-size:12px;
+  }
+  .bg2 {
+    background: #F0F0F0;
+    border-bottom: 1px solid #bdf0bc;
+    height: 30px;
+    border-right: 1px solid #bdf0bc;
+    text-align: center;
+    font-size: 14px;
+    padding: 4px;
+  }
+  td {
+    border: 1px solid #bdf0bc;
+    height: 22px;
+    border-width: 0 1px 1px 0;
+    padding: 2px 4px;
+  }
 }

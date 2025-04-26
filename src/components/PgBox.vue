@@ -32,7 +32,6 @@ const props = defineProps({
   }
 })
 const pgBox = ref();
-console.log(pgBox);
 const addPgBox = inject('addPgBox')
 const toggle = (bool) => {
   if(typeof bool === 'boolean') {

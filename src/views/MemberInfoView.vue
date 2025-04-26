@@ -1,18 +1,59 @@
 <script setup>
 import { ref } from 'vue';
+import { useUserStore } from '@/stores';
 // MemberInfoView is 会员资料
 defineOptions({
   name: "MemberInfoView"
 });
-
+let userStore = useUserStore()
 </script>
 
 <template>
   <PageLay class="member-info-view">
-    <div class="flex-box gap10 w100">
-      <CardBox class="flex-item" title="会员资料">暂无数据</CardBox>
-      <CardBox class="flex-item" title="录码模式">暂无数据</CardBox>
-    </div>
+    <form>
+      <div class="flex-box gap10 w100">
+        <CardBox class="flex-item" title="会员资料" padding="0">
+          <table class="table-form-green ">
+            <tbody>
+              <tr><td width="50%">账号：</td><td>{{ userStore.userInfo.name }}</td></tr>
+              <tr><td>姓名：</td><td></td></tr>
+              <tr><td>信用额度：</td><td>{{ userStore.userInfo.credit }}</td></tr>
+            </tbody>
+          </table>
+        </CardBox>
+        <CardBox class="flex-item" title="录码模式" padding="0" space="0">
+          <table class="table-form-green ">
+            <tbody>
+              <tr>
+                <td width="20%">自动：</td>
+                <td width="13%"><input type="radio" name="input_mode"></td>
+                <td width="20%">小票打印：</td>
+                <td width="13%"><input type="radio" name="show_mode"></td>
+                <td width="20%">实际赔率：</td>
+                <td width="13%"><input type="radio" name="odds_type"></td>
+              </tr>
+              <tr>
+                <td width="20%">回车：</td>
+                <td width="13%"><input type="radio" name="input_mode"></td>
+                <td width="20%">显示彩种：</td>
+                <td width="13%"><input type="radio" name="show_mode"></td>
+                <td width="20%">转换赔率：</td>
+                <td width="13%"><input type="radio" name="odds_type"></td>
+              </tr>
+              <tr>
+                <td>小票截图</td>
+                <td colspan="5"><input type="checkbox" ></td>
+              </tr>
+              <tr>
+                <td>销售点：</td>
+                <td colspan="5"><input type="text"></td>
+              </tr>
+            </tbody>
+          </table>
+        </CardBox>
+      </div>
+      <div class="tc ptb20"><button class="pri-btn" type="submit">提交</button></div>
+    </form>
     <CardBox class="mt10" hideHead padding="0">
       <div class="playtype" >
       <table class="table-form-green">
@@ -45,8 +86,8 @@ defineOptions({
             <td></td>
             <td></td>
           </tr>
-          <tr id="td_erd" style="display: none;">
-            <td colspan="8" style="padding:4px;">
+          <tr id="td_erd" >
+            <td colspan="8" style="padding:0px;">
               <table class="t-1">
                 <tbody>
                   <tr class="fn-hover">
@@ -153,8 +194,8 @@ defineOptions({
             <td></td>
             <td></td>
           </tr>
-          <tr id="td_sand" style="display: none;">
-            <td colspan="8" style="padding:4px;">
+          <tr id="td_sand" >
+            <td colspan="8" style="padding:0px;">
               <table class="t-1">
                 <tbody>
                   <tr class="fn-hover">
@@ -275,11 +316,11 @@ defineOptions({
           </tr>
         </tbody>
       </table>
-      <div id="show_tip" class="hide">
+      <!-- <div id="show_tip" class="hide">
         <span>
           <font color="red">【提示：因上级赚水调整，导致交易回水超限，详见上表中交易回水一栏红色字体提示，请重新设置并提交保存。】</font>
         </span>
-      </div>
+      </div> -->
     </div>
     </CardBox>
   </PageLay>

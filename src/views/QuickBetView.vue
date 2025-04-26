@@ -19,14 +19,114 @@ const tableTitle = ref([
   { value: '状态', name: 'status', width: '9%' },
   { value: '操作', name: 'actions', width: '15%' }
 ])
-const tableData = ref([])
+const tableData = ref([
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+  {
+    lotteryType: '--',
+    betId: '--',
+    number: '--',
+    odds: '--',
+    amount: '--',
+    status: '--',
+    actions: '--'
+  },
+])
 </script>
 
 <template>
   <PageLay class="quick-bet-view" isBox >
     <div class="page-view flex-item">
       <CardBox title="下注框" padding="0" >
-        <TableBox :title="tableTitle" :data="tableData">
+        <TableBox :title="tableTitle" :data="tableData" center>
           <template #title_actions>
             <label>全选<input type="checkbox"></label>
             <button class="ml10 pri-btn">退码</button>
@@ -38,11 +138,11 @@ const tableData = ref([])
           <label>四字现 <input type="checkbox" /></label>
           <label class="ml10">全转 <input type="checkbox" /></label>
         </template>
-        <form>
-          <label class="ml10" >号码 <input type="text" class="w60" /></label>
-          <label class="ml10">金额 <input type="text" class="w60" /></label>
-          <button class="ml20 pri-btn">确认下注</button>
-          <button class="ml10 pri-btn">极速快打</button>
+        <form class="flex-inline">
+          <label class="ml10 fs22" >号码 <input type="text" class="w60 input-h36" /></label>
+          <label class="ml10 fs22">金额 <input type="text" class="w60 input-h36" /></label>
+          <button class="ml20 pri-btn-h36">确认下注</button>
+          <button class="ml10 pri-btn-h36">极速快打</button>
         </form>
       </CardBox>
     </div>

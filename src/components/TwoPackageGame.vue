@@ -65,7 +65,7 @@ provide('addPgBox', function(gameBox) {
     <div>
 
     </div>
-    <template #footer> <PackageBetForm></PackageBetForm></template>
+    <template #footer> <PackageBetForm packageType="two"></PackageBetForm></template>
   </CardBox>
 </template>
 

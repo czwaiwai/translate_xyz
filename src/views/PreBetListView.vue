@@ -17,12 +17,14 @@ const tableTitle = [
   { name: "actions", value: "操作" },
 ]
 const tableData = ref([])
+const submitHandle = () => {}
+const printHandle = () => {}
 </script>
 
 <template>
   <PageLay class="pre-bet-list">
     <CardBox title="搜索">
-      <form>
+      <form @submit.prevent="submitHandle">
         <SelectBox :options="[]"></SelectBox>
         <label class="ml10">查号码：<input class="w60"></label>
         <label class="ml10">投注状态：<SelectBox :options="emnum.betStatus"></SelectBox></label>
@@ -30,13 +32,16 @@ const tableData = ref([])
         <label class="ml10">列出：<SelectBox :options="emnum.searchType"/></label>
         <label class="ml10"><input class="w60"> 至 <input class="w60"></label>
         <label class="ml10">分类 <SelectBox :options="emnum.frontCate"/></label>
-        <button class="ml10 pri-btn">提交</button>
-        <button class="ml10 pri-btn">打印</button>
+        <button type="submit" class="ml10 pri-btn">提交</button>
+        <button @click="printHandle" type="button" class="ml10 pri-btn">打印</button>
       </form>
     </CardBox>
-    <CardBox padding="0" >
+    <CardBox title="本期预下注单明细" padding="0" >
       <TableBox :title="tableTitle" :data="tableData"></TableBox>
     </CardBox>
+    <div class="pt10 tc">
+      <button class="pri-btn" >删除选中 </button>
+    </div>
   </PageLay>
 </template>
 

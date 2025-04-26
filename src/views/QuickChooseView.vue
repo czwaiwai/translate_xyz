@@ -20,19 +20,19 @@ const topCate = computed(() => {
         <CardBox class="flex-item" title="生成号码框"></CardBox>
         <CardBox class="flex-item" title="发送框" flexBox padding="0">
           <form class="flex-item flex-inline ptb6 plr4 flex-cv gap10">
-            <label class="fs22 flex-inline flex-cv ">金额 <input class="mlr4 w60 input_h36"></label>
+            <label class="fs22 flex-inline flex-cv ">金额 <input class="mlr4 w60 input-h36"></label>
             <button class="pri-btn-h36 ">下注</button>
             <button class="pri-btn-h36 ">包牌</button>
             <button class="pri-btn-h36 ">录入汇总表</button>
           </form>
-          <div class="div-green-border">
-            <div class="gbb">笔数：0</div>
-            <div>金额：0元</div>
+          <div class="div-green-border " >
+            <div class="gbb w130">笔数：0</div>
+            <div class="w130">金额：0元</div>
           </div>
         </CardBox>
       </div>
 
-      <CardBox class="flex-item other_head" >
+      <CardBox class="flex-item other_head" padding="0" >
         <template #header>
           <div>
             <a-radio-group  class="tab_radio" v-model="gameType" >

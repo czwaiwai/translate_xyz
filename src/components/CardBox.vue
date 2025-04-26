@@ -17,6 +17,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  space: {
+    type: String,
+    default: '10px'
+  },
   flexBox: {
     type: Boolean,
     default: false
@@ -81,8 +85,8 @@ defineExpose({toggleCont})
 
 
 <style lang="less" scoped>
-.card-box+.card-box {
-  margin-top: 10px;
+.card-box + .card-box {
+  margin-top: v-bind(space);
 }
 
 .card-box {

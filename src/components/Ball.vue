@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+// import { ref } from 'vue';
 // Ball is
 defineOptions({
   // eslint-disable-next-line vue/multi-word-component-names
@@ -11,8 +11,7 @@ const props = defineProps({
     default: 'gray'
   },
 })
-const ball = ref();
-console.log(ball);
+// const ball = ref();
 </script>
 
 <template>

@@ -37,7 +37,7 @@ const tableData = []
         <button class="ml10 pri-btn">中奖明细</button>
       </form>
     </CardBox>
-    <CardBox padding="0">
+    <CardBox title="本期下注明细" padding="0">
       <TableBox :title="tableTitle" :data="tableData" center>
         <template #footer>
           <tfoot class="table-ft">

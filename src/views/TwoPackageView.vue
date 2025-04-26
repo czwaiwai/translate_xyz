@@ -20,15 +20,8 @@ const tableData = ref([
 
 <template>
   <PageLay class="two-package-view" isBox>
-    <!-- <h1>{{ message }}</h1> -->
     <div class="page-view flex-item">
-     <!-- <CardBox title="" close="正在开盘中...">
-
-     </CardBox> -->
-     <TwoPackageGame>
-     </TwoPackageGame>
-
-
+     <TwoPackageGame></TwoPackageGame>
     </div>
     <div class="page-view wp200">
       <CardBox title="包牌" center padding="0">

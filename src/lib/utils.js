@@ -87,3 +87,37 @@ export function twoContain2Nums(arr) {
   newNums = Array.from(new Set(newNums)).map(num => padStart(num,2,'0'))
   return newNums
 }
+const packageType = {
+  0: 'four',
+  1: 'three',
+  2: 'two'
+}
+// 根据输入的num的到所下载的定包
+export function queryPackageByNum(num) {
+  let numStr = num.toString()
+  if (numStr.length !==4 ) return new Error('输入数字长度不正确')
+  if (!/^[\d|X]{4}$/.test(numStr)) return new Error('不是有效的输入')
+  let len = numStr.replace(/\d+/g, '').length
+  if (queryTypeByNum(num)) {
+    return packageType[len] || ''
+  }
+  return ''
+}
+
+export function cover2Object(arr) {
+  return arr.reduce((before,item) => {
+    before[item.label] = item.value
+    return before
+  }, {})
+}
+let twoCateObj = cover2Object(emnum.twoCate)
+let threeCateObj = cover2Object(emnum.threeCate)
+// 根据num的到用户操作的类型
+export function queryTypeByNum(num) {
+  let numStr = num.toString()
+  if (numStr.length !==4 ) return new Error('输入数字长度不正确')
+  if (!/^[\d|X]{4}$/.test(numStr)) return new Error('不是有效的输入')
+  let inputType = numStr.replace(/\d/g, '口')
+  if(/^\d{4}$/.test(numStr)) return '11'
+  return twoCateObj[inputType] || threeCateObj[inputType] || ''
+}

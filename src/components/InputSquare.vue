@@ -1,28 +1,23 @@
 <script setup>
-import { ref } from 'vue';
-// InputSquare is
 defineOptions({
   name: "InputSquare"
 });
-const props = defineProps({
-  gameType: {
-    type: String,
-    default: '1'
-  }
-})
-const model = defineModel({
+const [model] = defineModel({
   set(value) {
-    let val = value.replace(/\D/g, '')
+    console.log(value)
+    let newVal = value.toUpperCase().replace(/[^0-9|X]/g, '')
+    console.log(newVal)
+    return newVal
   }
 })
 
-const inputHandle = () => {
-
+const inputHandle = (event) => {
+  event.target.value = model.value
 }
 </script>
 
 <template>
-  <input v-model="model" @input="inputHandle" >
+  <input v-model="model" v-bind="$attrs" @input="inputHandle" >
 </template>
 
 <style lang="less" scoped>

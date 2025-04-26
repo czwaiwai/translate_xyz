@@ -34,11 +34,11 @@ provide('addGameBox', function(gameBox) {
   // console.log(gameBox)
   dataMap.set(gameBox.num, gameBox)
 })
-const vHandle = (posiV) => {
-  Array.from(dataMap.values()).filter(item => item.posiV === posiV).map(item => item.toggle())
-}
-const hHandle = (posiH) => {
+const vHandle = (posiH) => {
   Array.from(dataMap.values()).filter(item => item.posiH === posiH).map(item => item.toggle())
+}
+const hHandle = (posiV) => {
+  Array.from(dataMap.values()).filter(item => item.posiV === posiV).map(item => item.toggle())
 }
 const clickHandle = (gameItem) => {
   dataMap.get(gameItem.num).toggle()
@@ -69,6 +69,13 @@ const restActive = () => {
 const getActives = () => {
   return Array.from(dataMap.values()).filter(item => item.active)
 }
+// 取消所选
+const cancelHandle = () => {
+  restActive()
+}
+const submitHandle = () => {
+  console.log('提交所选')
+}
 defineExpose({getActives, restActive})
 </script>
 <template>
@@ -77,7 +84,7 @@ defineExpose({getActives, restActive})
     <thead>
       <tr>
         <td ></td>
-        <td @click="vHandle(0)" class="btn-v">&nbsp;</td>
+        <td  @click="vHandle(0)" class="btn-v">&nbsp;</td>
         <td  @click="vHandle(1)" class="btn-v">&nbsp;</td>
         <td  @click="vHandle(2)" class="btn-v">&nbsp;</td>
         <td  @click="vHandle(3)" class="btn-v">&nbsp;</td>
@@ -167,12 +174,12 @@ defineExpose({getActives, restActive})
             <div class="flex-item p4 gbr bc_333">
               <PosiBtns v-model="posiValues" :gameType="gameType" ></PosiBtns>
             </div>
-            <div class="sub-form">
-              <form>
-                <label>金额： <input class="w60"></label>
-                <button class="pri-btn">下注</button>
-                <button class="pri-btn">包牌</button>
-                <button class="pri-btn">取消</button>
+            <div class="sub-form flex-box flex-cv flex-ch">
+              <form @submit.prevent="submitHandle" class="flex-inline gap4" >
+                <label class="fs22">金额： <input class="w60 input-h36"></label>
+                <button type="submit" class="pri-btn-h36">下注</button>
+                <button type="button" class="pri-btn-h36">包牌</button>
+                <button type="button" @click="cancelHandle" class="pri-btn-h36">取消</button>
               </form>
             </div>
           </div>
