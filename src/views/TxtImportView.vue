@@ -10,7 +10,7 @@ defineOptions({
   <PageLay class="txt-import-view">
     <CardBox title="txt导入" center>
       <form>
-        <Table class="table-form2">
+        <table class="table-form2">
           <tbody>
             <tr>
               <td>文件路径</td>
@@ -30,7 +30,7 @@ defineOptions({
             </tr>
             <tr> <td colspan="3"> 说明：由于各会员使用的（txt文件）的格式不一样，如果不符合网站上要求的格式，有可能导入到网站 （没有下注之前）的号码内容和自己（txt文件）里号码内容不一致，操作时请认真检查，如果出现内容不一致，请不要下注。 </td> </tr>
           </tbody>
-        </Table>
+        </table>
       </form>
     </CardBox>
     <CardBox title="文件明细" center></CardBox>

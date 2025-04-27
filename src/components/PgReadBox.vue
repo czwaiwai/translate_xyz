@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed,inject } from 'vue';
-// import {getTwoLabelNum} from '@/lib/utils.js'
+import {getTwoLabelNum} from '@/lib/utils.js'
 // PgBox is 定包牌盒子
 defineOptions({
   name: "PgBox"
@@ -21,10 +21,6 @@ const props = defineProps({
   num: {
     type: String,
     default: '',
-  },
-  betNo: {
-    type: String,
-    default: ''
   },
   x: {
     type: Number,
@@ -58,14 +54,14 @@ addPgBox({
 const activeClass = computed(() => {
   return active.value? 'active': ''
 })
-// const signStr= computed(() => {
-//   return getTwoLabelNum(props.num, type.value)
-// })
+const signStr= computed(() => {
+  return getTwoLabelNum(props.num, type.value)
+})
 </script>
 
 <template>
   <div ref="pgBox" class="pg-box" :class="activeClass" >
-    <div class="flex-item">{{ betNo }}</div>
+    <div class="flex-item">{{ signStr }}</div>
     <div class="flex-item"><input  v-model="val" readonly class="input_w40" /></div>
   </div>
 </template>

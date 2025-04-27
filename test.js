@@ -1,4 +1,4 @@
-import {range, chunk, padStart} from 'lodash-es'
+import {range, chunk, padStart, groupBy, sumBy } from 'lodash-es'
 
 console.log(Array.from(new Set([1,2,3,4,12,3,4,5])))
 
@@ -41,3 +41,57 @@ console.log(typeof padStart(1200, 4, '0'))
 //   }, [])
 // }
 // console.log(getZhUnit())
+
+// const array = [
+//   { name: 'apple', value: 10 },
+//   { name: 'banana', value: 20 },
+//   { name: 'apple', value: 30 },
+//   { name: 'orange', value: 40 },
+//   { name: 'banana', value: 50 },
+//   { name: 'orange', value: 60 }
+// ];
+
+
+// const group = groupBy(array, 'name')
+// const result = Object.keys(group).map(key => {
+//   return {
+//     name:key,
+//     value: sumBy(group[key], 'value')
+//   }
+// })
+// // .map(group => {
+// //   return {
+// //     name: group[0].name,
+// //     value: sumBy(group, 'value')
+// //   }
+// // })
+//   // .map(group => ({
+//   //   name: group[0].name,
+//   //   value: sumBy(group, 'value')
+//   // }))
+//   // .value();
+
+// console.log(result);
+
+
+
+function getPermutations(string) {
+  if (string.length === 1) {
+    return [string];
+  }
+
+  let permutations = [];
+  for (let i = 0; i < string.length; i++) {
+    let char = string[i];
+    let remainingString = string.slice(0, i) + string.slice(i + 1, string.length);
+    let remainingPermutations = getPermutations(remainingString);
+
+    for (let j = 0; j < remainingPermutations.length; j++) {
+      permutations.push(char + remainingPermutations[j]);
+    }
+  }
+
+  return permutations;
+}
+
+console.log(getPermutations('12'))

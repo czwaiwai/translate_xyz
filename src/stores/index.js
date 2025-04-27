@@ -1,6 +1,7 @@
-import { ref, computed } from 'vue'
+import { ref, computed, toRaw } from 'vue'
 import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash-es'
+import { mergeBets } from '@/lib/utils'
 export const useCounterStore = defineStore('counter', () => {
   const count = ref(0)
   const doubleCount = computed(() => count.value * 2)
@@ -31,11 +32,18 @@ export const useGameStore = defineStore('game', () => {
     gameInfo.value.datetime = datetime
   }
   function setPackageData(type, arr) {
-    packageInfo.value[type] = arr
+    packageInfo.value[type + 'Arr'] = mergeBets(toRaw(packageInfo.value[`${type}Arr`]), arr)
   }
   function clearPackageData(type) {
-    packageInfo.value[type] = []
+    if(type) {
+      packageInfo.value[`${type}Arr`] = []
+    } else {
+      packageInfo.value.twoArr = []
+      packageInfo.value.threeArr = []
+      packageInfo.value.fourArr = []
+    }
   }
+
   return { gameInfo, setGameInfo, packageInfo, setPackageData, clearPackageData }
 })
 export const useUserStore = defineStore(

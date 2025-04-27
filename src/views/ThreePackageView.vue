@@ -20,7 +20,7 @@ const tableData = ref([
 <template>
   <PageLay class="three-package-view" isBox>
     <div class="page-view flex-item">
-      <PackageGame></PackageGame>
+      <PackageGame packageType="three"></PackageGame>
     </div>
     <div class="page-view wp200">
       <CardBox title="包牌" center padding="0">

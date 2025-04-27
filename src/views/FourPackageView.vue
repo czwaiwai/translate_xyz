@@ -15,24 +15,13 @@ const tableData = ref([
   { groupCount: '200组', odds: '980' },
   { groupCount: '200组', odds: '980' },
 ])
-const pageno = ref('1')
-const options = ref([
-  {label: '第一页', value: '1'}
-])
+
 </script>
 
 <template>
   <PageLay class="four-package-view" isBox>
     <div class="page-view flex-item">
-      <PackageGame>
-        <template #header>
-          <div class="flex-box gap20 flex-ch">
-            <div class="red bold" >四字定 </div>
-            <div class="bold yellow" >总金额: 12</div>
-            <div><SelectBox v-model="pageno" :options="options"></SelectBox></div>
-          </div>
-        </template>
-      </PackageGame>
+      <FourPackageGame gameType="11" ></FourPackageGame>
     </div>
     <div class="page-view wp200">
       <CardBox title="包牌" center padding="0">

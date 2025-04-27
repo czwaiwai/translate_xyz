@@ -21,6 +21,10 @@ const props = defineProps({
     type: String,
     default: '10px'
   },
+  minHeight: {
+    type: String,
+    default: '0',
+  },
   flexBox: {
     type: Boolean,
     default: false
@@ -128,7 +132,7 @@ defineExpose({toggleCont})
   &-bd {
     padding: v-bind(padding);
     background: #FFF;
-    // min-height: 80px;
+    min-height: v-bind(minHeight);
   }
 
   &-border {

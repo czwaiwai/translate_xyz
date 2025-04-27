@@ -1,10 +1,12 @@
 <script setup>
 import { ref, h } from 'vue';
+import {capitalize} from 'lodash-es'
 import { dialog } from '@/lib/dialog.js'
-import { queryPackageByNum, queryTypeByNum } from '@/lib/utils.js'
-import { useRouter } from 'vue-router'
+import { queryPackageByNum, coverToBets, queryTypeByNum } from '@/lib/utils.js'
+import { useRouter, useRoute } from 'vue-router'
 import { useGameStore } from '@/stores';
 import TableHistory from './TableHistory.vue';
+import TableBets from './TableBets.vue'
 // PackageBetForm is
 defineOptions({
   name: "PackageBetForm"
@@ -24,6 +26,7 @@ const gameStore = useGameStore()
 const packageBetForm = ref();
 console.log(packageBetForm);
 const router = useRouter()
+const route = useRoute()
 const routeToQuick = () => {
   router.push({name: 'QuickBetView'})
 }
@@ -43,24 +46,55 @@ const baoHandle = () => {
   dialog.alert('未选择任何号码！')
 }
 const betHandle = () => {
-  dialog.alert('未选择任何号码！')
+  // dialog.alert('未选择任何号码！')
+  dialog({
+    title: `确认`,
+    content: () => h(TableBets, {ref: 'tabBet',list: gameStore.packageInfo[`${props.packageType}Arr`]} ),
+    width: 480,
+    // footer: false
+  }).then(res => {
+    const tabBet = ref()
+    console.log(tabBet)
+  })
 }
 const formObj = ref({
-  allRound: false,
+  transform: false,
   num: '',
   money: '',
 })
+const inputSquare = ref()
+const inputMoney = ref()
 const submitHandle = (event) => {
   // console.log(event)
   // const formData = new FormData(event.target)
   // console.log(formData)
   console.log(formObj)
   console.log(queryPackageByNum(formObj.value.num))
-  console.log(queryTypeByNum(formObj.value.num))
-  // let allRound = formData.get('allRound')
+  // 验证是不是有效的num
+
+  console.log(route)
+  if(!inputSquare.value.verfiInput()) return
+  if(!inputMoney.value.verfiInput()) return
+  let packageType = queryPackageByNum(formObj.value.num)
+  console.log('当前要添加的组是',packageType)
+  gameStore.setPackageData(packageType, coverToBets(formObj.value))
+  // 清空表单
+  formObj.value.num = ''
+  formObj.value.money = ''
+  // 如果下注的route不是当前route则跳转到对应的route中
+  let routeName = capitalize(packageType) + 'PackageView'
+  if (routeName !== route.name) {
+    router.push({name: routeName})
+  }
+  console.log(coverToBets(formObj.value))
+  //
+  // queryTypeByNum
+  // console.log(setPackageData, '---')
+  // console.log(queryTypeByNum(formObj.value.num))
+  // let transform = formData.get('transform')
   // let num =  formData.get('num')
   // let money = formData.get('money')
-  // console.log(allRound,num, money)
+  // console.log(transform,num, money)
 }
 </script>
 
@@ -69,9 +103,9 @@ const submitHandle = (event) => {
     <div ref="packageBetForm" class="package-bet-form bt">
     <div class="flex-box  ptb6 plr4">
         <form @submit.prevent="submitHandle"  class="flex-item flex-inline gap10">
-          <label class="flex-inline flex-cv ">全转 <input v-model="formObj.allRound" name="allRound" type="checkbox" class="ml4" ></label>
-          <label class="flex-inline flex-cv fs22">号码 <InputSquare v-model="formObj.num" name="num" class="ml4 w60 input-h36"   maxlength="4" ></InputSquare></label>
-          <label class="flex-inline flex-cv fs22">金额 <input v-model="formObj.money" name="money" type="text" class="mlr4 w60 input-h36"  required > 元</label>
+          <label class="flex-inline flex-cv ">全转 <input v-model="formObj.transform" name="transform" type="checkbox" class="ml4" ></label>
+          <label class="flex-inline flex-cv fs22">号码 <InputSquare ref="inputSquare" v-model="formObj.num" name="num" class="ml4 w60 input-h36"   maxlength="4"  required></InputSquare></label>
+          <label class="flex-inline flex-cv fs22">金额 <InputNumber ref="inputMoney" v-model="formObj.money" name="money" type="text" class="mlr4 w60 input-h36"  required ></InputNumber> 元</label>
           <button class="pri-btn-v" type="submit"  >确定</button>
        </form>
       <div class="flex-inline flex-cv"><button class="pri-btn">包牌预下注使用说明</button></div>

@@ -1,13 +1,12 @@
 <script setup>
 import { ref } from 'vue';
-import { queryTypeByNum } from '@/lib/utils.js'
 defineOptions({
-  name: "InputSquare"
+  name: "InputNumber"
 });
 const [model] = defineModel({
   set(value) {
     console.log(value)
-    let newVal = value.toUpperCase().replace(/[^0-9|Xx]/g, '')
+    let newVal = value.toUpperCase().replace(/[^0-9]/g, '')
     console.log(newVal)
     return newVal
   }
@@ -27,24 +26,6 @@ const verfiInput = () => {
     input.value.focus()
     return false
   }
-  if(model.value.length !== 4) {
-    errMsg.value = '至少需要4个字符'
-    popup.value = true
-    input.value.focus()
-    return false
-  }
-  if (!/^[\d|X]{4}$/.test(model.value)) {
-    errMsg.value = '输入号码格式不正确'
-    popup.value = true
-    input.value.focus()
-    return false
-  }
-  if(!queryTypeByNum(model.value)) {
-    errMsg.value = '输入号码格式不正确'
-    popup.value = true
-    input.value.focus()
-    return false
-  }
   return true
 }
 const clickHandle = () => {
@@ -58,13 +39,13 @@ defineExpose({verfiInput})
     <template #content>
       <div class="input-tip">{{ errMsg }}</div>
     </template>
-    <input ref="input" @click="clickHandle" v-model="model" v-bind="$attrs" @input="inputHandle" >
+    <input class="input-number" ref="input" @click="clickHandle" v-model="model" v-bind="$attrs" @input="inputHandle" >
   </a-trigger>
 
 </template>
 
 <style lang="less" scoped>
-.input-square {
+.input-number {
   /* Add your styles here */
 }
 .input-tip {

@@ -1,5 +1,5 @@
 import { emnum } from "./api"
-import { range, padStart } from 'lodash-es'
+import { range, padStart, groupBy, sumBy } from 'lodash-es'
 const units = ['仟','佰','拾','个']
 const unitsEn = ['q', 'b', 's', 'g']
 export function getZhUnit(chars = '口XX口') {
@@ -19,8 +19,8 @@ export function getTwoLabel(type = '3') {
   return item.label
 }
 
-export function getTwoTypeObj() {
-  return emnum.twoCate.reduce((before, item) => {
+export function getTypeObj(name = 'twoCate') {
+  return emnum[name].reduce((before, item) => {
     before[item.value] = item.label
     return before
   }, {})
@@ -30,8 +30,19 @@ export function getTwoLabelNum(nums, type = '3') {
   if(typeof nums !== 'string') new Error('getTwoLabelNum 入参nums必须为字符串！')
   if(nums.length > 3) new Error(`nums is ${nums}, 太长了无法转换！`)
   let strArr = nums.split('')
-  return getTwoTypeObj()[type].replace('口', strArr[0]).replace('口', strArr[1])
+  return getTypeObj()[type].replace('口', strArr[0]).replace('口', strArr[1])
 }
+export function getLabelNum(nums, type = '') {
+  if(typeof nums !== 'string') new Error('getTwoLabelNum 入参nums必须为字符串！')
+  let strArr = nums.split('')
+  if (getTypeObj()[type]) { // two匹配
+    return getTypeObj()[type].replace('口', strArr[0]).replace('口', strArr[1])
+  }
+  if(getTypeObj('threeCate')[type]) {
+    return getTypeObj()[type].replace('口', strArr[0]).replace('口', strArr[1]).replace('口', strArr[2])
+  }
+}
+// export function getThree
 
 const twoNameObj = {
   single: ['1','3', '5', '7', '9'],
@@ -120,4 +131,50 @@ export function queryTypeByNum(num) {
   let inputType = numStr.replace(/\d/g, '口')
   if(/^\d{4}$/.test(numStr)) return '11'
   return twoCateObj[inputType] || threeCateObj[inputType] || ''
+}
+// 合并用户提交的所有数据
+export function mergeBets(arr1, arr2) {
+  const arr = [...arr1, ...arr2]
+  const group = groupBy(arr, 'betNo')
+  return Object.keys(group).map(key => {
+    console.log(group, 'group--', key)
+    return {
+      betNo: key,
+      num:group[key][0].num,
+      gameType: group[key][0].gameType,
+      value: sumBy(group[key], (n) => +n.value) + '',
+    }
+  })
+}
+// 生成一个字符串的所有组合
+export function  getPermutations(string) {
+  if (string.length === 1) {
+    return [string];
+  }
+
+  let permutations = [];
+  for (let i = 0; i < string.length; i++) {
+    let char = string[i];
+    let remainingString = string.slice(0, i) + string.slice(i + 1, string.length);
+    let remainingPermutations = getPermutations(remainingString);
+
+    for (let j = 0; j < remainingPermutations.length; j++) {
+      permutations.push(char + remainingPermutations[j]);
+    }
+  }
+
+  return permutations;
+}
+// 去掉号码中的X的到纯粹的数字
+export function delX(str) {
+  return str.replace(/X/g, '')
+}
+// 转换成下单的数组
+export function coverToBets(formObj) {
+  if(formObj.transform) {
+    return Array.from(new Set(getPermutations(formObj.num))).map(betNo => {
+      return {betNo:betNo, num: delX(formObj.num), gameType: queryTypeByNum(betNo), value: formObj.money}
+    })
+  }
+  return [{betNo:formObj.num, num: delX(formObj.num), gameType: queryTypeByNum(formObj.num), value: formObj.money}]
 }

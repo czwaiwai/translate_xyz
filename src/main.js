@@ -18,6 +18,10 @@ app.use(router)
 app.provide('app', app)
 app.provide('theme', 'green')
 app.provide('breadcrumb', false)
+app.config.errorHandler = function(err, vm, info) {
+  err && console.error(err)
+  return  false
+}
 Modal._context = app._context
 router.isReady().then(() => {
   app.mount('#app')

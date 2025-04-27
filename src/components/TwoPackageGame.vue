@@ -1,7 +1,9 @@
 <script setup>
 import { ref, computed, provide} from 'vue';
+import { useGameStore } from '@/stores';
 import { emnum } from '@/lib/api';
-import {range, chunk, padStart} from 'lodash-es'
+import { getTwoLabelNum } from '@/lib/utils.js'
+import { range, chunk, padStart} from 'lodash-es'
 // TwoPackageGame is 二字定包牌
 defineOptions({
   name: "TwoPackageGame"
@@ -10,11 +12,13 @@ const twoPackageGame = ref();
 console.log(twoPackageGame);
 // const message = ref('Hello, TwoPackageGame');
 const gameType = ref('1')
+const gameStore = useGameStore()
 const arr = range(100)
 let data = arr.map((num, index) => {
   return {
       index: index,
       num: padStart(num,2,'0'),
+      betNo: '',
       value: '',
       active: false,
       // gameType: props.gameType,
@@ -24,12 +28,39 @@ let data = arr.map((num, index) => {
   }
 })
 let list = ref(data)
+// {
+//   betNo:'',
+//   nums: '',
+//   value: '',
+// }
+// 转换以num为key的对象，方便选取
+const betsObj = computed(() => {
+  console.log(gameStore.packageInfo)
+  return gameStore.packageInfo.twoArr.filter(item => item.gameType === gameType.value).reduce((before,item) => {
+    before[item.betNo] = item
+    return before
+  }, {})
+})
 const listFormat = computed(() => {
+  console.log(betsObj.value)
+  list.value.forEach(item => {
+    let betNo = getTwoLabelNum(item.num, gameType.value)
+    item.betNo = betNo
+    let betItem = betsObj.value[item.betNo]
+    if (betItem) {
+      console.log('匹配好的---', betItem)
+      item.active = true
+      item.value = betItem.value
+      // item.odds  = betItem.odds //有接口后实现
+    } else {
+      item.active = false
+      item.value = ''
+    }
+  })
   return chunk(list.value, 10)
 })
 let dataMap = new Map()
 provide('addPgBox', function(gameBox) {
-  // console.log(gameBox)
   dataMap.set(gameBox.num, gameBox)
 })
 </script>
@@ -56,8 +87,8 @@ provide('addPgBox', function(gameBox) {
       </thead>
       <tbody>
         <tr v-for="(items, index) in listFormat" :key="index">
-          <td v-for="(sub, sindex) in items" :key="sindex">
-            <PgBox v-model:type="gameType" v-model:active="sub.active" :num="sub.num" :x="sindex" :y="index"></PgBox>
+          <td v-for="(sub, sindex) in items" :key="sindex" :class="sub.active? 'active': ''">
+            <PgBox v-model:type="gameType" v-model:active="sub.active" v-model:value="sub.value" :betNo="sub.betNo" :num="sub.num" :x="sindex" :y="index"></PgBox>
           </td>
         </tr>
       </tbody>
@@ -106,6 +137,9 @@ provide('addPgBox', function(gameBox) {
       font-weight: bold;
       text-align: left;
       border: 1px solid #bdf0bc;
+    }
+    td.active {
+      background:rgb(244,231,221)
     }
   }
 }

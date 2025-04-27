@@ -2,13 +2,30 @@ import { Modal } from '@arco-design/web-vue';
 
 
 export function dialog(config) {
-  config.draggable = true
-  return Modal.open(config)
+  let resolve, reject
+  let promise = new Promise((resol, rej) => (resolve = resol, reject = rej))
+  let defaultPar = {
+    draggable: true,
+    onOk: resolve,
+    onCancel: reject,
+    onClose: reject,
+    ...config,
+  }
+  let model = Modal.open(defaultPar)
+  promise.close = model.close.bind(model)
+  promise.update = model.update.bind(model)
+  return promise
 }
 dialog.confirm = function(config, title) {
+  // let [promise, resolve, reject ] = Promise.withResolvers
+  let resolve, reject
+  let promise = new Promise((resol, rej) => (resolve = resol, reject = rej))
   let defaultPar = {
     title: title || '确认',
-    draggable: true
+    draggable: true,
+    onOk: resolve,
+    onCancel: reject,
+    onClose: reject
   }
   let par = {}
   if (typeof config === 'string') {
@@ -16,10 +33,13 @@ dialog.confirm = function(config, title) {
   } else {
     Object.assign(par, config)
   }
-  return Modal.open({
+  let model =  Modal.open({
     ...defaultPar,
     ...par
   })
+  promise.close = model.close.bind(model)
+  promise.update = model.update.bind(model)
+  return promise
 }
 dialog.alert = function (config, title) {
   let defaultPar = {

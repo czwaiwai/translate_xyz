@@ -1,22 +1,24 @@
 <script setup>
 import { ref, computed, provide } from 'vue';
 import { useGameStore } from '@/stores';
-import {emnum} from '@/lib/api.js'
+// import {emnum} from '@/lib/api.js'
 import {chunk} from 'lodash-es'
 // PackageGame is
 defineOptions({
   name: "PackageGame"
 });
-const gameType = defineModel({
-  default: '7'
-})
+const gameType = ref('11')
 const props = defineProps({
   packageType: {
     type: String,
-    default: 'three'
+    default: 'four'
   }
 })
 const gameStore = useGameStore()
+const pageno = ref('1')
+// const options = ref([
+//   {label: '第一页', value: '1'}
+// ])
 const packageGame = ref();
 // const gameType = ref('7')
 console.log(packageGame);
@@ -26,8 +28,19 @@ const list = computed(() => {
     active: true
   }))
 })
+const options = computed(() => {
+  let arr = chunk(list.value, 100)
+  return arr.map((subArr, index) => {
+    return {label: `第${index+1}页`, value: '' + (index+1)}
+  })
+})
 const listFormat = computed(() => {
-  return chunk(list.value, 10)
+  let arr = chunk(list.value, 100)
+  return chunk(arr[pageno.value - 1], 10)
+  // return chunk(list.value, 10)
+})
+const totalMoney = computed(() => {
+  return list.value.reduce((before,item) => before + +item.value, 0)
 })
 let dataMap = new Map()
 provide('addPgBox', function(gameBox) {
@@ -40,15 +53,10 @@ provide('addPgBox', function(gameBox) {
     <CardBox ref="packageGame"  class="package-game" padding="0" minHeight="346px">
     <template #header>
       <slot name="header">
-        <div class="mode_radio">
-          <a-radio-group v-model="gameType" >
-            <a-radio v-for="(item, index) in emnum.threeCate" :key="index" :value="item.value">
-              <template #radio="{ checked }">
-                <a-link :status="checked?'warning':''" >{{ item.label }}</a-link>
-              </template>
-            </a-radio>
-          </a-radio-group>
-          <span class="yellow">总金额: 0</span>
+        <div class="flex-box gap20 flex-ch">
+          <div class="red bold" >四字定 </div>
+          <div class="bold yellow" >总金额: {{totalMoney}}</div>
+          <div><SelectBox v-model="pageno" :options="options"></SelectBox></div>
         </div>
       </slot>
     </template>
