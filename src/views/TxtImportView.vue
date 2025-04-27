@@ -1,9 +1,23 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted} from 'vue';
 // TxtImportView is 文本导入
 defineOptions({
   name: "TxtImportView"
 });
+const inputFile = ref()
+onMounted(() => {
+  inputFile.value.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const fileContent = e.target.result;
+        console.log(fileContent); // 这里可以获取到txt文件的内容
+      };
+      reader.readAsText(file); // 读取文件内容为文本
+    }
+  });
+})
 </script>
 
 <template>
@@ -15,7 +29,7 @@ defineOptions({
             <tr>
               <td>文件路径</td>
               <td>
-                <input type="file" />
+                <input ref="inputFile" type="file" />
               </td>
               <td><button class="pri-btn">提交</button></td>
             </tr>
