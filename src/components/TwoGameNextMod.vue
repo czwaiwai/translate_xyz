@@ -37,6 +37,7 @@ provide('addGameBox', function(gameBox) {
   // console.log(gameBox)
   dataMap.set(gameBox.num, gameBox)
 })
+const clickHandle = () => {}
 </script>
 
 <template>
