@@ -1,5 +1,5 @@
 <script setup>
-import { ref, h } from 'vue';
+import { ref, h, toRaw} from 'vue';
 import {capitalize} from 'lodash-es'
 import { dialog } from '@/lib/dialog.js'
 import { queryPackageByNum, coverToBets, queryTypeByNum } from '@/lib/utils.js'
@@ -47,14 +47,20 @@ const baoHandle = () => {
 }
 const betHandle = () => {
   // dialog.alert('未选择任何号码！')
+  let arr = toRaw(gameStore.packageInfo[`${props.packageType}Arr`]).map(item=> ({...item}))
+  console.log(arr, '=====')
+  const list = ref(arr)
   dialog({
     title: `确认`,
-    content: () => h(TableBets, {ref: 'tabBet',list: gameStore.packageInfo[`${props.packageType}Arr`]} ),
+    content: () => h(TableBets, {
+      modelValue:list.value,
+      'onUpdate:modelValue':(value) => {list.value = value}
+    }),
     width: 480,
     // footer: false
   }).then(res => {
-    const tabBet = ref()
-    console.log(tabBet)
+    console.log(list.value, '-----')
+    // console.log(TableBets.getBetList())
   })
 }
 const formObj = ref({
@@ -86,7 +92,6 @@ const submitHandle = (event) => {
   if (routeName !== route.name) {
     router.push({name: routeName})
   }
-  console.log(coverToBets(formObj.value))
   //
   // queryTypeByNum
   // console.log(setPackageData, '---')

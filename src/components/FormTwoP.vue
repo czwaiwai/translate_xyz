@@ -6,6 +6,10 @@ defineOptions({
 })
 const formTwoP = ref()
 console.log(formTwoP)
+const formObj = ref({
+  position: '0',
+  transform:  '0',
+})
 </script>
 
 <template>
@@ -15,11 +19,11 @@ console.log(formTwoP)
         <tr class="bg2">
           <td colspan="2" class="tc">
             <strong class="red2">定位置</strong>
-            <SwitchGroup></SwitchGroup>
+            <SwitchGroup v-model="formObj.position" value="-1"></SwitchGroup>
           </td>
           <td colspan="2" class="tc">
             <strong class="red2">配数全转</strong>
-            <SwitchGroup></SwitchGroup>
+            <SwitchGroup v-model="formObj.transform"></SwitchGroup>
           </td>
         </tr>
         <tr class="fixed-input tc">

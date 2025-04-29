@@ -3,8 +3,8 @@
 
 <template>
   <PageLay>
-    <CardBox v-for="item in 10" :key="item" title="标题">
-      但是看风景的路上就发多少
+    <CardBox  title="标题">
+      网站首页
     </CardBox>
 
   </PageLay>

@@ -11,7 +11,7 @@ const router = createRouter({
       path: '/',
       name: 'IndexLay',
       component: IndexLay,
-      redirect: '/home',
+      redirect: '/quick-bet',
       children: [
         {
           path: 'home',

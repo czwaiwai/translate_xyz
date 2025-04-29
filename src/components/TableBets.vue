@@ -1,15 +1,27 @@
 <script setup>
+import { onMounted, toRaw } from 'vue';
 // 定包牌汇总历史
 defineOptions({
   name: 'TableBets'
 });
-defineProps({
-  list: {
-    type: Array,
-    default: () => []
-  },
+// const props = defineProps({
+//   list: {
+//     type: Array,
+//     default: () => []
+//   },
+// })
+const list = defineModel({
+  default: () => []
 })
-const clickHandle = (betNo) => {}
+// onMounted(() => {
+//   console.log(props.list)
+//   model.value = toRaw(props.list)
+// })
+defineEmits('change')
+const clickHandle = (betNo) => {
+  let index = list.value.findIndex(item => item.betNo === betNo)
+  list.value.splice(index, 1)
+}
 </script>
 
 <template>

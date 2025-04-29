@@ -28,14 +28,24 @@ const handleSubmit = async ({ values, errors }) => {
   if (errors) {
     return;
   }
-  let res = await api.login({
-    username: formData.value.username,
-    password: formData.value.password
-  }).catch(err => {
-    Message.error('登录失败，请稍后再试');
-    return Promise.reject(err);
-  })
-  console.log(res.data)
+  // let res = await api.login({
+  //   username: formData.value.username,
+  //   password: formData.value.password
+  // }).catch(err => {
+  //   Message.error('登录失败，请稍后再试');
+  //   return Promise.reject(err);
+  // })
+  // console.log(res.data)
+  let res = {
+      data: {
+        name: 'y05',
+        token: 'xxxxxxx',
+        credit: 0,
+        used: 0,
+        canUse: 0,
+        serialNum: '25089',
+      }
+  }
   userStore.setUserInfo(res.data);
   Message.success('登录成功');
   router.push('/home');

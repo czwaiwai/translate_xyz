@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import {dialog} from '@/lib/dialog.js'
 // QuickBetView is 快打
 defineOptions({
   name: "QuickBetView"
@@ -120,6 +121,12 @@ const tableData = ref([
     actions: '--'
   },
 ])
+const quickHandle = () => {}
+const submitHandle = () => {
+  dialog({
+
+  })
+}
 </script>
 
 <template>
@@ -138,11 +145,11 @@ const tableData = ref([
           <label>四字现 <input type="checkbox" /></label>
           <label class="ml10">全转 <input type="checkbox" /></label>
         </template>
-        <form class="flex-inline">
-          <label class="ml10 fs22" >号码 <input type="text" class="w60 input-h36" /></label>
-          <label class="ml10 fs22">金额 <input type="text" class="w60 input-h36" /></label>
-          <button class="ml20 pri-btn-h36">确认下注</button>
-          <button class="ml10 pri-btn-h36">极速快打</button>
+        <form @submit.prevent="submitHandle" class="flex-inline">
+          <label class="ml10 fs22" >号码 <input name="betNo" type="text" class="w60 input-h36" /></label>
+          <label class="ml10 fs22">金额 <input name="money" type="text" class="w60 input-h36" /></label>
+          <button type="submit" class="ml20 pri-btn-h36">确认下注</button>
+          <button type="button" @click="quickHandle" class="ml10 pri-btn-h36">极速快打</button>
         </form>
       </CardBox>
     </div>
