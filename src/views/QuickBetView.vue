@@ -1,6 +1,7 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, h } from 'vue';
 import {dialog} from '@/lib/dialog.js'
+import SmallQuickBox from '@/components/SmallQuickBox.vue'
 // QuickBetView is 快打
 defineOptions({
   name: "QuickBetView"
@@ -121,11 +122,15 @@ const tableData = ref([
     actions: '--'
   },
 ])
-const quickHandle = () => {}
-const submitHandle = () => {
+const quickHandle = () => {
   dialog({
-
+    title: '极速快打',
+    content: () => h(SmallQuickBox),
+    footer: false,
   })
+}
+const submitHandle = () => {
+
 }
 </script>
 

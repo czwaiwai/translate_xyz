@@ -9,7 +9,29 @@ console.log(formTwoP)
 const formObj = ref({
   position: '0',
   transform:  '0',
+  ge: '',
+  shi: '',
+  bai: '',
+  qian: '',
+  pei1: '',
+  pei2: '',
+  fenhe: '',
+  he1: '',
+  he2: '',
+  he3: '',
+  he4: '',
 })
+const positionHandle = (val) => {
+  if(val !== '0') {
+    formObj.value.transform = '0'
+  }
+}
+const transformHandle = (val) => {
+  if(val !== '0') {
+    formObj.value.position = '0'
+  }
+}
+
 </script>
 
 <template>
@@ -19,80 +41,82 @@ const formObj = ref({
         <tr class="bg2">
           <td colspan="2" class="tc">
             <strong class="red2">定位置</strong>
-            <SwitchGroup v-model="formObj.position" value="-1"></SwitchGroup>
+            <SwitchGroup v-model="formObj.position" value="-1" @change="positionHandle"></SwitchGroup>
           </td>
           <td colspan="2" class="tc">
             <strong class="red2">配数全转</strong>
-            <SwitchGroup v-model="formObj.transform"></SwitchGroup>
+            <SwitchGroup v-model="formObj.transform" value="0" @change="transformHandle"></SwitchGroup>
           </td>
         </tr>
-        <tr class="fixed-input tc">
+        <tr v-show="formObj.position !== '0'" class="fixed-input tc">
           <td width="25%">仟</td>
           <td width="25%">佰</td>
           <td width="25%">拾</td>
           <td width="25%">个</td>
         </tr>
-        <tr class="fixed-input tc">
+        <tr v-show="formObj.position !== '0'" class="fixed-input tc">
           <td>
-            <input type="text" class="w90" boxnumber="1" name="qian" digits="true" maxlength="10" value="" />
+            <InputNum v-model="formObj.qian" type="text" class="w90" boxnumber="1" name="qian" digits="true" maxlength="10" value="" />
           </td>
           <td>
-            <input type="text" class="w90" boxnumber="2" name="bai" digits="true" maxlength="10" value="" />
+            <InputNum  v-model="formObj.bai" type="text" class="w90" boxnumber="2" name="bai" digits="true" maxlength="10" value="" />
           </td>
           <td>
-            <input type="text" class="w90" boxnumber="3" name="shi" digits="true" maxlength="10" value="" />
+            <InputNum  v-model="formObj.shi" type="text" class="w90" boxnumber="3" name="shi" digits="true" maxlength="10" value="" />
           </td>
           <td>
-            <input type="text" class="w90" boxnumber="4" name="ge" digits="true" maxlength="10" value="" />
+            <InputNum  v-model="formObj.ge" type="text" class="w90" boxnumber="4" name="ge" digits="true" maxlength="10" value="" />
           </td>
         </tr>
-        <tr class="match-input hide">
+        <tr v-show="formObj.transform !=='0'" class="match-input hide">
           <td colspan="4" class="tc">
-            <input type="text" class="w90" boxnumber="1" name="pei1" digits="true" maxlength="10" />配,<input
-              type="text" class="w90" boxnumber="2" name="pei2" digits="true" maxlength="10" />
+            <div class="flex-inline gap4">
+              <InputNum v-model="formObj.pei1" type="text" class="w90" boxnumber="1" name="pei1" digits="true" maxlength="10" />
+              配,
+              <InputNum v-model="formObj.pei2" type="text" class="w90" boxnumber="2" name="pei2" digits="true" maxlength="10" />
+            </div>
           </td>
         </tr>
         <tr class="bg2">
           <td colspan="4" class="tc">
             <strong class="red2">合</strong>&nbsp;&nbsp; <strong class="red2">分</strong>
-            <SwitchGroup></SwitchGroup>
+            <SwitchGroup v-model="fenhe"></SwitchGroup>
           </td>
         </tr>
         <tr class="tc">
           <td class="remain-fixed-filter-item">
             1. <CheckFourGroup></CheckFourGroup> <br />
-            <input type="text" class="w90" name="he1" digits="true" maxlength="10" />
+            <InputNum v-model="formObj.he1"  type="text" class="w90" name="he1" digits="true" maxlength="10" />
           </td>
           <td class="remain-fixed-filter-item">
             2. <CheckFourGroup></CheckFourGroup> <br />
-            <input type="text" class="w90" name="he2" digits="true" maxlength="10" />
+            <InputNum v-model="formObj.he2"  type="text" class="w90" name="he2" digits="true" maxlength="10" />
           </td>
           <td class="remain-fixed-filter-item">
             3. <CheckFourGroup></CheckFourGroup> <br />
-            <input type="text" class="w90" name="he3" digits="true" maxlength="10" />
+            <InputNum v-model="formObj.he3"  type="text" class="w90" name="he3" digits="true" maxlength="10" />
           </td>
           <td class="remain-fixed-filter-item">
             4. <CheckFourGroup></CheckFourGroup> <br />
-            <input type="text" class="w90" name="he4" digits="true" maxlength="10" />
+            <InputNum v-model="formObj.he4"  type="text" class="w90" name="he4" digits="true" maxlength="10" />
           </td>
         </tr>
         <tr>
           <td colspan="4" class="remain-match-filter-item">
             <strong class="red2">不定位合分</strong>
-            <label><input type="checkbox" remainmatchfilter="2"
-                class="remain-match-filter checkbox" />两数合</label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="text" class="w90" name="budinghe" digits="true" maxlength="10" />
+            <label><InputNum type="checkbox" remainmatchfilter="2"  class="remain-match-filter checkbox" />两数合</label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <InputNum type="text" class="w90" name="budinghe" digits="true" maxlength="10" />
           </td>
         </tr>
         <tr>
           <td colspan="4">
             <div class="flex-inline gap2">
               <strong class="red2">全转</strong>
-              <input type="text" class="transform-filter-item w50" name="quanzhuan" digits="true" maxlength="10" />
+              <InputNum type="text" class="transform-filter-item w50" name="quanzhuan" digits="true" maxlength="10" />
               <strong class="red2">上奖</strong>
-              <input type="text" class="upper-filter-item w50" name="shangjiang" digits="true" maxlength="10" />
+              <InputNum type="text" class="upper-filter-item w50" name="shangjiang" digits="true" maxlength="10" />
               <strong class="red2">排除</strong>
-              <input type="text" class="except-filter-item w50" name="paichu" digits="true" maxlength="10" />
+              <InputNum type="text" class="except-filter-item w50" name="paichu" digits="true" maxlength="10" />
               <strong class="red2">乘号位置</strong>
             </div>
             <CheckFourGroup></CheckFourGroup>
@@ -102,9 +126,9 @@ const formObj = ref({
           <td colspan="4">
             <SwitchGroup></SwitchGroup>
             二字定含
-            <input type="text" class="contain-filter-item w80" name="han" digits="true" maxlength="10" />
+            <InputNum type="text" class="contain-filter-item w80" name="han" digits="true" maxlength="10" />
             二字定复式
-            <input type="text" class="multiple-filter-item" name="fushi" digits="true" maxlength="10" />
+            <InputNum type="text" class="multiple-filter-item" name="fushi" digits="true" maxlength="10" />
           </td>
         </tr>
         <tr>
@@ -124,9 +148,9 @@ const formObj = ref({
             <SwitchGroup></SwitchGroup>
             (<strong class="red2">对数</strong>)
             <div class="flex-inline gap2">
-              <input type="text" class="w60" name="duishu1" pairnumber="true" maxlength="2" />
-              <input type="text" class="w60" name="duishu2" pairnumber="true" maxlength="2" />
-              <input type="text" class="w60" name="duishu3" pairnumber="true" maxlength="2" />
+              <InputNum type="text" class="w60" name="duishu1" pairnumber="true" maxlength="2" />
+              <InputNum type="text" class="w60" name="duishu2" pairnumber="true" maxlength="2" />
+              <InputNum type="text" class="w60" name="duishu3" pairnumber="true" maxlength="2" />
             </div>
           </td>
         </tr>
