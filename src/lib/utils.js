@@ -1,5 +1,5 @@
 import { emnum } from "./api"
-import { range, padStart, groupBy, sumBy } from 'lodash-es'
+import { range, padStart, groupBy, sumBy,  reduce, flatMap, map, difference, repeat, uniq } from 'lodash-es'
 const units = ['仟','佰','拾','个']
 const unitsEn = ['q', 'b', 's', 'g']
 export function getZhUnit(chars = '口XX口') {
@@ -177,4 +177,47 @@ export function coverToBets(formObj) {
     })
   }
   return [{betNo:formObj.num, num: delX(formObj.num), gameType: queryTypeByNum(formObj.num), value: formObj.money}]
+}
+
+function cartesianProduct(arrays) {
+  return reduce(arrays, (result, currentArray) => {
+      return flatMap(result, (previousValue) => {
+          return map(currentArray, (currentValue) => {
+              return previousValue.concat(currentValue);
+          });
+      });
+  }, [[]]);
+}
+// 获取2，3 ,4 字符串间产生的所有组合
+export function getCombinations(...strings) {
+  const charArrays = strings.map(str => str.split(''));
+  const product = cartesianProduct(charArrays);
+  return product.map(combination => combination.join(''));
+}
+
+
+// 获取0-9中未传入的数字
+export function nextNum(str) {
+  if(!str) return ''
+  return difference(range(10).map(n => n+''), str.split('')).join('')
+}
+
+// 入参为 千 ，百 ，十， 个，必须为四个数，没有值可以为空
+export function generateAllCombinations(...args)  {
+  if (args.length !==4) return new Error('入参必须为4位')
+  const digitArrays = args.map(nums => (nums ? nums.split('') : ['X']))
+  return digitArrays.reduce((acc, currentDigits) => {
+      if (acc.length === 0) {
+          return currentDigits.map(digit => `${digit}`);
+      }
+      return acc.flatMap(prevCombination => currentDigits.map(digit => `${prevCombination}${digit}`));
+  }, []);
+};
+// 入参为2位3位4位
+
+export function generateAllTransform(...args) {
+  if (args.length < 2) return new Error('入参需要大于1')
+  if (args.length > 4) return new Error('入参需要小于等于4')
+  // const digitArrays = args.map(nums => (nums ? nums: 'X'))
+  return uniq(getCombinations(...args).map(num => getPermutations(num + repeat('X', 4 - num.length))).flatMap(nums => nums))
 }
