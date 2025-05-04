@@ -5,7 +5,7 @@ import {generateAllCombinations, nextNum, generateAllTransform} from '@/lib/util
 defineOptions({
   name: 'FormTwoP',
 })
-
+const emit = defineEmits(['submitData'])
 const formObj = ref({
   position: '0',
   transform:  '0',
@@ -38,10 +38,10 @@ const submitHandle = () => {
   let arr = []
   if (position !== '0') {
     if(position === '1') {
-      arr = generateAllCombinations(qian,shi,bai,ge)
+      arr = generateAllCombinations(qian,bai, shi,ge)
     }
     if(position === '-1') {
-      arr = generateAllCombinations(nextNum(qian),nextNum(shi),nextNum(bai),nextNum(ge))
+      arr = generateAllCombinations(nextNum(qian),nextNum(bai),nextNum(shi),nextNum(ge))
     }
   }
   if (transform !=='0') {
@@ -53,6 +53,7 @@ const submitHandle = () => {
     }
   }
   console.log(arr)
+  emit('submitData', arr)
 }
 const toSubmit = () => {
   // formTwoP.value.submit()
@@ -109,7 +110,7 @@ defineExpose({
         <tr class="bg2">
           <td colspan="4" class="tc">
             <strong class="red2">合</strong>&nbsp;&nbsp; <strong class="red2">分</strong>
-            <SwitchGroup v-model="formObj.fenhe"></SwitchGroup>
+            <SwitchGroup v-model="formObj.fenhe" value="1"></SwitchGroup>
           </td>
         </tr>
         <tr class="tc">

@@ -1,6 +1,7 @@
 <script setup>
-import { ref,computed, shallowRef } from 'vue';
+import { ref, computed, shallowRef } from 'vue';
 import { emnum } from '@/lib/api';
+import {chunk} from 'lodash-es'
 import FormTwoP from '@/components/FormTwoP.vue';
 import FormThreeP from '@/components/FormThreeP.vue';
 import FormFourP from '@/components/FormFourP.vue';
@@ -29,6 +30,13 @@ const formRef = ref()
 const genNoHandle = () => {
   formRef.value.toSubmit()
 }
+const list = ref([])
+const submitData = (arr) => {
+  list.value = arr
+}
+const listFormat = computed(() => {
+  return chunk(list.value, 8)
+})
 </script>
 
 <template>
@@ -36,13 +44,10 @@ const genNoHandle = () => {
     <div class="flex-box gap6">
       <div class="flex-item">
         <CardBox class="flex-item" title="生成号码框" padding="0" minHeight="300px">
-          <table>
+          <table class="nums-table">
             <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+              <tr v-for="(items, index) in listFormat" :key="index">
+                <td v-for="(num, sIndex) in items" :key="sIndex" width="12.5%">{{ num }}</td>
               </tr>
             </tbody>
           </table>
@@ -79,7 +84,7 @@ const genNoHandle = () => {
           <FormTwoX  ref="formTwoX" v-if="gameType==='21'"></FormTwoX>
           <FormThreeX  v-if="gameType==='31'"></FormThreeX>
           <FormFourX  v-if="gameType==='41'"></FormFourX> -->
-          <Component ref="formRef" :is="tabsObj[gameType]"></Component>
+          <Component ref="formRef" :is="tabsObj[gameType]" @submitData="submitData"></Component>
           <template #footer>
             <div class="flex-box flex-ch flex-cv gap10 bt ptb4">
               <button @click="genNoHandle" class="pri-btn-h36 ">生成</button>
@@ -121,6 +126,13 @@ const genNoHandle = () => {
       &.active {
         background:#a9e58c;
       }
+    }
+  }
+  .nums-table {
+    td {
+      border: 1px solid #000;
+      height: 25px;
+      text-align: center;
     }
   }
   /* Add your styles here */

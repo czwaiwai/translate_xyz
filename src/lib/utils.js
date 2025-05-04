@@ -1,5 +1,5 @@
 import { emnum } from "./api"
-import { range, padStart, groupBy, sumBy,  reduce, flatMap, map, difference, repeat, uniq } from 'lodash-es'
+import { range, padStart, groupBy, sumBy,  reduce, flatMap, map, difference, repeat, uniq, flow, add, toNumber } from 'lodash-es'
 const units = ['仟','佰','拾','个']
 const unitsEn = ['q', 'b', 's', 'g']
 export function getZhUnit(chars = '口XX口') {
@@ -221,3 +221,39 @@ export function generateAllTransform(...args) {
   // const digitArrays = args.map(nums => (nums ? nums: 'X'))
   return uniq(getCombinations(...args).map(num => getPermutations(num + repeat('X', 4 - num.length))).flatMap(nums => nums))
 }
+// 函数组合 传入多个处理函数，上一个函数的处理结果是下一个函数的入参
+// export function compose(...funcs) {
+//   return flow(funcs)
+// }
+export function compose(middlewares) {
+  return function (context) {
+      function dispatch(i) {
+          if (i === middlewares.length) return context;
+          const middleware = middlewares[i];
+          // eslint-disable-next-line no-useless-catch
+          try {
+              return middleware(context, function next() {
+                  return dispatch(i + 1);
+              });
+          } catch (err) {
+              throw err;
+          }
+      }
+      return dispatch(0);
+  };
+}
+
+// 如果数字为空这返回全部
+export function emptyNums(val) {
+  if(!val) return '0123456789'
+  return val.toString()
+}
+// 数字拆分返回数字
+export function splitNum(numstr) {
+  return numstr.split('').map(toNumber)
+}
+// 一个数字拆分后相加
+export function strAdd(numstr) {
+  return add(...splitNum(numstr))
+}
+
