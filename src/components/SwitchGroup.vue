@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch } from 'vue';
 // SwitchGroup is
 defineOptions({
   name: "SwitchGroup"
@@ -15,10 +15,8 @@ const model = defineModel({
   type: String,
   default: '0'  // -1 除  0 空  1取
 })
-onMounted(() => {
-  model.value = props.value
-})
-
+const chu = ref(false)
+const qu = ref(false)
 const setModel = (chuVal, quVal) => {
   console.log(chuVal, quVal)
   if(!chuVal && !quVal) {
@@ -32,9 +30,9 @@ const setModel = (chuVal, quVal) => {
   }
 }
 watch(model, (newVal, oldVal) => {
-  console.log(newVal, oldVal)
+  // console.log(newVal, oldVal)
   if(newVal !== oldVal) {
-    if(newVal === '0') {
+    if(!newVal || newVal === '0') {
       chu.value = false
       qu.value = false
     }
@@ -48,9 +46,10 @@ watch(model, (newVal, oldVal) => {
     }
     emit('change', newVal)
   }
+}, {
+  immediate: true
 })
-const chu = ref(false)
-const qu = ref(false)
+
 const changeHandle = (e, index) => {
   if(index === 1) {
     if(qu.value) {

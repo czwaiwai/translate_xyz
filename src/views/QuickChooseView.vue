@@ -27,10 +27,15 @@ const tabsObj = {
   '41': FormFourX,
 }
 const formRef = ref()
+const list = ref([])
 const genNoHandle = () => {
   formRef.value.toSubmit()
 }
-const list = ref([])
+
+const resetHandle = () => {
+  list.value = []
+  formRef.value.toReset()
+}
 const submitData = (arr) => {
   list.value = arr
 }
