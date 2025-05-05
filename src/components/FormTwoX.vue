@@ -10,7 +10,6 @@ defineOptions({
 });
 const emit = defineEmits(['submitData'])
 const formTwoX = ref();
-console.log(formTwoX);
 const formObj = ref(cloneDeep(formX))
 // 对数有效值校验
 const duishuValid = (value) => {

@@ -42,6 +42,9 @@ const submitData = (arr) => {
 const listFormat = computed(() => {
   return chunk(list.value, 8)
 })
+const showByX = computed(() => {
+  return ['21', '31', '41'].includes(gameType.value)
+})
 </script>
 
 <template>
@@ -61,11 +64,14 @@ const listFormat = computed(() => {
           <form class="flex-item flex-inline ptb6 plr4 flex-cv gap10">
             <label class="fs22 flex-inline flex-cv ">金额 <input class="mlr4 w60 input-h36"></label>
             <button class="pri-btn-h36 ">下注</button>
-            <button class="pri-btn-h36 ">包牌</button>
-            <button class="pri-btn-h36 ">录入汇总表</button>
+            <template v-if="!showByX">
+              <button class="pri-btn-h36 ">包牌</button>
+              <button class="pri-btn-h36 ">录入汇总表</button>
+            </template>
+
           </form>
           <div class="div-green-border " >
-            <div class="gbb w130">笔数：0</div>
+            <div class="gbb w130">笔数：{{ list.length }}</div>
             <div class="w130">金额：0元</div>
           </div>
         </CardBox>
