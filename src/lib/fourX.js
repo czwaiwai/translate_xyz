@@ -297,6 +297,8 @@ export const formX = {
     peishu: '1', // 配数
     pei1: '', // 配数1
     pei2: '', // 配数2
+    pei3: '',
+    pei4: '',
     budingheCheck: false, // 不定位合分
     budinghe: '', // 不定位合分值
     budingheCheckThree: false, // 三合数

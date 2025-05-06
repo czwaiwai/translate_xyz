@@ -1,26 +1,16 @@
 <script setup>
-import { ref } from 'vue'
-import {generateAllCombinations, nextNum, generateAllTransform} from '@/lib/utils.js'
+import { ref, toRaw } from 'vue'
+import { dialog } from '@/lib/dialog.js'
+import { cloneDeep, range, padStart } from 'lodash-es'
+import { formP, toComposed } from '@/lib/twoP.js'
+import { validLogar } from '@/lib/utils.js'
 // FormTwoP is
 defineOptions({
   name: 'FormTwoP',
 })
 const emit = defineEmits(['submitData'])
-const formObj = ref({
-  position: '0',
-  transform:  '0',
-  ge: '',
-  shi: '',
-  bai: '',
-  qian: '',
-  pei1: '',
-  pei2: '',
-  fenhe: '',
-  he1: '',
-  he2: '',
-  he3: '',
-  he4: '',
-})
+const formTwoP = ref()
+const formObj = ref(cloneDeep(formP))
 const positionHandle = (val) => {
   if(val !== '0') {
     formObj.value.transform = '0'
@@ -31,36 +21,66 @@ const transformHandle = (val) => {
     formObj.value.position = '0'
   }
 }
-const formTwoP = ref()
+
+// 对数有效值校验
+const duishuValid = (value) => {
+  if(!validLogar(value)) {
+    return '请输入差值为5的对数'
+  }
+}
+const duishu1 = ref()
+const duishu2 = ref()
+const duishu3 = ref()
+const arr = [duishu1,duishu2,duishu3]
 const submitHandle = () => {
-  // $event.preventDefault()
-  let {qian,shi,bai,ge,pei1,pei2,position, transform} = formObj.value
-  let arr = []
-  if (position !== '0') {
-    if(position === '1') {
-      arr = generateAllCombinations(qian,bai, shi,ge)
-    }
-    if(position === '-1') {
-      arr = generateAllCombinations(nextNum(qian),nextNum(bai),nextNum(shi),nextNum(ge))
-    }
+  // // $event.preventDefault()
+  // let {qian,shi,bai,ge,pei1,pei2,position, transform} = formObj.value
+  // let arr = []
+  // if (position !== '0') {
+  //   if(position === '1') {
+  //     arr = generateAllCombinations(qian,bai, shi,ge)
+  //   }
+  //   if(position === '-1') {
+  //     arr = generateAllCombinations(nextNum(qian),nextNum(bai),nextNum(shi),nextNum(ge))
+  //   }
+  // }
+  // if (transform !=='0') {
+  //   if (transform === '1') {
+  //     arr = generateAllTransform(pei1,pei2)
+  //   }
+  //   if(transform === '-1') {
+  //     arr = generateAllTransform(nextNum(pei1),nextNum(pei2))
+  //   }
+  // }
+  // console.log(arr)
+  // emit('submitData', arr)
+  if(arr.some(comp => !comp.value.verfiInput())) return
+  let {res, process} = toComposed({
+    formObj: toRaw(formObj.value),
+    template: 'XX口口',
+    nums: range(0, 100).map(num => padStart(num, 2, '0')),
+    nodes: [],
+    process: 0, // 标记处理步骤
+    res: []
+  })
+  if (process) {
+    console.log(res)
+    emit('submitData', res)
+  } else {
+    // 提示没有输入条件
+    dialog.alert('请选择或填写条件生成！')
   }
-  if (transform !=='0') {
-    if (transform === '1') {
-      arr = generateAllTransform(pei1,pei2)
-    }
-    if(transform === '-1') {
-      arr = generateAllTransform(nextNum(pei1),nextNum(pei2))
-    }
-  }
-  console.log(arr)
-  emit('submitData', arr)
 }
 const toSubmit = () => {
   // formTwoP.value.submit()
   submitHandle()
 }
+const toReset = () => {
+  formObj.value = cloneDeep(formP)
+}
 defineExpose({
-  toSubmit
+  toSubmit,
+  toReset,
 })
 </script>
 
@@ -163,7 +183,7 @@ defineExpose({
         </tr>
         <tr>
           <td colspan="4">
-            <SwitchGroup></SwitchGroup>
+            <SwitchGroup v-model="formObj.doubleGroup"></SwitchGroup>
             (<strong class="red2">双重</strong>)
           </td>
         </tr>
@@ -175,45 +195,29 @@ defineExpose({
         </tr>
         <tr>
           <td colspan="4" class="logarithm-number-item">
-            <SwitchGroup></SwitchGroup>
+            <SwitchGroup v-model="formObj.duishuGroup" @change="duishuChangeHandle"></SwitchGroup>
             (<strong class="red2">对数</strong>)
             <div class="flex-inline gap2">
-              <InputNum type="text" class="w60" name="duishu1" pairnumber="true" maxlength="2" />
-              <InputNum type="text" class="w60" name="duishu2" pairnumber="true" maxlength="2" />
-              <InputNum type="text" class="w60" name="duishu3" pairnumber="true" maxlength="2" />
+              <InputNum ref="duishu1" v-model="formObj.duishu1" type="text" class="w60" name="duishu1" :validator="duishuValid" maxlength="2"></InputNum>
+              <InputNum ref="duishu2" v-model="formObj.duishu2" type="text" class="w60" name="duishu2" :validator="duishuValid" maxlength="2"></InputNum>
+              <InputNum ref="duishu3" v-model="formObj.duishu3" type="text" class="w60" name="duishu3" :validator="duishuValid" maxlength="2"></InputNum>
             </div>
           </td>
         </tr>
         <tr>
-          <td colspan="2">
-            <SwitchGroup></SwitchGroup>
-            (<strong class="red2">单</strong>)
-            <CheckFourGroup></CheckFourGroup>
-            <span class="green fb f14"><span id="selectWord_odd"></span>&nbsp;&nbsp;<span
-                id="selectCondition_odd"></span></span>
+          <td colspan="2" style="width: 50%">
+            <SwitchFourComb v-model:group="formObj.oddGroup" v-model:check="formObj.oddCheckStr" title="单"></SwitchFourComb>
           </td>
-          <td colspan="2">
-            <SwitchGroup></SwitchGroup>
-            (<strong class="red2">双</strong>)
-            <CheckFourGroup></CheckFourGroup>
-            <span class="green fb f14"><span id="selectWord_even"></span>&nbsp;&nbsp;<span
-                id="selectCondition_even"></span></span>
+          <td colspan="2" style="width: 50%">
+            <SwitchFourComb v-model:group="formObj.evenGroup" v-model:check="formObj.evenCheckStr" title="双"></SwitchFourComb>
           </td>
         </tr>
         <tr>
-          <td colspan="2">
-            <SwitchGroup></SwitchGroup>
-            (<strong class="red2">大</strong>)
-            <CheckFourGroup></CheckFourGroup>
-            <span class="green fb f14"><span id="selectWord_big"></span>&nbsp;&nbsp;<span
-                id="selectCondition_big"></span></span>
+          <td colspan="2" style="width: 50%">
+            <SwitchFourComb v-model:group="formObj.bigGroup" v-model:check="formObj.bigCheckStr" title="大"></SwitchFourComb>
           </td>
-          <td colspan="2">
-            <SwitchGroup></SwitchGroup>
-            (<strong class="red2">小</strong>)
-            <CheckFourGroup></CheckFourGroup>
-            <span class="green fb f14"><span id="selectWord_small"></span>&nbsp;&nbsp;<span
-                id="selectCondition_small"></span></span>
+          <td colspan="2" style="width: 50%">
+            <SwitchFourComb v-model:group="formObj.smallGroup" v-model:check="formObj.smallCheckStr" title="小"></SwitchFourComb>
           </td>
         </tr>
       </tbody>

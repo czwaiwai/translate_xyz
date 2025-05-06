@@ -172,24 +172,46 @@ export function mergeBets(arr1, arr2) {
     }
   })
 }
+
+// 替换所有template中的口为数字
+export function replaceChars(str, template) {
+  let index = 0;
+  return template.replace(/口/g, () => (index < str.length ? str[index++] : '口'));
+}
+
 // 生成一个字符串的所有组合
-export function getPermutations(string) {
-  if (string.length === 1) {
-    return [string]
+ export function getAllPermutations(str) {
+  if (str.length !== 4) {
+    throw new Error('Input string must be exactly 4 characters long');
   }
 
-  let permutations = []
-  for (let i = 0; i < string.length; i++) {
-    let char = string[i]
-    let remainingString = string.slice(0, i) + string.slice(i + 1, string.length)
-    let remainingPermutations = getPermutations(remainingString)
+  const chars = str.split('');
 
-    for (let j = 0; j < remainingPermutations.length; j++) {
-      permutations.push(char + remainingPermutations[j])
-    }
-  }
+  // 使用 reduce 生成所有可能的排列组合
+  const permutations = reduce(
+    chars,
+    (result, char) => {
+      if (result.length === 0) return [[char]];
 
-  return permutations
+      // 使用 flatMap 在每个现有排列的每个可能位置插入新字符
+      return flatMap(result, (perm) => {
+        const spots = Array(perm.length + 1).fill(null);
+        return spots.map((_, i) => [
+          ...perm.slice(0, i),
+          char,
+          ...perm.slice(i)
+        ]);
+      });
+    },
+    []
+  );
+
+  // 转换结果数组并去重
+  return Array.from(
+    new Set(
+      permutations.map(arr => arr.join(''))
+    )
+  );
 }
 // 去掉号码中的X的到纯粹的数字
 export function delX(str) {
@@ -198,7 +220,7 @@ export function delX(str) {
 // 转换成下单的数组
 export function coverToBets(formObj) {
   if (formObj.transform) {
-    return Array.from(new Set(getPermutations(formObj.num))).map((betNo) => {
+    return getAllPermutations(formObj.num).map((betNo) => {
       return {
         betNo: betNo,
         num: delX(formObj.num),
