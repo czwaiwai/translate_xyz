@@ -63,8 +63,8 @@ const submitHandle = () => {
   if(arr.some(comp => !comp.value.verfiInput())) return
   let {res, process} = toComposed({
     formObj: toRaw(formObj.value),
-    template: 'XX口口',
-    nums: range(0, 100).map(num => padStart(num, 2, '0')),
+    template: 'X口口口',
+    nums: range(0, 1000).map(num => padStart(num, 3, '0')),
     nodes: [],
     process: 0, // 标记处理步骤
     res: []

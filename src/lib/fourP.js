@@ -1,8 +1,28 @@
-import {invert, difference} from 'lodash-es'
-import {compose, getTypeObj, emptyNums, strAdd, splitNum, getIndexs, logarithm, filterOdd, filterEven, filterBig, filterSmall} from '@/lib/utils.js'
+
+import {invert, difference, before} from 'lodash-es'
+import {compose, getTypeObj, emptyNums, strTwoComb, strAdd, splitNum, getIndexs, logarithm, filterOdd, filterEven, filterBig, filterSmall} from '@/lib/utils.js'
 import NodeNum from './nodeNum.js'
-
-
+// 转为nodeNum对象
+function midCreateNode(ctx, next) {
+  let { nums, template } = ctx
+  // 生成所有数
+  ctx.nodes = nums.map(num => new NodeNum(num, template))
+  ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getNums()] ,[])
+  return next()
+}
+// 定位置
+function midPosition(ctx, next) {
+  let { position, ge, shi, bai, qian } = ctx.formObj
+  if (position && position !== '0') {
+    ctx.process ++
+    if(position === '1') {
+      ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getPosiNums(qian, bai, shi, ge)],[])
+    } else {
+      ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getChuPosiNums(qian, bai, shi, ge)],[])
+    }
+  }
+  return next()
+}
 export const formP = {
   position: '1', // 定位置
   transform:  '0', // 配数全转
@@ -56,8 +76,8 @@ function midSort(ctx, next) {
 // 导出处理流程 二字定的处理流程
 export function toComposed(context) {
   const middlewares = [
-    // midCreateNode,
-    // midPosition,
+    midCreateNode,
+    midPosition,
     // midTransForm,
     // midPeishu,
     // midBudinghe,
