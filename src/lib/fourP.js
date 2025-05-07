@@ -14,11 +14,15 @@ export const formP = {
   pei2: '',
   pei3: '',
   pei4: '',
-  fenhe: '',
+  fenhe: '1',
   he1: '',
+  he1check: '',
   he2: '',
+  he2check: '',
   he3: '',
+  he3check: '',
   he4: '',
+  he4check: '',
   doubleGroup: '', // 双重
   doubleThreeGroup: '', // 三重
   doubleFourGroup: '', // 四重

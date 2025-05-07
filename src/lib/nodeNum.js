@@ -7,6 +7,9 @@ export default class NodeNum {
     this.template = template //  XX口口 |  X口口口  | 口口口口
     this.nums = this.getAllNums()
   }
+  getNums() {
+    return this.nums
+  }
   // 获取所有组合数字
   getAllNums() {
     // 通过template的到所有的组合
@@ -37,16 +40,18 @@ export default class NodeNum {
     return difference(nums, this.getPosiNums(qian, bai, shi, ge))
   }
   // 配数全转 取
-  getTransNums(pei1, pei2) {
-    this.nums.filter()
-    // let [num1, num2] = this.num.split('')
-    // if(pei1.includes(num1) && pei2.includes(num2)) {
-    //   return this.nums
-    // }
-    // return []
+  getTransNums(peiArr) {
+    if(peiArr.includes(this.num)) {
+      return this.nums
+    }
+    return []
   }
   // 配数全转 除
-  getChuTransNums(pei1, pei2) {
-    return difference(this.nums, this.getTransNums(pei1, pei2))
+  getChuTransNums(peiArr) {
+    let arr =  this.getTransNums(peiArr)
+    if(!arr.length) {
+      return this.nums
+    }
+    return []
   }
 }

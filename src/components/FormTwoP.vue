@@ -32,6 +32,13 @@ const duishu1 = ref()
 const duishu2 = ref()
 const duishu3 = ref()
 const arr = [duishu1,duishu2,duishu3]
+const duishuChangeHandle = (val) => {
+  if(val === '0') {
+    formObj.value.duishu1 = ''
+    formObj.value.duishu2 = ''
+    formObj.value.duishu3 = ''
+  }
+}
 const submitHandle = () => {
   // // $event.preventDefault()
   // let {qian,shi,bai,ge,pei1,pei2,position, transform} = formObj.value
@@ -135,41 +142,43 @@ defineExpose({
         </tr>
         <tr class="tc">
           <td class="remain-fixed-filter-item">
-            1. <CheckFourGroup></CheckFourGroup> <br />
+            1. <CheckFourGroup v-model="formObj.he1check"></CheckFourGroup> <br />
             <InputNum v-model="formObj.he1"  type="text" class="w90" name="he1" digits="true" maxlength="10" />
           </td>
           <td class="remain-fixed-filter-item">
-            2. <CheckFourGroup></CheckFourGroup> <br />
+            2. <CheckFourGroup v-model="formObj.he2check"></CheckFourGroup> <br />
             <InputNum v-model="formObj.he2"  type="text" class="w90" name="he2" digits="true" maxlength="10" />
           </td>
           <td class="remain-fixed-filter-item">
-            3. <CheckFourGroup></CheckFourGroup> <br />
+            3. <CheckFourGroup v-model="formObj.he3check"></CheckFourGroup> <br />
             <InputNum v-model="formObj.he3"  type="text" class="w90" name="he3" digits="true" maxlength="10" />
           </td>
           <td class="remain-fixed-filter-item">
-            4. <CheckFourGroup></CheckFourGroup> <br />
+            4. <CheckFourGroup v-model="formObj.he4check"></CheckFourGroup> <br />
             <InputNum v-model="formObj.he4"  type="text" class="w90" name="he4" digits="true" maxlength="10" />
           </td>
         </tr>
         <tr>
           <td colspan="4" class="remain-match-filter-item">
-            <strong class="red2">不定位合分</strong>
-            <label><InputNum type="checkbox" remainmatchfilter="2"  class="remain-match-filter checkbox" />两数合</label>&nbsp;&nbsp;&nbsp;&nbsp;
-            <InputNum type="text" class="w90" name="budinghe" digits="true" maxlength="10" />
+            <div class="flex-inline gap4">
+              <strong class="red2">不定位合分</strong>
+              <label><input v-model="formObj.budingheCheck" type="checkbox" class="remain-match-filter checkbox" remainmatchfilter="2"> 两数合</label>
+              <InputNum v-model="formObj.budinghe" type="text" class="w90" name="budinghe" digits="true" maxlength="10"></InputNum>
+            </div>
           </td>
         </tr>
         <tr>
           <td colspan="4">
             <div class="flex-inline gap2">
               <strong class="red2">全转</strong>
-              <InputNum type="text" class="transform-filter-item w50" name="quanzhuan" digits="true" maxlength="10" />
+              <input v-model="formObj.allRound" type="text" class="transform-filter-item w50" name="quanzhuan" digits="true" maxlength="10" />
               <strong class="red2">上奖</strong>
-              <InputNum type="text" class="upper-filter-item w50" name="shangjiang" digits="true" maxlength="10" />
+              <input v-model="formObj.upper" type="text" class="upper-filter-item w50" name="shangjiang" digits="true" maxlength="10" />
               <strong class="red2">排除</strong>
-              <InputNum type="text" class="except-filter-item w50" name="paichu" digits="true" maxlength="10" />
+              <input v-model="formObj.exclude" type="text" class="except-filter-item w50" name="paichu" digits="true" maxlength="10" />
               <strong class="red2">乘号位置</strong>
+              <CheckFourGroup v-model="formObj.timesWhere"></CheckFourGroup>
             </div>
-            <CheckFourGroup></CheckFourGroup>
           </td>
         </tr>
         <tr>

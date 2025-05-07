@@ -1,14 +1,22 @@
 
-import {invert, difference} from 'lodash-es'
-import {compose, getTypeObj, emptyNums, strAdd, splitNum, getIndexs, logarithm, filterOdd, filterEven, filterBig, filterSmall} from '@/lib/utils.js'
+import {invert, difference, before} from 'lodash-es'
+import {compose, getTypeObj, emptyNums, strTwoComb, strAdd, splitNum, getIndexs, logarithm, filterOdd, filterEven, filterBig, filterSmall} from '@/lib/utils.js'
 import NodeNum from './nodeNum.js'
 // 转为nodeNum对象
 function midCreateNode(ctx, next) {
   let { nums, template } = ctx
   // 生成所有数
   ctx.nodes = nums.map(num => new NodeNum(num, template))
+  ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getNums()] ,[])
   return next()
 }
+
+// function midCreateNode(ctx, next) {
+//   let {nums, template } = ctx
+//   replaceChars('12', 'XX口口')
+//   ctx.nodes = nums.map(item => )
+// }
+
 // 定位置
 function midPosition(ctx, next) {
   let { position, ge, shi, bai, qian } = ctx.formObj
@@ -22,19 +30,146 @@ function midPosition(ctx, next) {
   }
   return next()
 }
+// 配数获取所有组合
+function peiFn(pei1, pe12) {
+  let str1 = emptyNums(pei1)
+  let str2 = emptyNums(pe12)
+  const combinations = [];
+  for (let i = 0; i < str1.length; i++) {
+      for (let j = 0; j < str2.length; j++) {
+          combinations.push(str1[i] + str2[j]);
+      }
+  }
+  for (let i = 0; i < str2.length; i++) {
+      for (let j = 0; j < str1.length; j++) {
+          combinations.push(str2[i] + str1[j]);
+      }
+  }
+  return combinations;
+}
 // 配数全转
 function midTransForm(ctx, next) {
   let {transform, pei1, pei2} = ctx.formObj
   if (transform && transform !== '0') {
     ctx.process ++
+    let peiArr = peiFn(pei1, pei2)
     if (transform === '1') {
-      ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getTransNums(pei1,pei2)], [])
+      ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getTransNums(peiArr)], [])
     } else {
-      ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getChuTransNums(pei1,pei2)], [])
+      ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getChuTransNums(peiArr)], [])
     }
   }
   return next()
 }
+function computedHe(num, he, check) {
+  // 得到所有勾选位置的坐标
+  let posiArr = check.split('').reduce((before, item, index)=> {
+    if(item === 'T') {
+      before.push(index)
+    }
+    return before
+  } , [])
+  // 判断有一个不是数字就返回false
+  if(posiArr.some(item => !/\d/.test(item))) return false
+  // 坐标中的值相加
+  let newNum =  posiArr.reduce((before, item) => before + parseInt(num[item]), 0)
+  // 取个位数是否在he中
+  return he.includes(newNum % 10)
+}
+// 合 分
+function midHeFen(ctx, next) {
+  let {fenhe, he1, he1check, he2, he2check, he3, he3check, he4, he4check} = ctx.formObj
+  let hefenArr = [
+    { value: he1, check: he1check },
+    { value: he2, check: he2check },
+    { value: he3, check: he3check },
+    { value: he4, check: he4check },
+  ]
+  let quArr = hefenArr.reduce((before, item) => {
+    let {value, check} = item
+    if (value && /T/.test(check)) {
+      ctx.process ++
+      const regStr = check.replace(/T/g, '\\d').replace(/X/g, '[\\d|X]')
+      const reg = new RegExp('^' + regStr + '$')
+      // 得到满足规则条件的值
+      before = before.filter(num => reg.test(num) && computedHe(num, value, check))
+    }
+    return before
+  }, [...ctx.res])
+  if (fenhe === '1') { // 取
+    ctx.res = quArr
+  } else { // 除
+    ctx.res = difference(ctx.res, quArr)
+  }
+  return next()
+}
+
+function numTotal(num) {
+  return num.replace(/X/g, '').split('').reduce((b, n) => b + +n ,0)
+}
+// 不定位合分 两数合  将号码中数字部分相加 取个位等于 budinghe中的值为匹配
+function midBudinghe(ctx, next) {
+  let {budingheCheck, budinghe} = ctx.formObj
+  if (budingheCheck && budinghe) {
+    ctx.process ++
+    ctx.res = ctx.res.filter(item => {
+      return budinghe.includes((numTotal(item) % 10).toString())
+    })
+  }
+  return next()
+}
+// 全转 所有输入字符串产生的2字组合匹配
+function midNumInVal(ctx, next) {
+  let { allRound } = ctx.formObj
+  if(allRound) {
+    let arr = strTwoComb(allRound)
+    if(arr.length) {
+      ctx.process ++
+      ctx.res = ctx.res.filter(item => arr.includes(item.replace(/X/g, '')))
+    }
+  }
+  return next()
+}
+// 上奖 应该是所输出的值在号码中存在，存在一个即可
+function midUpper(ctx, next) {
+  let { upper } = ctx.formObj
+  if(upper) {
+    ctx.process ++
+    ctx.res = ctx.res.filter(item => {
+      let [num1, num2] = item.replace(/X/g, '').split('')
+      return upper.includes(num1) || upper.includes(num2)
+    })
+  }
+  return next()
+}
+// 排除 逻辑应该是所输入的值不能出现在号码中
+function midExclude(ctx, next) {
+  let {exclude} = ctx.formObj
+  if(exclude) {
+    let exArr = Array.from(new Set(exclude))
+    ctx.process ++
+    ctx.res = ctx.res.filter(item => !exArr.some(n => item.includes(n)))
+  }
+  return next()
+}
+
+// 乘号位置
+function midTimesWhere(ctx, next) {
+  let { timesWhere } = ctx.formObj
+  if (timesWhere.includes('T')) {
+    // 获取乘号位置的坐标
+    let posiArr = timesWhere.split('').reduce((before, item, index) => {
+      if(item === 'T') {
+        before.push(index)
+      }
+      return before
+    } , [])
+    ctx.process ++
+    ctx.res = ctx.res.filter(item => posiArr.every(index =>  item[index] === 'X'))
+  }
+  return next()
+}
+
 // 双重
 function doubleQuFn(arr) {
   return arr.filter(num => {
@@ -64,11 +199,19 @@ export const formP = {
   qian: '',
   pei1: '',
   pei2: '',
-  fenhe: '',
+  fenhe: '1',
   he1: '',
+  he1check: '',
   he2: '',
+  he2check: '',
   he3: '',
+  he3check: '',
   he4: '',
+  he4check: '',
+  allRound: '', // 全转
+  upper: '', // 上奖
+  exclude: '', // 排除
+  timesWhere: '', // 乘号位置
   doubleGroup: '', // 双重
   duishuGroup: '', // 对数
   duishu1: '',
@@ -87,9 +230,7 @@ export const formP = {
 // 最后排序
 function midSort(ctx, next) {
   let types = invert(getTypeObj())
-  console.log(types, '=====')
   ctx.res.sort((a,b) => {
-    console.log(a, b)
     return types[a.replace(/\d/g, '口')] - types[b.replace(/\d/g, '口')]
   })
   return next()
@@ -100,8 +241,12 @@ export function toComposed(context) {
     midCreateNode,
     midPosition,
     midTransForm,
-    // midPeishu,
-    // midBudinghe,
+    midHeFen,
+    midBudinghe,
+    midNumInVal, // 全转
+    midUpper,
+    midExclude,
+    midTimesWhere, // 乘号位置
     // midContain,
     // midMulti,
     midDouble,

@@ -31,6 +31,13 @@ const duishu1 = ref()
 const duishu2 = ref()
 const duishu3 = ref()
 const arr = [duishu1,duishu2,duishu3]
+const duishuChangeHandle = (val) => {
+  if(val === '0') {
+    formObj.value.duishu1 = ''
+    formObj.value.duishu2 = ''
+    formObj.value.duishu3 = ''
+  }
+}
 const submitHandle = () => {
   // // $event.preventDefault()
   // let {qian,shi,bai,ge,pei1,pei2,position, transform} = formObj.value
@@ -135,24 +142,20 @@ defineExpose({
         </tr>
         <tr class="tc">
           <td class="remain-fixed-filter-item">
-            1. <input type="checkbox" /> <input type="checkbox" /> <input type="checkbox" />
-            <input type="checkbox" /> <br />
-            <input type="text" class="w90" name="he1" digits="true" maxlength="10" />
+            1. <CheckFourGroup v-model="formObj.he1check"></CheckFourGroup> <br />
+            <InputNum v-model="formObj.he1"  type="text" class="w90" name="he1" digits="true" maxlength="10" />
           </td>
           <td class="remain-fixed-filter-item">
-            2. <input type="checkbox" /> <input type="checkbox" /> <input type="checkbox" />
-            <input type="checkbox" /> <br />
-            <input type="text" class="w90" name="he2" digits="true" maxlength="10" />
+            2. <CheckFourGroup v-model="formObj.he2check"></CheckFourGroup> <br />
+            <InputNum v-model="formObj.he2"  type="text" class="w90" name="he2" digits="true" maxlength="10" />
           </td>
           <td class="remain-fixed-filter-item">
-            3. <input type="checkbox" /> <input type="checkbox" /> <input type="checkbox" />
-            <input type="checkbox" /> <br />
-            <input type="text" class="w90" name="he3" digits="true" maxlength="10" />
+            3. <CheckFourGroup v-model="formObj.he3check"></CheckFourGroup> <br />
+            <InputNum v-model="formObj.he3"  type="text" class="w90" name="he3" digits="true" maxlength="10" />
           </td>
           <td class="remain-fixed-filter-item">
-            4. <input type="checkbox" /> <input type="checkbox" /> <input type="checkbox" />
-            <input type="checkbox" /> <br />
-            <input type="text" class="w90" name="he4" digits="true" maxlength="10" />
+            4. <CheckFourGroup v-model="formObj.he4check"></CheckFourGroup> <br />
+            <InputNum v-model="formObj.he4"  type="text" class="w90" name="he4" digits="true" maxlength="10" />
           </td>
         </tr>
         <tr>
@@ -183,7 +186,7 @@ defineExpose({
             <input type="text" class="except-filter-item w50" name="paichu" digits="true" maxlength="10" />
             <span class="gu-ding-wei-zhi hide">
               <strong class="red2">固定位置</strong>
-              <CheckFourGroup></CheckFourGroup>
+              <CheckFourGroup v-model="formObj.timesWhere"></CheckFourGroup>
             </span>
           </td>
         </tr>

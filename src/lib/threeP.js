@@ -13,11 +13,15 @@ export const formP = {
   pei1: '',
   pei2: '',
   pei3: '',
-  fenhe: '',
+  fenhe: '1',
   he1: '',
+  he1check: '',
   he2: '',
+  he2check: '',
   he3: '',
+  he3check: '',
   he4: '',
+  he4check: '',
   budingheCheck: false, // 不定位合分
   budinghe: '', // 不定位合分值
   budingheCheckThree: false, // 三合数

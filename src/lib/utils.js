@@ -213,6 +213,43 @@ export function replaceChars(str, template) {
     )
   );
 }
+// 生成一个字符串所有二字组合
+export function strTwoComb(str) {
+  const result = [];
+  const chars = str.split(''); // 将字符串拆分为字符数组
+  for (let i = 0; i < chars.length; i++) {
+      for (let j = 0; j < chars.length; j++) {
+          if (i !== j) { // 确保两个字符不相同
+              result.push(chars[i] + chars[j]);
+          }
+      }
+  }
+  return result;
+}
+
+export function getAllCombinations(str, combinationLength) {
+  const result = [];
+  const chars = str.split(''); // 将字符串拆分为字符数组
+
+  // 递归函数，用于生成组合
+  function generateCombinations(currentCombination, startIndex) {
+      if (currentCombination.length === combinationLength) {
+          result.push(currentCombination.join(''));
+          return;
+      }
+
+      for (let i = 0; i < chars.length; i++) {
+          if (currentCombination.indexOf(chars[i]) === -1) { // 确保字符不重复
+              currentCombination.push(chars[i]);
+              generateCombinations(currentCombination, i + 1);
+              currentCombination.pop(); // 回溯，移除最后一个字符
+          }
+      }
+  }
+
+  generateCombinations([], 0);
+  return result;
+}
 // 去掉号码中的X的到纯粹的数字
 export function delX(str) {
   return str.replace(/X/g, '')
