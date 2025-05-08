@@ -359,6 +359,9 @@ export function emptyNums(val) {
 }
 // 数字拆分返回数字
 export function splitNum(numstr) {
+  if (numstr.includes('X')) {
+    numstr = numstr.replace(/X/g, '')
+  }
   return numstr.split('').map(toNumber)
 }
 // 一个数字拆分后相加
@@ -414,9 +417,10 @@ export function getIndexs(str) {
 // 数组中指定位置取单
 export function filterOdd(arr, indexs) {
   return arr.filter((item) =>
-    item.split('').reduce((before, item, index) => {
+    item.split('').reduce((before, sub, index) => {
       if (indexs.includes(index)) {
-        return item % 2 === 1 && before
+        if (sub === 'X') return false
+        return sub % 2 === 1 && before
       }
       return before
     }, true),
@@ -425,9 +429,10 @@ export function filterOdd(arr, indexs) {
 // 数组中指定位置取双
 export function filterEven(arr, indexs) {
   return arr.filter((item) =>
-    item.split('').reduce((before, item, index) => {
+    item.split('').reduce((before, sub, index) => {
       if (indexs.includes(index)) {
-        return item % 2 === 0 && before
+        if(sub === 'X') return false
+        return sub % 2 === 0 && before
       }
       return before
     }, true),
@@ -436,9 +441,10 @@ export function filterEven(arr, indexs) {
 // 数组中指定位置取大
 export function filterBig(arr, indexs) {
   return arr.filter((item) =>
-    item.split('').reduce((before, item, index) => {
+    item.split('').reduce((before, sub, index) => {
       if (indexs.includes(index)) {
-        return +item >= 5 && before
+        if(sub === 'X') return false
+        return +sub >= 5 && before
       }
       return before
     }, true),
@@ -447,9 +453,10 @@ export function filterBig(arr, indexs) {
 // 数组中指定位置取小
 export function filterSmall(arr, indexs) {
   return arr.filter((item) =>
-    item.split('').reduce((before, item, index) => {
+    item.split('').reduce((before, sub, index) => {
       if (indexs.includes(index)) {
-        return +item < 5 && before
+        if(sub === 'X') return false
+        return +sub < 5 && before
       }
       return before
     }, true),

@@ -183,11 +183,11 @@ defineExpose({
         </tr>
         <tr>
           <td colspan="4">
-            <SwitchGroup></SwitchGroup>
+            <SwitchGroup v-model="formObj.containGroup" value="1"></SwitchGroup>
             二字定含
-            <InputNum type="text" class="contain-filter-item w80" name="han" digits="true" maxlength="10" />
+            <InputNum v-model="formObj.containVal" type="text" class="contain-filter-item w80" name="han" digits="true" maxlength="10" />
             二字定复式
-            <InputNum type="text" class="multiple-filter-item" name="fushi" digits="true" maxlength="10" />
+            <InputNum v-model="formObj.multiVal" type="text" class="multiple-filter-item" name="fushi" digits="true" maxlength="10" />
           </td>
         </tr>
         <tr>
@@ -198,7 +198,7 @@ defineExpose({
         </tr>
         <tr>
           <td colspan="4">
-            <SwitchGroup></SwitchGroup>
+            <SwitchGroup v-model="formObj.brotherGroup"></SwitchGroup>
             (<strong class="red2">二兄弟</strong>)
           </td>
         </tr>

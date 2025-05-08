@@ -16,7 +16,12 @@ function midCreateNode(ctx, next) {
 //   replaceChars('12', 'XX口口')
 //   ctx.nodes = nums.map(item => )
 // }
-
+function onlyNum(num) {
+  return num.replace(/X/g, '')
+}
+function onlyNumArr(num) {
+  return onlyNum(num).split('')
+}
 // 定位置
 function midPosition(ctx, next) {
   let { position, ge, shi, bai, qian } = ctx.formObj
@@ -169,7 +174,35 @@ function midTimesWhere(ctx, next) {
   }
   return next()
 }
-
+// 二字现  含｜复式
+function midContain(ctx, next) {
+  let {containVal, containGroup} = ctx.formObj
+  if (containVal) {
+    ctx.process ++
+    let tmpArr = ctx.res.filter(item => splitNum(containVal).some(sub => item.includes(sub)))
+    if (containGroup === '1') {
+      ctx.res = tmpArr
+    } else {
+      ctx.res = difference(ctx.res, tmpArr)
+    }
+  }
+  return next()
+}
+// 复式
+function midMulti(ctx, next) {
+  let { multiVal, containGroup } = ctx.formObj
+  if (multiVal) {
+    ctx.process ++
+    let tmpArr = ctx.res.filter(item => onlyNumArr(item).every(sub => multiVal.includes(sub + '')))
+    if (containGroup === '1') { //  取
+      // 组成的数字的每个数都要在multival中存在
+      ctx.res = tmpArr
+    } else { // 除
+      ctx.res = difference(ctx.res, tmpArr)
+    }
+  }
+  return next()
+}
 // 双重
 function doubleQuFn(arr) {
   return arr.filter(num => {
@@ -190,6 +223,102 @@ function midDouble(ctx, next) {
   }
   return next()
 }
+// 二兄弟
+const brotherQuFn = (arr) => {
+  return arr.filter(num => {
+    let [tmp1,tmp2] = onlyNumArr(num)
+    return Math.abs(tmp1 - tmp2) === 1 || Math.abs(tmp1 - tmp2) === 9
+  })
+}
+function midBrother(ctx, next) {
+  let {brotherGroup} = ctx.formObj
+  if(brotherGroup && brotherGroup !== '0') {
+    ctx.process ++
+    if (brotherGroup === '1') {
+      ctx.res = brotherQuFn(ctx.res)
+    } else {
+      ctx.res = difference(ctx.res, brotherQuFn(ctx.res))
+    }
+  }
+  return next()
+}
+// 对数
+function midDuishu(ctx, next) {
+  let {duishuGroup, duishu1, duishu2, duishu3} = ctx.formObj
+  if(duishuGroup && duishuGroup !== '0') {
+    ctx.process ++
+    if(duishuGroup === '1') {
+      ctx.res = logarithm(ctx.res, duishu1, duishu2, duishu3)
+    } else {
+      ctx.res = difference(ctx.res, logarithm(ctx.res, duishu1, duishu2, duishu3))
+    }
+  }
+  return next()
+}
+
+// 单
+function midOdd(ctx, next) {
+  let {oddGroup, oddCheckStr} = ctx.formObj
+  if(oddGroup && oddGroup !== '0' && oddCheckStr.includes('T')) {
+    ctx.process ++
+    // 得到索引
+    let indexs = getIndexs(oddCheckStr)
+    if (oddGroup === '1') { // 取
+      ctx.res = filterOdd(ctx.res, indexs)
+    } else { // 除
+      ctx.res = difference(ctx.res, filterOdd(ctx.res, indexs))
+    }
+  }
+  return next()
+}
+// 双
+function midEven(ctx, next) {
+  let { evenGroup, evenCheckStr} = ctx.formObj
+  // 存在T才处理
+  if(evenGroup && evenGroup !== '0' && evenCheckStr.includes('T')) {
+    ctx.process ++
+    // 得到索引
+    let indexs = getIndexs(evenCheckStr)
+    if (evenGroup === '1') { // 取
+      ctx.res = filterEven(ctx.res, indexs)
+    } else { // 除
+      ctx.res = difference(ctx.res, filterEven(ctx.res, indexs))
+    }
+  }
+  return next()
+}
+// 大
+function midBig(ctx, next) {
+  let { bigGroup, bigCheckStr } = ctx.formObj
+  // 存在T才处理
+  if (bigGroup && bigGroup !== '0' && bigCheckStr.includes('T')) {
+    console.log(bigGroup)
+    ctx.process ++
+    let indexs = getIndexs(bigCheckStr)
+    if(bigGroup === '1') { // 取
+      ctx.res = filterBig(ctx.res, indexs)
+    } else { // 除
+      ctx.res = difference(ctx.res, filterBig(ctx.res, indexs))
+    }
+  }
+  return next()
+}
+// 小
+function midSmall(ctx, next) {
+  let {smallGroup, smallCheckStr} = ctx.formObj
+  // 存在T才处理
+  if (smallGroup && smallGroup !== '0' && smallCheckStr.includes('T')) {
+    let indexs = getIndexs(smallCheckStr)
+    ctx.process ++
+    if(smallGroup === '1') { // 取
+      ctx.res = filterSmall(ctx.res, indexs)
+    } else { // 除
+      ctx.res = difference(ctx.res, filterSmall(ctx.res, indexs))
+    }
+  }
+  return next()
+}
+
 export const formP = {
   position: '1', // 定位置
   transform:  '0', // 配数全转
@@ -212,6 +341,9 @@ export const formP = {
   upper: '', // 上奖
   exclude: '', // 排除
   timesWhere: '', // 乘号位置
+  containGroup: '1', // 包含
+  containVal: '', // 包含值
+  multiVal:'', // 复式
   doubleGroup: '', // 双重
   duishuGroup: '', // 对数
   duishu1: '',
@@ -247,15 +379,15 @@ export function toComposed(context) {
     midUpper,
     midExclude,
     midTimesWhere, // 乘号位置
-    // midContain,
-    // midMulti,
+    midContain,
+    midMulti,
     midDouble,
-    // midBrother,
-    // midDuishu,
-    // midOdd,
-    // midEven,
-    // midBig,
-    // midSmall,
+    midBrother,
+    midDuishu,
+    midOdd,
+    midEven,
+    midBig,
+    midSmall,
     midSort
   ]
   return compose(middlewares)(context)

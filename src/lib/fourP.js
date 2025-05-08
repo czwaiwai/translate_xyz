@@ -23,6 +23,84 @@ function midPosition(ctx, next) {
   }
   return next()
 }
+
+
+// 对数
+function midDuishu(ctx, next) {
+  let {duishuGroup, duishu1, duishu2, duishu3} = ctx.formObj
+  if(duishuGroup && duishuGroup !== '0') {
+    ctx.process ++
+    if(duishuGroup === '1') {
+      ctx.res = logarithm(ctx.res, duishu1, duishu2, duishu3)
+    } else {
+      ctx.res = difference(ctx.res, logarithm(ctx.res, duishu1, duishu2, duishu3))
+    }
+  }
+  return next()
+}
+
+// 单
+function midOdd(ctx, next) {
+  let {oddGroup, oddCheckStr} = ctx.formObj
+  if(oddGroup && oddGroup !== '0' && oddCheckStr.includes('T')) {
+    ctx.process ++
+    // 得到索引
+    let indexs = getIndexs(oddCheckStr)
+    if (oddGroup === '1') { // 取
+      ctx.res = filterOdd(ctx.res, indexs)
+    } else { // 除
+      ctx.res = difference(ctx.res, filterOdd(ctx.res, indexs))
+    }
+  }
+  return next()
+}
+// 双
+function midEven(ctx, next) {
+  let { evenGroup, evenCheckStr} = ctx.formObj
+  // 存在T才处理
+  if(evenGroup && evenGroup !== '0' && evenCheckStr.includes('T')) {
+    ctx.process ++
+    // 得到索引
+    let indexs = getIndexs(evenCheckStr)
+    if (evenGroup === '1') { // 取
+      ctx.res = filterEven(ctx.res, indexs)
+    } else { // 除
+      ctx.res = difference(ctx.res, filterEven(ctx.res, indexs))
+    }
+  }
+  return next()
+}
+// 大
+function midBig(ctx, next) {
+  let { bigGroup, bigCheckStr } = ctx.formObj
+  // 存在T才处理
+  if (bigGroup && bigGroup !== '0' && bigCheckStr.includes('T')) {
+    console.log(bigGroup)
+    ctx.process ++
+    let indexs = getIndexs(bigCheckStr)
+    if(bigGroup === '1') { // 取
+      ctx.res = filterBig(ctx.res, indexs)
+    } else { // 除
+      ctx.res = difference(ctx.res, filterBig(ctx.res, indexs))
+    }
+  }
+  return next()
+}
+// 小
+function midSmall(ctx, next) {
+  let {smallGroup, smallCheckStr} = ctx.formObj
+  // 存在T才处理
+  if (smallGroup && smallGroup !== '0' && smallCheckStr.includes('T')) {
+    let indexs = getIndexs(smallCheckStr)
+    ctx.process ++
+    if(smallGroup === '1') { // 取
+      ctx.res = filterSmall(ctx.res, indexs)
+    } else { // 除
+      ctx.res = difference(ctx.res, filterSmall(ctx.res, indexs))
+    }
+  }
+  return next()
+}
 export const formP = {
   position: '1', // 定位置
   transform:  '0', // 配数全转
@@ -85,11 +163,11 @@ export function toComposed(context) {
     // midMulti,
     // midDouble,
     // midBrother,
-    // midDuishu,
-    // midOdd,
-    // midEven,
-    // midBig,
-    // midSmall,
+    midDuishu,
+    midOdd,
+    midEven,
+    midBig,
+    midSmall,
     midSort
   ]
   return compose(middlewares)(context)
