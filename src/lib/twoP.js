@@ -1,6 +1,6 @@
 
-import {invert, difference, before} from 'lodash-es'
-import {compose, getTypeObj, emptyNums, strTwoComb, strAdd, splitNum, getIndexs, logarithm, filterOdd, filterEven, filterBig, filterSmall} from '@/lib/utils.js'
+import {invert, difference} from 'lodash-es'
+import {compose, getTypeObj, emptyNums, strTwoComb, splitNum, getIndexs, logarithm, filterOdd, filterEven, filterBig, filterSmall} from '@/lib/utils.js'
 import NodeNum from './nodeNum.js'
 // 转为nodeNum对象
 function midCreateNode(ctx, next) {
@@ -58,6 +58,7 @@ function midTransForm(ctx, next) {
   if (transform && transform !== '0') {
     ctx.process ++
     let peiArr = peiFn(pei1, pei2)
+    console.log('peiArr', peiArr)
     if (transform === '1') {
       ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getTransNums(peiArr)], [])
     } else {

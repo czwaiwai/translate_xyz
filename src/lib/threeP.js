@@ -1,5 +1,5 @@
 
-import {invert, difference, before} from 'lodash-es'
+import {invert, difference} from 'lodash-es'
 import {compose, getTypeObj, emptyNums, strTwoComb, strAdd, splitNum, getIndexs, logarithm, filterOdd, filterEven, filterBig, filterSmall} from '@/lib/utils.js'
 import NodeNum from './nodeNum.js'
 // 转为nodeNum对象
@@ -19,6 +19,38 @@ function midPosition(ctx, next) {
       ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getPosiNums(qian, bai, shi, ge)],[])
     } else {
       ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getChuPosiNums(qian, bai, shi, ge)],[])
+    }
+  }
+  return next()
+}
+// 配数获取所有组合
+function peiFn(pei1, pe12, pei3) {
+  let str1 = emptyNums(pei1)
+  let str2 = emptyNums(pe12)
+
+  const combinations = [];
+  for (let i = 0; i < str1.length; i++) {
+      for (let j = 0; j < str2.length; j++) {
+          combinations.push(str1[i] + str2[j]);
+      }
+  }
+  for (let i = 0; i < str2.length; i++) {
+      for (let j = 0; j < str1.length; j++) {
+          combinations.push(str2[i] + str1[j]);
+      }
+  }
+  return combinations;
+}
+// 配数全转
+function midTransForm(ctx, next) {
+  let {transform, pei1, pei2, pei3} = ctx.formObj
+  if (transform && transform !== '0') {
+    ctx.process ++
+    let peiArr = peiFn(pei1, pei2, pei3)
+    if (transform === '1') {
+      ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getTransNums(peiArr)], [])
+    } else {
+      ctx.res = ctx.nodes.reduce((before, node) => [...before, ...node.getChuTransNums(peiArr)], [])
     }
   }
   return next()

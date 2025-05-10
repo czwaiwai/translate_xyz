@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // import HomeView from '../views/HomeView.vue'
 import { useUserStore } from '@/stores'
 import IndexLay from '../views/IndexLay.vue'
+import RouteNext from '@/components/RouteNext.vue'
 const router = createRouter({
   linkActiveClass: 'link-active',
   linkExactActiveClass: 'link-active-sub',
@@ -16,7 +17,29 @@ const router = createRouter({
         {
           path: 'home',
           name: 'HomeView',
+          meta: { title: '' },
           component: () => import('../views/HomeView.vue'),
+          redirect: '/home/sub-quick-bet',
+          children: [
+            {
+              path: 'sub-two-set',
+              meta: { title: '二字定' },
+              name: 'SubTwoSet',
+              component: () => import('../views/TwoSetView.vue'),
+            },
+            {
+              path: 'sub-quick-bet',
+              meta: { title: '快打' },
+              name: 'SubQuickBet',
+              component: () => import('../views/QuickBetView.vue'),
+            },
+            {
+              path: 'sub-quick-choose',
+              meta: { title: '快选' },
+              name: 'subQuickChoose',
+              component: () => import('../views/QuickChooseView.vue'),
+            },
+          ]
         },
         {
           path: 'bet-list',

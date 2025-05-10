@@ -35,7 +35,22 @@ const userStore = useUserStore()
         </tbody>
       </table>
     </CardBox>
-    <PrintTable></PrintTable>
+    <CardBox title="最近成交" padding="0" minHeight="200px">
+      <div class="flex-box ">
+        <div class="flex-item flex-box flex-flow tc ">
+          <div class="bb">已成交</div>
+          <div class="flex-item"></div>
+        </div>
+        <div class="flex-item bl tc">
+          <div class="bb">挂牌</div>
+          <div class="flex-item "></div>
+        </div>
+      </div>
+    </CardBox>
+    <CardBox title="总资产" minHeight="200px">
+
+    </CardBox>
+    <!-- <PrintTable></PrintTable> -->
   </div>
 </template>
 
