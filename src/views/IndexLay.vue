@@ -13,7 +13,7 @@ console.log(feature)
       <MemHeader />
     </a-layout-header>
     <a-layout>
-      <a-layout-sider>
+      <a-layout-sider width="250">
         <SiderLeft></SiderLeft>
       </a-layout-sider>
       <a-layout-content class="layout_content">

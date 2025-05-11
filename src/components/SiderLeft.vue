@@ -35,20 +35,43 @@ const userStore = useUserStore()
         </tbody>
       </table>
     </CardBox>
-    <CardBox title="最近成交" padding="0" minHeight="200px">
-      <div class="flex-box ">
-        <div class="flex-item flex-box flex-flow tc ">
-          <div class="bb">已成交</div>
-          <div class="flex-item"></div>
-        </div>
-        <div class="flex-item bl tc">
-          <div class="bb">挂牌</div>
-          <div class="flex-item "></div>
-        </div>
-      </div>
+    <CardBox title="已成交" padding="0" minHeight="200px">
+      <table class="mem-table">
+        <thead>
+          <tr>
+            <th>号码</th>
+            <th>赔率</th>
+            <th>金额</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in 5" :key="index">
+            <td>XX0{{ item }}</td>
+            <td>1000</td>
+            <td>980</td>
+          </tr>
+        </tbody>
+      </table>
     </CardBox>
-    <CardBox title="总资产" minHeight="200px">
-
+    <CardBox title="挂牌" minHeight="200px">
+      <table class="mem-table">
+        <thead>
+          <tr>
+            <th>号码</th>
+            <th>赔率</th>
+            <th>金额</th>
+            <th>结果</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in 5" :key="index">
+            <td>XX0{{ item }}</td>
+            <td>1000</td>
+            <td>980</td>
+            <td><button class="pri-btn">删</button></td>
+          </tr>
+        </tbody>
+      </table>
     </CardBox>
     <!-- <PrintTable></PrintTable> -->
   </div>

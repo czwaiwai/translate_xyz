@@ -19,25 +19,59 @@ const router = createRouter({
           name: 'HomeView',
           meta: { title: '' },
           component: () => import('../views/HomeView.vue'),
-          redirect: '/home/sub-quick-bet',
+          redirect: '/home/bet/bet-quick-bet',
           children: [
             {
-              path: 'sub-two-set',
-              meta: { title: '二字定' },
-              name: 'SubTwoSet',
-              component: () => import('../views/TwoSetView.vue'),
+              path: 'bet',
+              meta: { title: '赌' },
+              name: 'Bet',
+              component: () => import('../views/BetView.vue'),
+              children: [
+                {
+                  path: 'bet-two-set',
+                  meta: { title: '二字定' },
+                  name: 'BetTwoSet',
+                  component: () => import('../views/TwoSetView.vue'),
+                },
+                {
+                  path: 'bet-quick-bet',
+                  meta: { title: '快打' },
+                  name: 'BetQuickBet',
+                  component: () => import('../views/QuickBetView.vue'),
+                },
+                {
+                  path: 'bet-quick-choose',
+                  meta: { title: '快选' },
+                  name: 'BetQuickChoose',
+                  component: () => import('../views/QuickChooseView.vue'),
+                },
+              ]
             },
             {
-              path: 'sub-quick-bet',
-              meta: { title: '快打' },
-              name: 'SubQuickBet',
-              component: () => import('../views/QuickBetView.vue'),
-            },
-            {
-              path: 'sub-quick-choose',
-              meta: { title: '快选' },
-              name: 'subQuickChoose',
-              component: () => import('../views/QuickChooseView.vue'),
+              path: 'eat',
+              meta: { title: '吃' },
+              name: 'Eat',
+              component: () => import('../views/EatView.vue'),
+              children: [
+                {
+                  path: 'eat-two-set',
+                  meta: { title: '二字定' },
+                  name: 'EatTwoSet',
+                  component: () => import('../views/TwoSetView.vue'),
+                },
+                {
+                  path: 'eat-quick-bet',
+                  meta: { title: '快打' },
+                  name: 'EatQuickBet',
+                  component: () => import('../views/QuickBetView.vue'),
+                },
+                {
+                  path: 'eat-quick-choose',
+                  meta: { title: '快选' },
+                  name: 'EatQuickChoose',
+                  component: () => import('../views/QuickChooseView.vue'),
+                },
+              ]
             },
           ]
         },

@@ -1,28 +1,36 @@
 <script setup>
+defineOptions({
+  name: "EatView"
+});
 </script>
 
 <template>
-  <div class="route-page">
-    <div class="flex-box">
-      <div class="flex-item">
-        <RouterLink to="/home/bet/bet-two-set">
-          <div class="mai_btn mai_btn_bet">赌</div>
-        </RouterLink>
-      </div>
-      <div class="flex-item">
+  <div class="route-next">
+    <div class="big_link">
+      <a-space size="mini">
         <RouterLink to="/home/eat/eat-two-set">
-          <div class="mai_btn mai_btn_eat">吃</div>
+          <a-button>二字定</a-button>
         </RouterLink>
-      </div>
+        <RouterLink to="/home/eat/eat-quick-bet">
+          <a-button  >快打</a-button>
+        </RouterLink>
+        <RouterLink to="/home/eat/eat-quick-choose">
+          <a-button >快选</a-button>
+        </RouterLink>
+      </a-space>
     </div>
     <RouterView />
+    <div class="flex-box gap4">
+      <div class="flex-item">
+        <CardBox title="推荐一" minHeight="400px"></CardBox>
+      </div>
+    </div>
   </div>
 
 </template>
 <style lang="less" scoped>
 .route-page {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   :deep(.page-lay) {
@@ -34,27 +42,10 @@
   line-height:40px;
   text-align: center;
   font-size: 20px;
-  border:1px solid #ccc;
-  color:#333;
-  background: #ccc;
+  border:1px solid red;
   margin: 4px;
   cursor: pointer;
 }
-.link-active {
-  .mai_btn_bet {
-    color:#FFF;
-    text-decoration: none;
-    border: 1px solid #5f8dce;
-    background-image: linear-gradient(180deg, #9bd2ff, #386bb6);
-  }
-  .mai_btn_eat {
-    color:#FFF;
-    text-decoration: none;
-    border: 1px solid #ff5a4e;
-    background-image: linear-gradient(0deg, #ff5549, #ff9992);
-  }
-}
-
 
 .big_link {
   margin-bottom:4px;
