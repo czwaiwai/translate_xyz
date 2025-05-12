@@ -1,16 +1,32 @@
 <script setup>
+import { ref, watch, provide } from 'vue';
+import { useRoute } from 'vue-router';
+defineOptions({
+  name: "HomeView"
+});
+const route = useRoute();
+const betType = ref('bet');
+watch(route, (to) => {
+  if (to.path.includes('/home/bet')) {
+    betType.value = 'bet';
+  }
+  if (to.path.includes('/home/eat')) {
+    betType.value = 'eat';
+  }
+});
+provide('betType', betType);
 </script>
 
 <template>
   <div class="route-page">
     <div class="flex-box">
       <div class="flex-item">
-        <RouterLink to="/home/bet/bet-two-set">
+        <RouterLink to="/home/bet">
           <div class="mai_btn mai_btn_bet">赌</div>
         </RouterLink>
       </div>
       <div class="flex-item">
-        <RouterLink to="/home/eat/eat-two-set">
+        <RouterLink to="/home/eat">
           <div class="mai_btn mai_btn_eat">吃</div>
         </RouterLink>
       </div>

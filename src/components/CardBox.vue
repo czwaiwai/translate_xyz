@@ -105,7 +105,8 @@ defineExpose({toggleCont})
     text-align: center;
   }
   &-hd {
-    background: #52b731;
+    // background: #52b731;
+    background-image: linear-gradient(180deg, #3494e3, #283785);
     height: 28px;
     padding: 0 4px;
     color: #FFF;

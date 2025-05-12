@@ -120,14 +120,14 @@ const clickHandle = () => {}
           <!-- <div class="flex-box "> -->
             <div class="sub-form tc p4">
               <button class="pri-btn">下注</button>
-              <button class="pri-btn ml10">包牌</button>
+              <!-- <button class="pri-btn ml10">包牌</button> -->
             </div>
           <!-- </div> -->
         </td>
       </tr>
       <tr>
         <td class="tr" colspan="10">
-          <ul class="odds_ul">
+          <!-- <ul class="odds_ul">
             <li >包牌金额：</li>
             <li>20组: <span class="red">98.2</span></li>
             <li>25组: <span class="red">98.2</span></li>
@@ -138,7 +138,7 @@ const clickHandle = () => {}
             <li>60组: <span class="red">98.2</span></li>
             <li>70组: <span class="red">98.2</span></li>
             <li>80组: <span class="red">98.2</span></li>
-          </ul>
+          </ul> -->
         </td>
       </tr>
     </tfoot>

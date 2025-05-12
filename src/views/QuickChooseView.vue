@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, shallowRef } from 'vue';
+import { ref, computed, shallowRef, inject } from 'vue';
 import { emnum } from '@/lib/api';
 import {chunk} from 'lodash-es'
 import FormTwoP from '@/components/FormTwoP.vue';
@@ -45,6 +45,16 @@ const listFormat = computed(() => {
 const showByX = computed(() => {
   return ['21', '31', '41'].includes(gameType.value)
 })
+const betType = inject('betType', '')
+const betBtnText = computed(() => {
+  if(betType.value === 'bet') {
+    return '赌票'
+  }
+  if(betType.value === 'eat') {
+    return '吃票'
+  }
+  return '确认下注'
+})
 </script>
 
 <template>
@@ -62,10 +72,11 @@ const showByX = computed(() => {
         </CardBox>
         <CardBox class="flex-item" title="发送框" flexBox padding="0">
           <form class="flex-item flex-inline ptb6 plr4 flex-cv gap10">
+            <label class="fs22 flex-inline flex-cv ">赔率 <input class="mlr4 w60 input-h36"></label>
             <label class="fs22 flex-inline flex-cv ">金额 <input class="mlr4 w60 input-h36"></label>
-            <button class="pri-btn-h36 ">下注</button>
+            <button class="pri-btn-h36 ">{{ betBtnText }}</button>
             <template v-if="!showByX">
-              <button class="pri-btn-h36 ">包牌</button>
+              <!-- <button class="pri-btn-h36 ">包牌</button> -->
               <button class="pri-btn-h36 ">录入汇总表</button>
             </template>
 

@@ -25,6 +25,7 @@ const router = createRouter({
               path: 'bet',
               meta: { title: '赌' },
               name: 'Bet',
+              redirect: '/home/bet/bet-quick-bet',
               component: () => import('../views/BetView.vue'),
               children: [
                 {
@@ -51,6 +52,7 @@ const router = createRouter({
               path: 'eat',
               meta: { title: '吃' },
               name: 'Eat',
+              redirect: '/home/eat/eat-quick-bet',
               component: () => import('../views/EatView.vue'),
               children: [
                 {

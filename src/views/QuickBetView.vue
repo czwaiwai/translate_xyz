@@ -1,5 +1,5 @@
 <script setup>
-import { ref, h } from 'vue';
+import { ref, h, inject, computed } from 'vue';
 import {dialog} from '@/lib/dialog.js'
 import SmallQuickBox from '@/components/SmallQuickBox.vue'
 // QuickBetView is 快打
@@ -129,6 +129,16 @@ const quickHandle = () => {
     footer: false,
   })
 }
+const betType = inject('betType', '')
+const betBtnText = computed(() => {
+  if(betType.value === 'bet') {
+    return '赌票'
+  }
+  if(betType.value === 'eat') {
+    return '吃票'
+  }
+  return '确认下注'
+})
 const submitHandle = () => {
 
 }
@@ -151,10 +161,12 @@ const submitHandle = () => {
           <label class="ml10">全转 <input type="checkbox" /></label>
         </template>
         <form @submit.prevent="submitHandle" class="flex-inline">
+          <label class="ml10 fs22" >赔率 <input name="betNo" type="text" class="w60 input-h36" /></label>
           <label class="ml10 fs22" >号码 <input name="betNo" type="text" class="w60 input-h36" /></label>
           <label class="ml10 fs22">金额 <input name="money" type="text" class="w60 input-h36" /></label>
-          <button type="submit" class="ml20 pri-btn-h36">确认下注</button>
-          <button type="button" @click="quickHandle" class="ml10 pri-btn-h36">极速快打</button>
+          <button type="submit" class="ml20 pri-btn-h36">{{ betBtnText }}</button>
+          <button type="button" @click="quickHandle" class="ml10">取消</button>
+          <!-- <button type="button" @click="quickHandle" class="ml10 pri-btn-h36">极速快打</button> -->
         </form>
       </CardBox>
     </div>

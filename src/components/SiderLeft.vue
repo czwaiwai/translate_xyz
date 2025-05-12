@@ -47,7 +47,7 @@ const userStore = useUserStore()
         <tbody>
           <tr v-for="(item, index) in 5" :key="index">
             <td>XX0{{ item }}</td>
-            <td>1000</td>
+            <td>99.9</td>
             <td>980</td>
           </tr>
         </tbody>
@@ -66,7 +66,7 @@ const userStore = useUserStore()
         <tbody>
           <tr v-for="(item, index) in 5" :key="index">
             <td>XX0{{ item }}</td>
-            <td>1000</td>
+            <td>98.9</td>
             <td>980</td>
             <td><button class="pri-btn">删</button></td>
           </tr>

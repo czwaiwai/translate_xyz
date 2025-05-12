@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide, computed } from 'vue';
+import { ref, provide, computed, inject } from 'vue';
 import { range, padStart, chunk} from 'lodash-es';
 // 二字定模式2
 defineOptions({
@@ -76,6 +76,16 @@ const cancelHandle = () => {
 const submitHandle = () => {
   console.log('提交所选')
 }
+const betType = inject('betType', '')
+const betBtnText = computed(() => {
+  if(betType.value === 'bet') {
+    return '赌票'
+  }
+  if(betType.value === 'eat') {
+    return '吃票'
+  }
+  return '确认下注'
+})
 defineExpose({getActives, restActive})
 </script>
 <template>
@@ -176,9 +186,10 @@ defineExpose({getActives, restActive})
             </div>
             <div class="sub-form flex-box flex-cv flex-ch">
               <form @submit.prevent="submitHandle" class="flex-inline gap4" >
+                <label class="fs22">赔率 <input class="w60 input-h36"></label>
                 <label class="fs22">金额： <input class="w60 input-h36"></label>
-                <button type="submit" class="pri-btn-h36">下注</button>
-                <button type="button" class="pri-btn-h36">包牌</button>
+                <button type="submit" class="pri-btn-h36">{{ betBtnText }}</button>
+                <!-- <button type="button" class="pri-btn-h36">包牌</button> -->
                 <button type="button" @click="cancelHandle" class="pri-btn-h36">取消</button>
               </form>
             </div>
@@ -187,7 +198,7 @@ defineExpose({getActives, restActive})
       </tr>
       <tr>
         <td class="tr" colspan="11">
-          <ul class="odds_ul">
+          <!-- <ul class="odds_ul">
             <li >包牌赔率：</li>
             <li>20组: <span class="red">98.2</span></li>
             <li>25组: <span class="red">98.2</span></li>
@@ -198,7 +209,7 @@ defineExpose({getActives, restActive})
             <li>60组: <span class="red">98.2</span></li>
             <li>70组: <span class="red">98.2</span></li>
             <li>80组: <span class="red">98.2</span></li>
-          </ul>
+          </ul> -->
         </td>
       </tr>
     </tfoot>
@@ -258,7 +269,7 @@ defineExpose({getActives, restActive})
     }
   }
   .sub-form {
-    width: 300px;
+    width: 350px;
   }
 }
 </style>

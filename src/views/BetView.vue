@@ -1,11 +1,25 @@
 <script setup>
+import { ref, computed } from 'vue';
+import { times, random, padStart, chunk} from 'lodash-es';
 defineOptions({
   name: "BetView"
 });
+const list = ref(times(100, () => random(0, 10000)))
+console.log(list.value)
+const listFormat = computed(() => {
+  return chunk(list.value.map((item, index) => {
+
+    return {
+      num: padStart(item, 4, '0'),
+      odds: random(80, 100),
+      index: index
+    }
+  }), 10)
+})
 </script>
 
 <template>
-  <div class="route-next">
+  <div class="route-next bet-view">
     <div class="big_link">
       <a-space size="mini">
         <RouterLink to="/home/bet/bet-two-set">
@@ -20,39 +34,85 @@ defineOptions({
       </a-space>
     </div>
     <RouterView />
-    <div class="flex-box gap4">
+    <div class="flex-box mt4 gap4">
       <div class="flex-item">
-        <CardBox title="推荐一" minHeight="400px">
-          <table class="table_num">
-          <thead>
-            <tr>
-              <th width="10%">号码</th>
-              <th width="10%">赔率</th>
-              <th width="10%">号码</th>
-              <th width="10%">赔率</th>
-              <th width="10%">号码</th>
-              <th width="10%">赔率</th>
-              <th width="10%">号码</th>
-              <th width="10%">赔率</th>
-              <th width="10%">号码</th>
-              <th width="10%">赔率</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in 10" :key="item">
-              <td>46XX</td>
-              <td>99.2</td>
-              <td>42XX</td>
-              <td>99.2</td>
-              <td>46XX</td>
-              <td>99.2</td>
-              <td>42XX</td>
-              <td>99.2</td>
-              <td>42XX</td>
-              <td>99.2</td>
-            </tr>
-          </tbody>
-        </table>
+        <CardBox title="赌彩池推荐" minHeight="400px">
+          <table class="hot-table" >
+            <thead>
+              <tr class="title_wrap">
+                <th class="title">
+                  <div class="flex-box title_box">
+                    <div class="flex-item">号码</div>
+                    <div class="flex-item red">赔率</div>
+                  </div>
+                </th>
+                <th class="title">
+                  <div class="flex-box title_box">
+                    <div class="flex-item">号码</div>
+                    <div class="flex-item red">赔率</div>
+                  </div>
+                </th>
+                <th class="title">
+                  <div class="flex-box title_box">
+                    <div class="flex-item">号码</div>
+                    <div class="flex-item red">赔率</div>
+                  </div>
+                </th>
+                <th class="title">
+                  <div class="flex-box title_box">
+                    <div class="flex-item">号码</div>
+                    <div class="flex-item red">赔率</div>
+                  </div>
+                </th>
+                <th class="title">
+                  <div class="flex-box title_box">
+                    <div class="flex-item">号码</div>
+                    <div class="flex-item red">赔率</div>
+                  </div>
+                </th>
+                <th class="title">
+                  <div class="flex-box title_box">
+                    <div class="flex-item">号码</div>
+                    <div class="flex-item red">赔率</div>
+                  </div>
+                </th>
+                <th class="title">
+                  <div class="flex-box title_box">
+                    <div class="flex-item">号码</div>
+                    <div class="flex-item red">赔率</div>
+                  </div>
+                </th>
+                <th class="title">
+                  <div class="flex-box title_box">
+                    <div class="flex-item">号码</div>
+                    <div class="flex-item red">赔率</div>
+                  </div>
+                </th>
+                <th class="title">
+                  <div class="flex-box title_box">
+                    <div class="flex-item">号码</div>
+                    <div class="flex-item red">赔率</div>
+                  </div>
+                </th>
+                <th class="title">
+                  <div class="flex-box title_box">
+                    <div class="flex-item">号码</div>
+                    <div class="flex-item red">赔率</div>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  v-for="(items, index) in listFormat" :key="index">
+                <td v-for="(item,sIndex) in  items" :key="sIndex">
+                  <div  class="flex-box">
+                    <div class="flex-item tc">{{ item.num }}</div>
+                    <div class="flex-item odds tc red">{{ item.odds }}</div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </CardBox>
       </div>
     </div>
@@ -61,11 +121,29 @@ defineOptions({
 </template>
 <style lang="less" scoped>
 .route-next {
+  background:#c5dff5;
   width: 100%;
   display: flex;
   flex-direction: column;
   :deep(.page-lay) {
     height: auto;
+  }
+  &.bet-view {
+    :deep(.quick-choose-view .radio-btn.active) {
+      color:#FFF;
+      background: #5f8dce;
+    }
+    :deep(.form-quick-choose td) {
+      border-color:#c5dff5;
+    }
+  }
+}
+table.hot-table {
+  border-collapse: collapse;
+  width: 100%;
+  td,
+  th {
+    border: 1px solid #333;
   }
 }
 .mai_btn {
@@ -79,7 +157,7 @@ defineOptions({
 }
 
 .big_link {
-  margin-bottom:4px;
+  margin:4px;
   :deep(.arco-btn-text) {
     color: yellow;
     font-weight: bold;
@@ -94,10 +172,10 @@ defineOptions({
 
   .link-active-sub {
     :deep(.arco-btn) {
-      color: #002f63;
-      background-color: transparent;
-      background-image: linear-gradient(to bottom, #a5d7ee, #FFF);
-      border-color: transparent;
+      color: #FFF;
+      background-image: linear-gradient(180deg, #9bd2ff, #386bb6);
+      border-radius: 2px;
+      border: 1px solid #5f8dce;
     }
   }
 }
