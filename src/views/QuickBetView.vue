@@ -1,16 +1,16 @@
 <script setup>
-import { ref, h, inject, computed } from 'vue';
-import {dialog} from '@/lib/dialog.js'
+import { ref, h, inject, computed } from 'vue'
+import { dialog } from '@/lib/dialog.js'
 import SmallQuickBox from '@/components/SmallQuickBox.vue'
 // QuickBetView is 快打
 defineOptions({
-  name: "QuickBetView"
-});
+  name: 'QuickBetView',
+})
 const select = ref('1')
 const options = ref([
   { label: '25100', value: '1' },
   { label: '25099', value: '2' },
-  { label: '25098', value: '3' }
+  { label: '25098', value: '3' },
 ])
 const tableTitle = ref([
   { value: '彩种', name: 'lotteryType', width: '8%' },
@@ -19,7 +19,7 @@ const tableTitle = ref([
   { value: '赔率', name: 'odds', width: '9%' },
   { value: '金额', name: 'amount', width: '9%' },
   { value: '状态', name: 'status', width: '9%' },
-  { value: '操作', name: 'actions', width: '15%' }
+  { value: '操作', name: 'actions', width: '15%' },
 ])
 const tableData = ref([
   {
@@ -29,7 +29,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
   {
     lotteryType: '--',
@@ -38,7 +38,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
   {
     lotteryType: '--',
@@ -47,7 +47,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
   {
     lotteryType: '--',
@@ -56,7 +56,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
   {
     lotteryType: '--',
@@ -65,7 +65,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
   {
     lotteryType: '--',
@@ -74,7 +74,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
   {
     lotteryType: '--',
@@ -83,7 +83,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
   {
     lotteryType: '--',
@@ -92,7 +92,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
   {
     lotteryType: '--',
@@ -101,7 +101,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
   {
     lotteryType: '--',
@@ -110,7 +110,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
   {
     lotteryType: '--',
@@ -119,7 +119,7 @@ const tableData = ref([
     odds: '--',
     amount: '--',
     status: '--',
-    actions: '--'
+    actions: '--',
   },
 ])
 const quickHandle = () => {
@@ -131,26 +131,24 @@ const quickHandle = () => {
 }
 const betType = inject('betType', '')
 const betBtnText = computed(() => {
-  if(betType.value === 'bet') {
-    return '赌票'
+  if (betType.value === 'bet') {
+    return '下单'
   }
-  if(betType.value === 'eat') {
-    return '吃票'
+  if (betType.value === 'eat') {
+    return '挂单'
   }
   return '确认下注'
 })
-const submitHandle = () => {
-
-}
+const submitHandle = () => {}
 </script>
 
 <template>
-  <PageLay class="quick-bet-view" isBox >
+  <PageLay class="quick-bet-view" isBox>
     <div class="page-view flex-item">
-      <CardBox title="下注框" padding="0" >
+      <CardBox title="下注框" padding="0">
         <TableBox :title="tableTitle" :data="tableData" center>
           <template #title_actions>
-            <label>全选<input type="checkbox"></label>
+            <label>全选<input type="checkbox" /></label>
             <button class="ml10 pri-btn">退码</button>
           </template>
         </TableBox>
@@ -161,21 +159,27 @@ const submitHandle = () => {
           <label class="ml10">全转 <input type="checkbox" /></label>
         </template>
         <form @submit.prevent="submitHandle" class="flex-inline">
-          <label class="ml10 fs22" >赔率 <input name="betNo" type="text" class="w60 input-h36" /></label>
-          <label class="ml10 fs22" >号码 <input name="betNo" type="text" class="w60 input-h36" /></label>
-          <label class="ml10 fs22">金额 <input name="money" type="text" class="w60 input-h36" /></label>
+          <label class="ml10 fs22"
+            >赔率 <input name="betNo" type="text" class="w60 input-h36"
+          /></label>
+          <label class="ml10 fs22"
+            >号码 <input name="betNo" type="text" class="w60 input-h36"
+          /></label>
+          <label class="ml10 fs22"
+            >金额 <input name="money" type="text" class="w60 input-h36"
+          /></label>
           <button type="submit" class="ml20 pri-btn-h36">{{ betBtnText }}</button>
           <button type="button" @click="quickHandle" class="ml10">取消</button>
           <!-- <button type="button" @click="quickHandle" class="ml10 pri-btn-h36">极速快打</button> -->
         </form>
       </CardBox>
     </div>
-    <div class="page-view wp200">
-      <CardBox  padding="0" >
+    <!-- <div class="page-view wp200">
+      <CardBox padding="0">
         <template #header>
           <div class="card-box-hd flex-box">
             <div class="flex-item tc bold">目前停押号码</div>
-            <div class="card-box-hd-right" >
+            <div class="card-box-hd-right">
               <SelectBox v-model="select" :options="options"></SelectBox>
             </div>
           </div>
@@ -224,13 +228,12 @@ const submitHandle = () => {
           </template>
         </TableBox>
       </CardBox>
-    </div>
+    </div> -->
   </PageLay>
 </template>
 
 <style lang="less" scoped>
 .quick-bet-view {
   overflow: hidden;
-
 }
 </style>

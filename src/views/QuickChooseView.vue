@@ -1,17 +1,17 @@
 <script setup>
-import { ref, computed, shallowRef, inject } from 'vue';
-import { emnum } from '@/lib/api';
-import {chunk} from 'lodash-es'
-import FormTwoP from '@/components/FormTwoP.vue';
-import FormThreeP from '@/components/FormThreeP.vue';
-import FormFourP from '@/components/FormFourP.vue';
-import FormTwoX from '@/components/FormTwoX.vue';
-import FormThreeX from '@/components/FormThreeX.vue';
-import FormFourX from '@/components/FormFourX.vue';
+import { ref, computed, shallowRef, inject } from 'vue'
+import { emnum } from '@/lib/api'
+import { chunk } from 'lodash-es'
+import FormTwoP from '@/components/FormTwoP.vue'
+import FormThreeP from '@/components/FormThreeP.vue'
+import FormFourP from '@/components/FormFourP.vue'
+import FormTwoX from '@/components/FormTwoX.vue'
+import FormThreeX from '@/components/FormThreeX.vue'
+import FormFourX from '@/components/FormFourX.vue'
 // QuickChooseView is
 defineOptions({
-  name: "QuickChooseView"
-});
+  name: 'QuickChooseView',
+})
 const gameType = ref('20')
 
 const topCate = computed(() => {
@@ -19,12 +19,12 @@ const topCate = computed(() => {
   return arr
 })
 const tabsObj = {
-  '20': FormTwoP,
-  '30': FormThreeP,
-  '40': FormFourP,
-  '21': FormTwoX,
-  '31': FormThreeX,
-  '41': FormFourX,
+  20: FormTwoP,
+  30: FormThreeP,
+  40: FormFourP,
+  21: FormTwoX,
+  31: FormThreeX,
+  41: FormFourX,
 }
 const formRef = ref()
 const list = ref([])
@@ -47,11 +47,11 @@ const showByX = computed(() => {
 })
 const betType = inject('betType', '')
 const betBtnText = computed(() => {
-  if(betType.value === 'bet') {
-    return '赌票'
+  if (betType.value === 'bet') {
+    return '下单'
   }
-  if(betType.value === 'eat') {
-    return '吃票'
+  if (betType.value === 'eat') {
+    return '挂单'
   }
   return '确认下注'
 })
@@ -72,29 +72,32 @@ const betBtnText = computed(() => {
         </CardBox>
         <CardBox class="flex-item" title="发送框" flexBox padding="0">
           <form class="flex-item flex-inline ptb6 plr4 flex-cv gap10">
-            <label class="fs22 flex-inline flex-cv ">赔率 <input class="mlr4 w60 input-h36"></label>
-            <label class="fs22 flex-inline flex-cv ">金额 <input class="mlr4 w60 input-h36"></label>
-            <button class="pri-btn-h36 ">{{ betBtnText }}</button>
+            <label class="fs22 flex-inline flex-cv"
+              >赔率 <input class="mlr4 w60 input-h36"
+            /></label>
+            <label class="fs22 flex-inline flex-cv"
+              >金额 <input class="mlr4 w60 input-h36"
+            /></label>
+            <button class="pri-btn-h36">{{ betBtnText }}</button>
             <template v-if="!showByX">
               <!-- <button class="pri-btn-h36 ">包牌</button> -->
-              <button class="pri-btn-h36 ">录入汇总表</button>
+              <button class="pri-btn-h36">录入汇总表</button>
             </template>
-
           </form>
-          <div class="div-green-border " >
+          <div class="div-green-border">
             <div class="gbb w130">笔数：{{ list.length }}</div>
             <div class="w130">金额：0元</div>
           </div>
         </CardBox>
       </div>
       <div class="flex-item">
-        <CardBox class="other_head" padding="0" >
+        <CardBox class="other_head" padding="0">
           <template #header>
             <div>
-              <a-radio-group  class="tab_radio" v-model="gameType" >
+              <a-radio-group class="tab_radio" v-model="gameType">
                 <a-radio v-for="(item, index) in topCate" :key="index" :value="item.value">
                   <template #radio="{ checked }">
-                    <div class="radio-btn" :class="checked?'active':''" >{{ item.label }}</div>
+                    <div class="radio-btn" :class="checked ? 'active' : ''">{{ item.label }}</div>
                   </template>
                 </a-radio>
               </a-radio-group>
@@ -109,13 +112,12 @@ const betBtnText = computed(() => {
           <Component ref="formRef" :is="tabsObj[gameType]" @submitData="submitData"></Component>
           <template #footer>
             <div class="flex-box flex-ch flex-cv gap10 bt ptb4">
-              <button @click="genNoHandle" class="pri-btn-h36 ">生成</button>
-              <button @click="resetHandle" class="pri-btn-h36 ">复位</button>
+              <button @click="genNoHandle" class="pri-btn-h36">生成</button>
+              <button @click="resetHandle" class="pri-btn-h36">复位</button>
             </div>
           </template>
         </CardBox>
       </div>
-
     </div>
   </PageLay>
 </template>
@@ -123,11 +125,11 @@ const betBtnText = computed(() => {
 <style lang="less" scoped>
 .quick-choose-view {
   .tab_radio {
-    display:flex;
+    display: flex;
     :deep(.arco-radio) {
-      flex:1;
-      margin:0;
-      padding:0;
+      flex: 1;
+      margin: 0;
+      padding: 0;
     }
     :deep(.arco-radio + .arco-radio) {
       border-left: 1px solid #333;
@@ -135,18 +137,18 @@ const betBtnText = computed(() => {
   }
   .other_head {
     :deep(.card-box-hd) {
-      background:#FFF;
-      height:38px;
-      padding:0;
+      background: #fff;
+      height: 38px;
+      padding: 0;
     }
     .radio-btn {
-      width:100%;
-      height:37px;
+      width: 100%;
+      height: 37px;
       line-height: 37px;
-      color:#333;
+      color: #333;
       text-align: center;
       &.active {
-        background:#a9e58c;
+        background: #a9e58c;
       }
     }
   }

@@ -1,20 +1,20 @@
 <script setup>
-import { ref, watch, provide } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref, watch, provide } from 'vue'
+import { useRoute } from 'vue-router'
 defineOptions({
-  name: "HomeView"
-});
-const route = useRoute();
-const betType = ref('bet');
+  name: 'HomeView',
+})
+const route = useRoute()
+const betType = ref('bet')
 watch(route, (to) => {
   if (to.path.includes('/home/bet')) {
-    betType.value = 'bet';
+    betType.value = 'bet'
   }
   if (to.path.includes('/home/eat')) {
-    betType.value = 'eat';
+    betType.value = 'eat'
   }
-});
-provide('betType', betType);
+})
+provide('betType', betType)
 </script>
 
 <template>
@@ -22,18 +22,17 @@ provide('betType', betType);
     <div class="flex-box">
       <div class="flex-item">
         <RouterLink to="/home/bet">
-          <div class="mai_btn mai_btn_bet">赌</div>
+          <div class="mai_btn mai_btn_bet">买入</div>
         </RouterLink>
       </div>
       <div class="flex-item">
         <RouterLink to="/home/eat">
-          <div class="mai_btn mai_btn_eat">吃</div>
+          <div class="mai_btn mai_btn_eat">卖出</div>
         </RouterLink>
       </div>
     </div>
     <RouterView />
   </div>
-
 </template>
 <style lang="less" scoped>
 .route-page {
@@ -47,33 +46,32 @@ provide('betType', betType);
 }
 .mai_btn {
   height: 40px;
-  line-height:40px;
+  line-height: 40px;
   text-align: center;
   font-size: 20px;
-  border:1px solid #ccc;
-  color:#333;
+  border: 1px solid #ccc;
+  color: #333;
   background: #ccc;
   margin: 4px;
   cursor: pointer;
 }
 .link-active {
   .mai_btn_bet {
-    color:#FFF;
+    color: #fff;
     text-decoration: none;
     border: 1px solid #5f8dce;
     background-image: linear-gradient(180deg, #9bd2ff, #386bb6);
   }
   .mai_btn_eat {
-    color:#FFF;
+    color: #fff;
     text-decoration: none;
     border: 1px solid #ff5a4e;
     background-image: linear-gradient(0deg, #ff5549, #ff9992);
   }
 }
 
-
 .big_link {
-  margin-bottom:4px;
+  margin-bottom: 4px;
   :deep(.arco-btn-text) {
     color: yellow;
     font-weight: bold;
@@ -85,12 +83,11 @@ provide('betType', betType);
     text-decoration: underline;
   }
 
-
   .link-active-sub {
     :deep(.arco-btn) {
       color: #002f63;
       background-color: transparent;
-      background-image: linear-gradient(to bottom, #a5d7ee, #FFF);
+      background-image: linear-gradient(to bottom, #a5d7ee, #fff);
       border-color: transparent;
     }
   }

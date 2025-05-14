@@ -1,9 +1,9 @@
 <script setup>
-import { onMounted } from 'vue';
-import { Notification, Modal } from '@arco-design/web-vue';
-import { useUserStore } from '@/stores/index.js';
-import { useRouter } from 'vue-router';
-const now = Date.now();
+import { onMounted } from 'vue'
+import { Notification, Modal } from '@arco-design/web-vue'
+import { useUserStore } from '@/stores/index.js'
+import { useRouter } from 'vue-router'
+const now = Date.now()
 console.log('111')
 onMounted(() => {
   Notification.info({
@@ -12,13 +12,13 @@ onMounted(() => {
     position: 'bottomRight',
     duration: 0,
     closable: true,
-    showIcon: false
+    showIcon: false,
   })
 })
 
 const valueStyle = {
   color: '#FFF',
-  fontSize: '14px'
+  fontSize: '14px',
 }
 const netCheckHandle = () => {
   Modal.confirm({
@@ -27,7 +27,7 @@ const netCheckHandle = () => {
     closable: true,
     alignCenter: false,
     draggable: true,
-    showIcon: false
+    showIcon: false,
   })
 }
 const router = useRouter()
@@ -45,7 +45,7 @@ const logoutHandle = () => {
         <a-space direction="vertical" size="mini" fill>
           <div class="big_link">
             <a-space size="mini">
-              <a-button @click="netCheckHandle">换线路</a-button>
+              <!-- <a-button @click="netCheckHandle">换线路</a-button> -->
               <RouterLink to="/bet-list">
                 <a-button>下注明细</a-button>
               </RouterLink>
@@ -80,7 +80,8 @@ const logoutHandle = () => {
           <div class="flex-box marquee-line">
             <div class="color_yellow mr6">排列五</div>
             <Component :is="'marquee'" scrollamount="2" class="marquee">
-              <span>欢迎光临!+会员【f1.p69jp636.xyz】【f2.p69jp636.xyz】【f3.p69jp636.xyz】【f4.p69jp636.xyz】【f5.p69jp636.xyz】【f6.p69jp636.xyz】【f7.p69jp636.xyz】【f8.p69jp636.xyz】【f9.p69jp636.xyz:8443】+会员手机版【m1.p69jp636.xyz】【m2.p69jp636.xyz】【m3.p69jp636.xyz】【m4.p69jp636.xyz】【m5.p69jp636.xyz】【m6.p69jp636.xyz】【m7.p69jp636.xyz】【m8.p69jp636.xyz】【m9.p69jp636.xyz:8443】+本公司每天上午12:00开盘。开奖日当天21:19分封盘！
+              <span
+                >欢迎光临!+会员【f1.p69jp636.xyz】【f2.p69jp636.xyz】【f3.p69jp636.xyz】【f4.p69jp636.xyz】【f5.p69jp636.xyz】【f6.p69jp636.xyz】【f7.p69jp636.xyz】【f8.p69jp636.xyz】【f9.p69jp636.xyz:8443】+会员手机版【m1.p69jp636.xyz】【m2.p69jp636.xyz】【m3.p69jp636.xyz】【m4.p69jp636.xyz】【m5.p69jp636.xyz】【m6.p69jp636.xyz】【m7.p69jp636.xyz】【m8.p69jp636.xyz】【m9.p69jp636.xyz:8443】+本公司每天上午12:00开盘。开奖日当天21:19分封盘！
                 ++++++++++++++++++++++++++++++++++++++++++++【提示】本公司提供转换赔率功能,请各会员在【会员资料】里设置使用。●●●【温馨提示】各位会员在下注确定后请到“下注明细”里确认注单，一切注单结算以下注明细里资料为准！
               </span>
             </Component>
@@ -89,11 +90,15 @@ const logoutHandle = () => {
             </marquee> -->
             <div class="color_fff ml6">
               离开盘还有：
-              <a-countdown :value-style="valueStyle" :value="now + 1000 * 60 * 60 * 24 * 4" :now="now"
-                format="D 天 H 时 m 分 s 秒" />
+              <a-countdown
+                :value-style="valueStyle"
+                :value="now + 1000 * 60 * 60 * 24 * 4"
+                :now="now"
+                format="D 天 H 时 m 分 s 秒"
+              />
             </div>
           </div>
-          <div class="quick_link">
+          <!-- <div class="quick_link">
             <a-space size="mini">
               <RouterLink to="/two-set">
                 <a-button size="mini" type="text">二字定</a-button>
@@ -126,9 +131,8 @@ const logoutHandle = () => {
                 <a-button size="mini" type="text">奖王APP</a-button>
               </RouterLink>
             </a-space>
-          </div>
+          </div> -->
         </a-space>
-
       </template>
     </APageHeader>
     <!-- <RouterLink to="/about">About</RouterLink> -->
@@ -154,7 +158,7 @@ const logoutHandle = () => {
 }
 
 .head-bg {
-  background: #589C35 url(@/assets/img/bg-a.jpg) no-repeat;
+  background: #589c35 url(@/assets/img/bg-a.jpg) no-repeat;
   background-size: contain;
 }
 
@@ -177,12 +181,12 @@ const logoutHandle = () => {
   border-top: 1px solid #2a2626;
 
   :deep(.arco-btn-text) {
-    color: #FFF;
+    color: #fff;
     font-weight: bold;
   }
 
   :deep(.arco-btn-text:hover) {
-    color: #FFF;
+    color: #fff;
     background-color: transparent;
     text-decoration: underline;
   }
@@ -206,12 +210,11 @@ const logoutHandle = () => {
     text-decoration: underline;
   }
 
-
   .link-active-sub {
     :deep(.arco-btn) {
       color: #002f63;
       background-color: transparent;
-      background-image: linear-gradient(to bottom, #a5d7ee, #FFF);
+      background-image: linear-gradient(to bottom, #a5d7ee, #fff);
       border-color: transparent;
       transform: scale(1, 1.1);
       transform-origin: bottom;

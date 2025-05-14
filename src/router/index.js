@@ -12,7 +12,7 @@ const router = createRouter({
       path: '/',
       name: 'IndexLay',
       component: IndexLay,
-      redirect: '/quick-bet',
+      redirect: '/home',
       children: [
         {
           path: 'home',
@@ -23,7 +23,7 @@ const router = createRouter({
           children: [
             {
               path: 'bet',
-              meta: { title: '赌' },
+              meta: { title: '买入' },
               name: 'Bet',
               redirect: '/home/bet/bet-quick-bet',
               component: () => import('../views/BetView.vue'),
@@ -46,7 +46,7 @@ const router = createRouter({
                   name: 'BetQuickChoose',
                   component: () => import('../views/QuickChooseView.vue'),
                 },
-              ]
+              ],
             },
             {
               path: 'eat',
@@ -73,9 +73,9 @@ const router = createRouter({
                   name: 'EatQuickChoose',
                   component: () => import('../views/QuickChooseView.vue'),
                 },
-              ]
+              ],
             },
-          ]
+          ],
         },
         {
           path: 'bet-list',

@@ -1,44 +1,48 @@
 <script setup>
-import { ref, provide, computed, inject } from 'vue';
-import { range, padStart, chunk} from 'lodash-es';
+import { ref, provide, computed, inject } from 'vue'
+import { range, padStart, chunk } from 'lodash-es'
 // 二字定模式2
 defineOptions({
-  name: "TwoGameMod"
-});
+  name: 'TwoGameMod',
+})
 const props = defineProps({
   gameType: {
     type: String,
-    default: '3'
+    default: '3',
   },
   oddsList: {
     type: Array,
-    default: () => []
-  }
+    default: () => [],
+  },
 })
 const arr = range(100)
 let data = arr.map((num, index) => {
   return {
-      index: index,
-      num: padStart(num,2,'0'),
-      // gameType: props.gameType,
-      odds: '98.9',
-      // posiH:0, // 横向
-      // posiV:0, // 纵向
-      active: false, // 是否选中
+    index: index,
+    num: padStart(num, 2, '0'),
+    // gameType: props.gameType,
+    odds: '98.9',
+    // posiH:0, // 横向
+    // posiV:0, // 纵向
+    active: false, // 是否选中
   }
 })
 let list = ref(data)
 
 let dataMap = new Map()
-provide('addGameBox', function(gameBox) {
+provide('addGameBox', function (gameBox) {
   // console.log(gameBox)
   dataMap.set(gameBox.num, gameBox)
 })
 const vHandle = (posiH) => {
-  Array.from(dataMap.values()).filter(item => item.posiH === posiH).map(item => item.toggle())
+  Array.from(dataMap.values())
+    .filter((item) => item.posiH === posiH)
+    .map((item) => item.toggle())
 }
 const hHandle = (posiV) => {
-  Array.from(dataMap.values()).filter(item => item.posiV === posiV).map(item => item.toggle())
+  Array.from(dataMap.values())
+    .filter((item) => item.posiV === posiV)
+    .map((item) => item.toggle())
 }
 const clickHandle = (gameItem) => {
   dataMap.get(gameItem.num).toggle()
@@ -46,7 +50,7 @@ const clickHandle = (gameItem) => {
 const posiValues = ref([])
 const listFormat = computed(() => {
   console.log(posiValues.value, '????')
-  list.value.forEach(item => {
+  list.value.forEach((item) => {
     item.active = posiValues.value.includes(item.num)
   })
   // list.value.forEach(item => {
@@ -63,11 +67,11 @@ const getValues = () => {
 }
 // 清空选中
 const restActive = () => {
-  getValues().forEach(item => item.toggle(false))
+  getValues().forEach((item) => item.toggle(false))
 }
 // 获取所有选中
 const getActives = () => {
-  return Array.from(dataMap.values()).filter(item => item.active)
+  return Array.from(dataMap.values()).filter((item) => item.active)
 }
 // 取消所选
 const cancelHandle = () => {
@@ -78,127 +82,136 @@ const submitHandle = () => {
 }
 const betType = inject('betType', '')
 const betBtnText = computed(() => {
-  if(betType.value === 'bet') {
-    return '赌票'
+  if (betType.value === 'bet') {
+    return '下单'
   }
-  if(betType.value === 'eat') {
-    return '吃票'
+  if (betType.value === 'eat') {
+    return '挂单'
   }
   return '确认下注'
 })
-defineExpose({getActives, restActive})
+defineExpose({ getActives, restActive })
 </script>
 <template>
   <div class="two-game-mod">
-  <table class="game-table" >
-    <thead>
-      <tr>
-        <td ></td>
-        <td  @click="vHandle(0)" class="btn-v">&nbsp;</td>
-        <td  @click="vHandle(1)" class="btn-v">&nbsp;</td>
-        <td  @click="vHandle(2)" class="btn-v">&nbsp;</td>
-        <td  @click="vHandle(3)" class="btn-v">&nbsp;</td>
-        <td  @click="vHandle(4)" class="btn-v">&nbsp;</td>
-        <td  @click="vHandle(5)" class="btn-v">&nbsp;</td>
-        <td  @click="vHandle(6)" class="btn-v">&nbsp;</td>
-        <td  @click="vHandle(7)" class="btn-v">&nbsp;</td>
-        <td  @click="vHandle(8)" class="btn-v">&nbsp;</td>
-        <td  @click="vHandle(9)" class="btn-v">&nbsp;</td>
-      </tr>
-      <tr class="title_wrap">
-        <th></th>
-        <th class="title">
-          <div class="flex-box title_box">
-            <div class="flex-item">号码</div>
-            <div class="flex-item red">赔率</div>
-          </div>
-        </th>
-        <th class="title">
-          <div class="flex-box title_box">
-            <div class="flex-item">号码</div>
-            <div class="flex-item red">赔率</div>
-          </div>
-        </th>
-        <th class="title">
-          <div class="flex-box title_box">
-            <div class="flex-item">号码</div>
-            <div class="flex-item red">赔率</div>
-          </div>
-        </th>
-        <th class="title">
-          <div class="flex-box title_box">
-            <div class="flex-item">号码</div>
-            <div class="flex-item red">赔率</div>
-          </div>
-        </th>
-        <th class="title">
-          <div class="flex-box title_box">
-            <div class="flex-item">号码</div>
-            <div class="flex-item red">赔率</div>
-          </div>
-        </th>
-        <th class="title">
-          <div class="flex-box title_box">
-            <div class="flex-item">号码</div>
-            <div class="flex-item red">赔率</div>
-          </div>
-        </th>
-        <th class="title">
-          <div class="flex-box title_box">
-            <div class="flex-item">号码</div>
-            <div class="flex-item red">赔率</div>
-          </div>
-        </th>
-        <th class="title">
-          <div class="flex-box title_box">
-            <div class="flex-item">号码</div>
-            <div class="flex-item red">赔率</div>
-          </div>
-        </th>
-        <th class="title">
-          <div class="flex-box title_box">
-            <div class="flex-item">号码</div>
-            <div class="flex-item red">赔率</div>
-          </div>
-        </th>
-        <th class="title">
-          <div class="flex-box title_box">
-            <div class="flex-item">号码</div>
-            <div class="flex-item red">赔率</div>
-          </div>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr  v-for="(items, index) in listFormat" :key="index">
-        <td @click="hHandle(index)" class="btn-h"></td>
-        <td v-for="(item,sIndex) in  items" :key="sIndex">
-          <GameBox @click="clickHandle" :index="item.index" :odds="item.odds" :num="item.num" v-model:active="item.active" :posiH="sIndex" :posiV="index" :type="props.gameType"></GameBox>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="11">
-          <div class="flex-box ">
-            <div class="flex-item p4 gbr bc_333">
-              <PosiBtns v-model="posiValues" :gameType="gameType" ></PosiBtns>
+    <table class="game-table">
+      <thead>
+        <tr>
+          <td></td>
+          <td @click="vHandle(0)" class="btn-v">&nbsp;</td>
+          <td @click="vHandle(1)" class="btn-v">&nbsp;</td>
+          <td @click="vHandle(2)" class="btn-v">&nbsp;</td>
+          <td @click="vHandle(3)" class="btn-v">&nbsp;</td>
+          <td @click="vHandle(4)" class="btn-v">&nbsp;</td>
+          <td @click="vHandle(5)" class="btn-v">&nbsp;</td>
+          <td @click="vHandle(6)" class="btn-v">&nbsp;</td>
+          <td @click="vHandle(7)" class="btn-v">&nbsp;</td>
+          <td @click="vHandle(8)" class="btn-v">&nbsp;</td>
+          <td @click="vHandle(9)" class="btn-v">&nbsp;</td>
+        </tr>
+        <tr class="title_wrap">
+          <th></th>
+          <th class="title">
+            <div class="flex-box title_box">
+              <div class="flex-item">号码</div>
+              <div class="flex-item red">赔率</div>
             </div>
-            <div class="sub-form flex-box flex-cv flex-ch">
-              <form @submit.prevent="submitHandle" class="flex-inline gap4" >
-                <label class="fs22">赔率 <input class="w60 input-h36"></label>
-                <label class="fs22">金额： <input class="w60 input-h36"></label>
-                <button type="submit" class="pri-btn-h36">{{ betBtnText }}</button>
-                <!-- <button type="button" class="pri-btn-h36">包牌</button> -->
-                <button type="button" @click="cancelHandle" class="pri-btn-h36">取消</button>
-              </form>
+          </th>
+          <th class="title">
+            <div class="flex-box title_box">
+              <div class="flex-item">号码</div>
+              <div class="flex-item red">赔率</div>
             </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td class="tr" colspan="11">
-          <!-- <ul class="odds_ul">
+          </th>
+          <th class="title">
+            <div class="flex-box title_box">
+              <div class="flex-item">号码</div>
+              <div class="flex-item red">赔率</div>
+            </div>
+          </th>
+          <th class="title">
+            <div class="flex-box title_box">
+              <div class="flex-item">号码</div>
+              <div class="flex-item red">赔率</div>
+            </div>
+          </th>
+          <th class="title">
+            <div class="flex-box title_box">
+              <div class="flex-item">号码</div>
+              <div class="flex-item red">赔率</div>
+            </div>
+          </th>
+          <th class="title">
+            <div class="flex-box title_box">
+              <div class="flex-item">号码</div>
+              <div class="flex-item red">赔率</div>
+            </div>
+          </th>
+          <th class="title">
+            <div class="flex-box title_box">
+              <div class="flex-item">号码</div>
+              <div class="flex-item red">赔率</div>
+            </div>
+          </th>
+          <th class="title">
+            <div class="flex-box title_box">
+              <div class="flex-item">号码</div>
+              <div class="flex-item red">赔率</div>
+            </div>
+          </th>
+          <th class="title">
+            <div class="flex-box title_box">
+              <div class="flex-item">号码</div>
+              <div class="flex-item red">赔率</div>
+            </div>
+          </th>
+          <th class="title">
+            <div class="flex-box title_box">
+              <div class="flex-item">号码</div>
+              <div class="flex-item red">赔率</div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(items, index) in listFormat" :key="index">
+          <td @click="hHandle(index)" class="btn-h"></td>
+          <td v-for="(item, sIndex) in items" :key="sIndex">
+            <GameBox
+              @click="clickHandle"
+              :index="item.index"
+              :odds="item.odds"
+              :num="item.num"
+              v-model:active="item.active"
+              :posiH="sIndex"
+              :posiV="index"
+              :type="props.gameType"
+            ></GameBox>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="11">
+            <div class="flex-box">
+              <div class="flex-item p4 gbr bc_333">
+                <PosiBtns v-model="posiValues" :gameType="gameType"></PosiBtns>
+              </div>
+              <div class="sub-form flex-box flex-cv flex-ch">
+                <form @submit.prevent="submitHandle" class="flex-inline gap4">
+                  <label class="fs22">赔率 <input class="w60 input-h36" /></label>
+                  <label class="fs22">金额： <input class="w60 input-h36" /></label>
+                  <button type="submit" class="pri-btn-h36">{{ betBtnText }}</button>
+                  <!-- <button type="button" class="pri-btn-h36">包牌</button> -->
+                  <button type="button" @click="cancelHandle" class="pri-btn-h36">取消</button>
+                </form>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="tr" colspan="11">
+            <!-- <ul class="odds_ul">
             <li >包牌赔率：</li>
             <li>20组: <span class="red">98.2</span></li>
             <li>25组: <span class="red">98.2</span></li>
@@ -210,11 +223,11 @@ defineExpose({getActives, restActive})
             <li>70组: <span class="red">98.2</span></li>
             <li>80组: <span class="red">98.2</span></li>
           </ul> -->
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </template>
 
 <style lang="less" scoped>
@@ -224,47 +237,47 @@ defineExpose({getActives, restActive})
     border-collapse: collapse;
     width: 100%;
     .title_wrap {
-      background:orange;
+      background: orange;
     }
     td,
     th {
       border: 1px solid #333;
     }
     .btn-v {
-      position:relative;
+      position: relative;
       cursor: pointer;
-      height:20px;
+      height: 20px;
       &:before {
-        position:absolute;
-        content: "";
-        top:5px;
+        position: absolute;
+        content: '';
+        top: 5px;
         left: 16px;
         border-top: 6px solid #333;
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
-       }
+      }
     }
     .btn-h {
-      position:relative;
+      position: relative;
       cursor: pointer;
       width: 20px;
       &:before {
-        position:absolute;
-        content: "";
+        position: absolute;
+        content: '';
         top: 10px;
         left: 5px;
         border-top: 6px solid transparent;
         border-left: 6px solid #333;
         border-bottom: 6px solid transparent;
-       }
+      }
     }
   }
 
   .odds_ul {
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     li {
-      padding-left:20px;
+      padding-left: 20px;
       display: inline-block;
     }
   }
