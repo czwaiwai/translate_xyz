@@ -1,8 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 // import HomeView from '../views/HomeView.vue'
 import { useUserStore } from '@/stores'
-import IndexLay from '../views/IndexLay.vue'
+import IndexLay from '../layout/IndexLay.vue'
+import MobiLay from '../layout/MobiLay.vue'
 import RouteNext from '@/components/RouteNext.vue'
+import { isMobile } from '@/lib/utils'
+
 const router = createRouter({
   linkActiveClass: 'link-active',
   linkExactActiveClass: 'link-active-sub',
@@ -11,7 +14,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'IndexLay',
-      component: IndexLay,
+      component: isMobile() ? MobiLay : IndexLay,
       redirect: '/home',
       children: [
         {

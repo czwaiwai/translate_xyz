@@ -46,6 +46,9 @@ const logoutHandle = () => {
           <div class="big_link">
             <a-space size="mini">
               <!-- <a-button @click="netCheckHandle">换线路</a-button> -->
+              <RouterLink to="/home/bet/bet-quick-bet">
+                <a-button>首页</a-button>
+              </RouterLink>
               <RouterLink to="/bet-list">
                 <a-button>下注明细</a-button>
               </RouterLink>
@@ -58,9 +61,9 @@ const logoutHandle = () => {
               <RouterLink to="/member-info">
                 <a-button>会员资料</a-button>
               </RouterLink>
-              <RouterLink to="/package-odd">
+              <!-- <RouterLink to="/package-odd">
                 <a-button>包牌赔率</a-button>
-              </RouterLink>
+              </RouterLink> -->
               <RouterLink to="/draw-number">
                 <a-button>开奖号码</a-button>
               </RouterLink>
@@ -158,7 +161,7 @@ const logoutHandle = () => {
 }
 
 .head-bg {
-  background: #589c35 url(@/assets/img/bg-a.jpg) no-repeat;
+  background: #3494e3;
   background-size: contain;
 }
 

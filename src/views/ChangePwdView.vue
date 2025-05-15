@@ -1,29 +1,29 @@
 <script setup>
-import { ref } from 'vue';
-import { Message } from '@arco-design/web-vue';
+import { ref } from 'vue'
+import { Message } from '@arco-design/web-vue'
 // ChangePwdView is 修改密码
 defineOptions({
-  name: "ChangePwdView"
-});
+  name: 'ChangePwdView',
+})
 const form = ref({
   oldPassword: '',
   newPassword: '',
-  confirmPassword: ''
-});
+  confirmPassword: '',
+})
 const rules = {
   oldPassword: [
     { required: true, message: '请输入旧密码' },
-    { min: 6, max: 20, message: '密码长度在6到20个字符之间' }
+    { min: 6, max: 20, message: '密码长度在6到20个字符之间' },
   ],
   newPassword: [
     { required: true, message: '请输入新密码' },
-    { min: 6, max: 20, message: '密码长度在6到20个字符之间' }
+    { min: 6, max: 20, message: '密码长度在6到20个字符之间' },
   ],
   confirmPassword: [
     { required: true, message: '请确认新密码' },
-    { min: 6, max: 20, message: '密码长度在6到20个字符之间' }
-  ]
-};
+    { min: 6, max: 20, message: '密码长度在6到20个字符之间' },
+  ],
+}
 const handleSubmit = async (values, errors) => {
   console.log('values:', values, '\nerrors:', errors)
   if (errors) {
@@ -31,8 +31,8 @@ const handleSubmit = async (values, errors) => {
   }
   Message.success({
     content: '提交成功',
-    closable: true
-  });
+    closable: true,
+  })
 
   // const { oldPassword, newPassword, confirmPassword } = form.value;
   // if (newPassword !== confirmPassword) {
@@ -47,13 +47,19 @@ const handleSubmit = async (values, errors) => {
   // } catch (error) {
   //   alert('密码修改失败');
   // }
-};
+}
 </script>
 
 <template>
   <PageLay class="change-pwd-view">
-    <CardBox title="账户修改密码" padding="10px">
-      <a-form :model="form" :style="{ width: '600px' }" :rules="rules" @submit="handleSubmit">
+    <CardBox title="账户修改密码" :padding="['10px', '20px']">
+      <a-form
+        :model="form"
+        :rules="rules"
+        @submit="handleSubmit"
+        :style="{ maxWidth: '600px', width: '100%' }"
+        layout="vertical"
+      >
         <a-form-item label="旧密码" field="oldPassword">
           <a-input-password v-model="form.oldPassword" placeholder="请输入旧密码" />
         </a-form-item>
@@ -64,10 +70,10 @@ const handleSubmit = async (values, errors) => {
           <a-input-password v-model="form.confirmPassword" placeholder="请确认新密码" />
         </a-form-item>
         <a-form-item>
-          <a-button type="primary" status="success" html-type="submit">提交</a-button>
+          <a-button type="primary" status="success" html-type="submit" long>提交</a-button>
         </a-form-item>
       </a-form>
-      <a-alert title="密码规则">
+      <a-alert class="password-rules">
         密码需符合以下规则:<br />
         1.必须是8-16位的大小写字母及数字组合<br />
         2.不可相连3位以上连续数字 (如: Asdf1234)<br />
@@ -84,6 +90,28 @@ const handleSubmit = async (values, errors) => {
 
 <style lang="less" scoped>
 .change-pwd-view {
-  /* Add your styles here */
+  padding: 16px;
+
+  .password-rules {
+    margin-top: 20px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px;
+
+    :deep(.a-form-item-label) {
+      font-size: 14px;
+    }
+
+    :deep(.a-input, .a-btn) {
+      height: 40px;
+    }
+
+    .password-rules {
+      font-size: 11px;
+    }
+  }
 }
 </style>

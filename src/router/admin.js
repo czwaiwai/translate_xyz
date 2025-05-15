@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 // import HomeView from '../admin/HomeView.vue'
 import { useUserStore } from '@/stores'
-import AdminLay from '../admin/AdminLay.vue'
+import AdminLay from '../layout/AdminLay.vue'
 import RouteNext from '@/components/RouteNext.vue'
 const router = createRouter({
   linkActiveClass: 'link-active',
@@ -26,25 +26,26 @@ const router = createRouter({
           meta: { title: '' },
           component: RouteNext,
           redirect: '/total-tab/total-details',
-          children: [{
-            path: 'total-details',
-            name: 'TotalDetails',
-            meta: { title: '总货明细' },
-            component: () => import('../admin/TotalDetails.vue'),
-          },
-          {
-            path: 'win-details',
-            name: 'WinDetails',
-            meta: { title: '中奖明细' },
-            component: () => import('../admin/WinDetails.vue'),
-          },
-          {
-            path: 'handicap-details',
-            name: 'HandicapDetails',
-            meta: { title: '拦货明细' },
-            component: () => import('../admin/HandicapDetails.vue'),
-          }
-          ]
+          children: [
+            {
+              path: 'total-details',
+              name: 'TotalDetails',
+              meta: { title: '总货明细' },
+              component: () => import('../admin/TotalDetails.vue'),
+            },
+            {
+              path: 'win-details',
+              name: 'WinDetails',
+              meta: { title: '中奖明细' },
+              component: () => import('../admin/WinDetails.vue'),
+            },
+            {
+              path: 'handicap-details',
+              name: 'HandicapDetails',
+              meta: { title: '拦货明细' },
+              component: () => import('../admin/HandicapDetails.vue'),
+            },
+          ],
         },
         {
           path: 'report-class',
@@ -131,7 +132,7 @@ const router = createRouter({
               path: 'power-opera',
               name: 'PowerOpera',
               meta: { title: '越级操作' },
-              component:  () => import('../admin/PowerOpera.vue'),
+              component: () => import('../admin/PowerOpera.vue'),
             },
           ],
         },
@@ -158,7 +159,7 @@ const router = createRouter({
               path: 'level-manage-list',
               name: 'LevelManageList',
               meta: { title: '下级管理' },
-              component:  () => import('../admin/LevelManageList.vue'),
+              component: () => import('../admin/LevelManageList.vue'),
             },
           ],
         },
@@ -232,7 +233,7 @@ const router = createRouter({
               meta: { title: '新增子账号' },
               component: () => import('../admin/CreateSubAccount.vue'),
             },
-          ]
+          ],
         },
         {
           path: 'handicap-dealer',
@@ -277,7 +278,7 @@ const router = createRouter({
               meta: { title: '', info: '四字现' },
               component: () => import('../admin/HandicapFourPresent.vue'),
             },
-          ]
+          ],
           // component: () => import('../admin/HandicapDealer.vue'),
         },
       ],

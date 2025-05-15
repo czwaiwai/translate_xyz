@@ -197,15 +197,14 @@ defineExpose({ getActives, restActive })
               <div class="flex-item p4 gbr bc_333">
                 <PosiBtns v-model="posiValues" :gameType="gameType"></PosiBtns>
               </div>
-              <div class="sub-form flex-box flex-cv flex-ch">
+              <!-- <div class="sub-form flex-box flex-cv flex-ch">
                 <form @submit.prevent="submitHandle" class="flex-inline gap4">
                   <label class="fs22">赔率 <input class="w60 input-h36" /></label>
                   <label class="fs22">金额： <input class="w60 input-h36" /></label>
                   <button type="submit" class="pri-btn-h36">{{ betBtnText }}</button>
-                  <!-- <button type="button" class="pri-btn-h36">包牌</button> -->
                   <button type="button" @click="cancelHandle" class="pri-btn-h36">取消</button>
                 </form>
-              </div>
+              </div> -->
             </div>
           </td>
         </tr>
@@ -233,6 +232,7 @@ defineExpose({ getActives, restActive })
 <style lang="less" scoped>
 .two-game-mod {
   user-select: none;
+  min-width: 900px;
   table.game-table {
     border-collapse: collapse;
     width: 100%;

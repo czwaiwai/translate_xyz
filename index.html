@@ -3,8 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
     <title>会员</title>
+    <script>
+      // 动态设置 viewport
+      function initViewport() {
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent,
+        )
+        const viewport = document.querySelector('meta[name="viewport"]')
+        if (isMobile) {
+          viewport.setAttribute(
+            'content',
+            'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
+          )
+        } else {
+          viewport.setAttribute('content', 'width=1200, initial-scale=1.0')
+        }
+      }
+      window.addEventListener('load', initViewport)
+      window.addEventListener('resize', initViewport)
+    </script>
   </head>
   <body>
     <div id="app"></div>

@@ -2,18 +2,18 @@
 defineOptions({
   name: 'IndexLay',
 })
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const feature = ref();
+const feature = ref()
 console.log(feature)
 </script>
 <template>
-  <a-layout ref="featrue" theme="light" class="h100 ">
+  <a-layout ref="featrue" theme="light" class="h100">
     <a-layout-header>
       <MemHeader />
     </a-layout-header>
     <a-layout>
-      <a-layout-sider width="250">
+      <a-layout-sider :width="250">
         <SiderLeft></SiderLeft>
       </a-layout-sider>
       <a-layout-content class="layout_content">
@@ -27,6 +27,7 @@ console.log(feature)
 </template>
 
 <style lang="less" scoped>
+/* 保持 PC 端布局样式 */
 :deep(.arco-layout-has-sider) {
   flex-shrink: 0;
   height: 0;

@@ -130,6 +130,7 @@ const quickHandle = () => {
   })
 }
 const betType = inject('betType', '')
+const isMobile = inject('isMobile', false)
 const betBtnText = computed(() => {
   if (betType.value === 'bet') {
     return '下单'
@@ -158,18 +159,26 @@ const submitHandle = () => {}
           <label>四字现 <input type="checkbox" /></label>
           <label class="ml10">全转 <input type="checkbox" /></label>
         </template>
-        <form @submit.prevent="submitHandle" class="flex-inline">
-          <label class="ml10 fs22"
-            >赔率 <input name="betNo" type="text" class="w60 input-h36"
-          /></label>
-          <label class="ml10 fs22"
-            >号码 <input name="betNo" type="text" class="w60 input-h36"
-          /></label>
-          <label class="ml10 fs22"
-            >金额 <input name="money" type="text" class="w60 input-h36"
-          /></label>
-          <button type="submit" class="ml20 pri-btn-h36">{{ betBtnText }}</button>
-          <button type="button" @click="quickHandle" class="ml10">取消</button>
+        <form
+          @submit.prevent="submitHandle"
+          class="flex-inline gap10"
+          :class="isMobile ? 'flex-flow' : ''"
+        >
+          <div class="flex-inline gap10">
+            <label class="fs22"
+              >赔率 <input name="betNo" type="text" class="w60 input-h36"
+            /></label>
+            <label class="fs22"
+              >号码 <input name="betNo" type="text" class="w60 input-h36"
+            /></label>
+            <label class="fs22"
+              >金额 <input name="money" type="text" class="w60 input-h36"
+            /></label>
+          </div>
+          <div class="flex-inline gap10">
+            <button type="submit" class="pri-btn-h36">{{ betBtnText }}</button>
+            <button type="button" @click="quickHandle" class="">取消</button>
+          </div>
           <!-- <button type="button" @click="quickHandle" class="ml10 pri-btn-h36">极速快打</button> -->
         </form>
       </CardBox>

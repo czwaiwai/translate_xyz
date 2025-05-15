@@ -13,7 +13,7 @@ defineOptions({
   name: 'QuickChooseView',
 })
 const gameType = ref('20')
-
+const isMobile = inject('isMobile')
 const topCate = computed(() => {
   const [all, ...arr] = emnum.topCate
   return arr
@@ -59,7 +59,7 @@ const betBtnText = computed(() => {
 
 <template>
   <PageLay class="quick-choose-view">
-    <div class="flex-box gap6">
+    <div class="flex-box gap6" :class="isMobile ? 'flex-wrap' : ''">
       <div class="flex-item">
         <CardBox class="flex-item" title="生成号码框" padding="0" minHeight="300px">
           <table class="nums-table">
@@ -70,22 +70,32 @@ const betBtnText = computed(() => {
             </tbody>
           </table>
         </CardBox>
-        <CardBox class="flex-item" title="发送框" flexBox padding="0">
-          <form class="flex-item flex-inline ptb6 plr4 flex-cv gap10">
-            <label class="fs22 flex-inline flex-cv"
-              >赔率 <input class="mlr4 w60 input-h36"
-            /></label>
-            <label class="fs22 flex-inline flex-cv"
-              >金额 <input class="mlr4 w60 input-h36"
-            /></label>
-            <button class="pri-btn-h36">{{ betBtnText }}</button>
-            <template v-if="!showByX">
-              <!-- <button class="pri-btn-h36 ">包牌</button> -->
+        <CardBox
+          class="flex-item"
+          title="发送框"
+          flexBox
+          padding="0"
+          :bdClassName="isMobile ? 'flex-flow' : 'flex-cv'"
+        >
+          <form
+            class="flex-item flex-inline ptb6 plr4 gap10"
+            :class="isMobile ? 'flex-flow' : 'flex-cv'"
+          >
+            <div class="flex-inline gap10">
+              <label class="fs22 flex-inline gap4 flex-cv"
+                >赔率 <input class="w60 input-h36"
+              /></label>
+              <label class="fs22 flex-inline gap4 flex-cv"
+                >金额 <input class="w60 input-h36"
+              /></label>
+              <button class="pri-btn-h36">{{ betBtnText }}</button>
+            </div>
+            <!-- <template v-if="!showByX">
               <button class="pri-btn-h36">录入汇总表</button>
-            </template>
+            </template> -->
           </form>
-          <div class="div-green-border">
-            <div class="gbb w130">笔数：{{ list.length }}</div>
+          <div class="div-green-border" :class="isMobile ? 'flex-box' : ''">
+            <div class="w130">笔数：{{ list.length }}</div>
             <div class="w130">金额：0元</div>
           </div>
         </CardBox>
@@ -103,12 +113,6 @@ const betBtnText = computed(() => {
               </a-radio-group>
             </div>
           </template>
-          <!-- <FormTwoP ref="formTwoP"  v-if="gameType==='20'"></FormTwoP>
-          <FormThreeP ref="formThreeP"  v-if="gameType==='30'"></FormThreeP>
-          <FormFourP ref="formFourP"  v-if="gameType==='40'"></FormFourP>
-          <FormTwoX  ref="formTwoX" v-if="gameType==='21'"></FormTwoX>
-          <FormThreeX  v-if="gameType==='31'"></FormThreeX>
-          <FormFourX  v-if="gameType==='41'"></FormFourX> -->
           <Component ref="formRef" :is="tabsObj[gameType]" @submitData="submitData"></Component>
           <template #footer>
             <div class="flex-box flex-ch flex-cv gap10 bt ptb4">

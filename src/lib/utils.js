@@ -175,80 +175,74 @@ export function mergeBets(arr1, arr2) {
 
 // 替换所有template中的口为数字
 export function replaceChars(str, template) {
-  let index = 0;
-  return template.replace(/口/g, () => (index < str.length ? str[index++] : '口'));
+  let index = 0
+  return template.replace(/口/g, () => (index < str.length ? str[index++] : '口'))
 }
 
 // 生成一个字符串的所有组合
- export function getAllPermutations(str) {
+export function getAllPermutations(str) {
   if (str.length !== 4) {
-    throw new Error('Input string must be exactly 4 characters long');
+    throw new Error('Input string must be exactly 4 characters long')
   }
 
-  const chars = str.split('');
+  const chars = str.split('')
 
   // 使用 reduce 生成所有可能的排列组合
   const permutations = reduce(
     chars,
     (result, char) => {
-      if (result.length === 0) return [[char]];
+      if (result.length === 0) return [[char]]
 
       // 使用 flatMap 在每个现有排列的每个可能位置插入新字符
       return flatMap(result, (perm) => {
-        const spots = Array(perm.length + 1).fill(null);
-        return spots.map((_, i) => [
-          ...perm.slice(0, i),
-          char,
-          ...perm.slice(i)
-        ]);
-      });
+        const spots = Array(perm.length + 1).fill(null)
+        return spots.map((_, i) => [...perm.slice(0, i), char, ...perm.slice(i)])
+      })
     },
-    []
-  );
+    [],
+  )
 
   // 转换结果数组并去重
-  return Array.from(
-    new Set(
-      permutations.map(arr => arr.join(''))
-    )
-  );
+  return Array.from(new Set(permutations.map((arr) => arr.join(''))))
 }
 // 生成一个字符串所有二字组合
 export function strTwoComb(str) {
-  const result = [];
-  const chars = str.split(''); // 将字符串拆分为字符数组
+  const result = []
+  const chars = str.split('') // 将字符串拆分为字符数组
   for (let i = 0; i < chars.length; i++) {
-      for (let j = 0; j < chars.length; j++) {
-          if (i !== j) { // 确保两个字符不相同
-              result.push(chars[i] + chars[j]);
-          }
+    for (let j = 0; j < chars.length; j++) {
+      if (i !== j) {
+        // 确保两个字符不相同
+        result.push(chars[i] + chars[j])
       }
+    }
   }
-  return result;
+  return result
 }
 
 export function getAllCombinations(str, combinationLength) {
-  const result = [];
-  const chars = str.split(''); // 将字符串拆分为字符数组
+  const result = []
+  const chars = str.split('') // 将字符串拆分为字符数组
 
   // 递归函数，用于生成组合
   function generateCombinations(currentCombination, startIndex) {
-      if (currentCombination.length === combinationLength) {
-          result.push(currentCombination.join(''));
-          return;
-      }
+    if (currentCombination.length === combinationLength) {
+      result.push(currentCombination.join(''))
+      return
+    }
 
-      for (let i = 0; i < chars.length; i++) {
-          if (currentCombination.indexOf(chars[i]) === -1) { // 确保字符不重复
-              currentCombination.push(chars[i]);
-              generateCombinations(currentCombination, i + 1);
-              currentCombination.pop(); // 回溯，移除最后一个字符
-          }
+    for (let i = 0; i < chars.length; i++) {
+      if (currentCombination.indexOf(chars[i]) === -1) {
+        // 确保字符不重复
+        currentCombination.push(chars[i])
+        generateCombinations(currentCombination, i + 1)
+        currentCombination.pop() // 回溯，移除最后一个字符
       }
+    }
   }
 
-  generateCombinations([], 0);
-  return result;
+  generateCombinations([], 0)
+  return result
 }
 // 去掉号码中的X的到纯粹的数字
 export function delX(str) {
@@ -411,7 +405,10 @@ export function validLogar(input) {
 
 // 得到字符串中字母为T的索引
 export function getIndexs(str) {
-  return str.split('').map((item, index) => item === 'T' ? index: -1).filter(item => item !== -1 )
+  return str
+    .split('')
+    .map((item, index) => (item === 'T' ? index : -1))
+    .filter((item) => item !== -1)
 }
 
 // 数组中指定位置取单
@@ -431,7 +428,7 @@ export function filterEven(arr, indexs) {
   return arr.filter((item) =>
     item.split('').reduce((before, sub, index) => {
       if (indexs.includes(index)) {
-        if(sub === 'X') return false
+        if (sub === 'X') return false
         return sub % 2 === 0 && before
       }
       return before
@@ -443,7 +440,7 @@ export function filterBig(arr, indexs) {
   return arr.filter((item) =>
     item.split('').reduce((before, sub, index) => {
       if (indexs.includes(index)) {
-        if(sub === 'X') return false
+        if (sub === 'X') return false
         return +sub >= 5 && before
       }
       return before
@@ -455,10 +452,14 @@ export function filterSmall(arr, indexs) {
   return arr.filter((item) =>
     item.split('').reduce((before, sub, index) => {
       if (indexs.includes(index)) {
-        if(sub === 'X') return false
+        if (sub === 'X') return false
         return +sub < 5 && before
       }
       return before
     }, true),
   )
+}
+
+export function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 }

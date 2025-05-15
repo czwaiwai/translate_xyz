@@ -1,25 +1,25 @@
 <script setup>
-import { ref, computed, inject } from 'vue';
-import { useGameStore } from '@/stores';
+import { ref, computed, inject } from 'vue'
+import { useGameStore } from '@/stores'
 defineOptions({
-  name: 'CardBox'
+  name: 'CardBox',
 })
 const props = defineProps({
   title: {
     type: String,
-    default: ''
+    default: '',
   },
   padding: {
     type: String,
-    default: '4px'
+    default: '4px',
   },
   close: {
     type: String,
-    default: ''
+    default: '',
   },
   space: {
     type: String,
-    default: '10px'
+    default: '10px',
   },
   minHeight: {
     type: String,
@@ -27,13 +27,17 @@ const props = defineProps({
   },
   flexBox: {
     type: Boolean,
-    default: false
+    default: false,
+  },
+  bdClassName: {
+    type: String,
+    default: '',
   },
   blue: Boolean,
   center: Boolean,
   hideHead: Boolean,
   hideBorder: Boolean,
-  hideContent: Boolean
+  hideContent: Boolean,
 })
 const color = inject('theme')
 const gameStore = useGameStore()
@@ -48,20 +52,20 @@ const headClass = computed(() => {
   return tmp
 })
 const bdClass = computed(() => {
-  if(props.flexBox) {
-    return 'flex-box'
+  if (props.flexBox) {
+    return 'flex-box ' + props.bdClassName
   }
-  return ''
+  return '' + props.bdClassName
 })
-const toggle = ref(true);
+const toggle = ref(true)
 const toggleCont = () => {
-  toggle.value = !toggle.value;
-  return toggle.value;
+  toggle.value = !toggle.value
+  return toggle.value
 }
-const waitOpen =  computed(() => {
+const waitOpen = computed(() => {
   return props.close || gameStore.statusTxt
 })
-defineExpose({toggleCont})
+defineExpose({ toggleCont })
 </script>
 
 <template>
@@ -73,7 +77,7 @@ defineExpose({toggleCont})
     </div>
     <div v-show="toggle" class="card-box-bd" :class="bdClass">
       <template v-if="waitOpen">
-        <div class="card-box-close" >
+        <div class="card-box-close">
           {{ close }}
         </div>
       </template>
@@ -87,7 +91,6 @@ defineExpose({toggleCont})
   </div>
 </template>
 
-
 <style lang="less" scoped>
 .card-box + .card-box {
   margin-top: v-bind(space);
@@ -98,8 +101,8 @@ defineExpose({toggleCont})
     margin-bottom: 0;
   }
   &-close {
-    min-height:300px;
-    padding-top:140px;
+    min-height: 300px;
+    padding-top: 140px;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -109,7 +112,7 @@ defineExpose({toggleCont})
     background-image: linear-gradient(180deg, #3494e3, #283785);
     height: 28px;
     padding: 0 4px;
-    color: #FFF;
+    color: #fff;
     line-height: 28px;
     font-size: 12px;
     font-weight: bold;
@@ -124,7 +127,7 @@ defineExpose({toggleCont})
   }
 
   &-title {
-    color: #FFF;
+    color: #fff;
     line-height: 28px;
     font-size: 12px;
     font-weight: bold;
@@ -132,7 +135,7 @@ defineExpose({toggleCont})
 
   &-bd {
     padding: v-bind(padding);
-    background: #FFF;
+    background: #fff;
     min-height: v-bind(minHeight);
   }
 
@@ -140,6 +143,7 @@ defineExpose({toggleCont})
     border: 1px solid #640000;
   }
 
-  &-ft {}
+  &-ft {
+  }
 }
 </style>
