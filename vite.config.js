@@ -18,6 +18,7 @@ export default defineConfig(({ command }) => {
         input: {
           main: fileURLToPath(new URL('./index.html', import.meta.url)),
           admin: fileURLToPath(new URL('./admin.html', import.meta.url)),
+          mobile: fileURLToPath(new URL('./mobile.html', import.meta.url)),
         },
       },
     },
