@@ -461,6 +461,6 @@ export function filterSmall(arr, indexs) {
 }
 
 export function isMobile() {
-  return false
+  return window.isMobile
   // return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 }

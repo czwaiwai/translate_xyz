@@ -19,7 +19,7 @@ app.use(router)
 app.provide('app', app)
 app.provide('theme', 'green')
 app.provide('breadcrumb', false)
-app.provide('isMobile', isMobile())
+app.provide('isMobile', window.isMobile)
 app.config.errorHandler = function (err, vm, info) {
   err && console.error(err)
   return false
