@@ -219,6 +219,24 @@ export function strTwoComb(str) {
   }
   return result
 }
+// 生成一个字符串所有三字组合
+export function strThreeComb(str) {
+  const result = []
+  const digits = str.split('') // 将字符串拆分为字符数组
+  // 使用三重循环生成所有可能的三位数组合
+  for (let i = 0; i < digits.length; i++) {
+    for (let j = 0; j < digits.length; j++) {
+      for (let k = 0; k < digits.length; k++) {
+        // 确保三个数字不相同
+        if (i !== j && i !== k && j !== k) {
+          const combination = digits[i] + digits[j] + digits[k]
+          result.push(combination)
+        }
+      }
+    }
+  }
+  return result
+}
 
 export function getAllCombinations(str, combinationLength) {
   const result = []
