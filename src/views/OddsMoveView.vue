@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 // OddsMoveView is
 defineOptions({
-  name: "OddsMoveView"
-});
+  name: 'OddsMoveView',
+})
 // const message = ref("odds-move-view");
 </script>
 
@@ -14,37 +14,37 @@ defineOptions({
       <template #header>
         <div class="card-box-title tc mode_radio">
           <a-radio-group default-value="1">
-              <a-radio value="1">
-                <template #radio="{ checked }">
-                  <a-link :status="checked?'warning':''" >二定位</a-link>
-                </template>
-              </a-radio>
-              <a-radio value="2">
-                <template #radio="{ checked }">
-                  <a-link :status="checked?'warning':''" >三定位</a-link>
-                </template>
-              </a-radio>
-              <a-radio value="3">
-                <template #radio="{ checked }">
-                  <a-link :status="checked?'warning':''" >四定位</a-link>
-                </template>
-              </a-radio>
-              <a-radio value="4">
-                <template #radio="{ checked }">
-                  <a-link :status="checked?'warning':''" >二字现</a-link>
-                </template>
-              </a-radio>
-              <a-radio value="5">
-                <template #radio="{ checked }">
-                  <a-link :status="checked?'warning':''" >三字现</a-link>
-                </template>
-              </a-radio>
-              <a-radio value="6">
-                <template #radio="{ checked }">
-                  <a-link :status="checked?'warning':''" >四字现</a-link>
-                </template>
-              </a-radio>
-            </a-radio-group>
+            <a-radio value="1">
+              <template #radio="{ checked }">
+                <a-link :status="checked ? 'warning' : ''">二定位</a-link>
+              </template>
+            </a-radio>
+            <a-radio value="2">
+              <template #radio="{ checked }">
+                <a-link :status="checked ? 'warning' : ''">三定位</a-link>
+              </template>
+            </a-radio>
+            <a-radio value="3">
+              <template #radio="{ checked }">
+                <a-link :status="checked ? 'warning' : ''">四定位</a-link>
+              </template>
+            </a-radio>
+            <a-radio value="4">
+              <template #radio="{ checked }">
+                <a-link :status="checked ? 'warning' : ''">二字现</a-link>
+              </template>
+            </a-radio>
+            <a-radio value="5">
+              <template #radio="{ checked }">
+                <a-link :status="checked ? 'warning' : ''">三字现</a-link>
+              </template>
+            </a-radio>
+            <a-radio value="6">
+              <template #radio="{ checked }">
+                <a-link :status="checked ? 'warning' : ''">四字现</a-link>
+              </template>
+            </a-radio>
+          </a-radio-group>
         </div>
       </template>
       <div class="odds-move-content">
@@ -79,41 +79,44 @@ defineOptions({
           </tbody>
         </table>
       </div>
-      </CardBox>
+    </CardBox>
   </PageLay>
 </template>
 
 <style lang="less" scoped>
 .odds-move-view {
   .table_num {
-    width:100%;
+    width: 100%;
     text-align: center;
-    td,th {
-      border: 1px solid #bdf0bc;
+    td,
+    th {
+      border: 1px solid var(--table-border-color);
       height: 22px;
       border-width: 0 1px 1px 0;
       padding: 2px 4px;
     }
     th {
-      background:#F0F0F0;
+      background: #f0f0f0;
     }
-    th:nth-child(4n+3), th:nth-child(4n+4) {
+    th:nth-child(4n + 3),
+    th:nth-child(4n + 4) {
       background: #fffeaa;
     }
-    td:nth-child(4n+3), td:nth-child(4n+4) {
+    td:nth-child(4n + 3),
+    td:nth-child(4n + 4) {
       background: #fffeaa;
     }
   }
   .mode_radio {
     :deep(.arco-radio) {
-      margin-right:6px;
+      margin-right: 6px;
       .arco-link {
-        color:#fff;
-        &.arco-link-status-warning{
-          color:red;
+        color: #fff;
+        &.arco-link-status-warning {
+          color: red;
         }
         &:hover {
-          background:transparent;
+          background: transparent;
         }
       }
     }

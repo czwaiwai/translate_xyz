@@ -229,7 +229,7 @@ defineExpose({
   gap: 0;
 
   .flex-item {
-    outline: 1px solid #bdf0bc;
+    outline: 1px solid var(--table-border-color);
   }
 
   /* Add your styles here */

@@ -16,7 +16,7 @@ export const useGameStore = defineStore('game', () => {
   const packageInfo = ref({
     twoArr: [],
     threeArr: [],
-    fourArr: []
+    fourArr: [],
   })
   const gameInfo = ref({
     name: '',
@@ -35,7 +35,7 @@ export const useGameStore = defineStore('game', () => {
     packageInfo.value[type + 'Arr'] = mergeBets(toRaw(packageInfo.value[`${type}Arr`]), arr)
   }
   function clearPackageData(type) {
-    if(type) {
+    if (type) {
       packageInfo.value[`${type}Arr`] = []
     } else {
       packageInfo.value.twoArr = []
@@ -50,6 +50,7 @@ export const useUserStore = defineStore(
   'user',
   () => {
     const token = ref('')
+    const refreshToken = ref('')
     // userInfo = {
     //   name: 'y05',
     //   token: 'xxxxxxx',
@@ -59,29 +60,42 @@ export const useUserStore = defineStore(
     //   serialNum: '25089',
     // }
     const userdefault = {
-      name: '',
+      id: '',
+      username: '',
+      nickname: '',
       token: '',
       credit: 0,
       used: 0,
       canUse: 0,
-      serialNum: '',
+      // serialNum: '',
     }
     const userInfo = ref(userdefault)
 
-    function setUserInfo(obj) {
-      userInfo.value.name = obj.name
-      userInfo.value.token = obj.token
-      userInfo.value.credit = obj.credit
-      userInfo.value.used = obj.used
-      userInfo.value.canUse = obj.canUse
-      userInfo.value.serialNum = obj.serialNum
-      token.value = obj.token
+    function setUserInfo(data) {
+      let { userInfo: obj, accessToken, refreshToken: longToken } = data
+      userInfo.value.id = obj.userId
+      userInfo.value.nickname = obj.nickName
+      userInfo.value.username = obj.userName
+      userInfo.value.token = accessToken
+      userInfo.value.credit = obj.balance // 剩余
+      userInfo.value.used = obj.usedCredit // 已使用
+      userInfo.value.canUse = obj.creditMax // 最大限额
+      // userInfo.value.serialNum = obj.serialNum
+      token.value = accessToken
+      refreshToken.value = longToken
+    }
+    function setToken(t) {
+      token.value = t
+    }
+    function setRefreshToken(t) {
+      refreshToken.value = t
     }
     function logout() {
       userInfo.value = cloneDeep(userdefault)
       token.value = ''
+      refreshToken.value = ''
     }
-    return { token, userInfo, setUserInfo, logout }
+    return { token, refreshToken, userInfo, setUserInfo, logout, setToken, setRefreshToken }
   },
   {
     persist: true,

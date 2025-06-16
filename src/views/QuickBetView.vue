@@ -183,61 +183,6 @@ const submitHandle = () => {}
         </form>
       </CardBox>
     </div>
-    <!-- <div class="page-view wp200">
-      <CardBox padding="0">
-        <template #header>
-          <div class="card-box-hd flex-box">
-            <div class="flex-item tc bold">目前停押号码</div>
-            <div class="card-box-hd-right">
-              <SelectBox v-model="select" :options="options"></SelectBox>
-            </div>
-          </div>
-        </template>
-        <TableBox class="table-form-green" center>
-          <template #header>
-            <thead class="subhead">
-              <tr>
-                <th>号码</th>
-                <th>金额</th>
-                <th>全选</th>
-              </tr>
-            </thead>
-          </template>
-          <template #footer>
-            <tfoot>
-              <tr>
-                <td colspan="3" class="tc">
-                  <span class="bold">笔数：0</span>
-                  <span class="ml10 bold">总金额：0</span>
-                </td>
-              </tr>
-            </tfoot>
-          </template>
-        </TableBox>
-      </CardBox>
-      <CardBox title="删除停押号码保留区" padding="0" center>
-        <TableBox class="table-form-green" center>
-          <template #header>
-            <thead class="subhead">
-              <tr>
-                <th>号码</th>
-                <th>金额</th>
-              </tr>
-            </thead>
-          </template>
-          <template #footer>
-            <tfoot>
-              <tr>
-                <td colspan="2" class="tc">
-                  <span class="bold">笔数：0</span>
-                  <span class="ml10 bold">总金额：0</span>
-                </td>
-              </tr>
-            </tfoot>
-          </template>
-        </TableBox>
-      </CardBox>
-    </div> -->
   </PageLay>
 </template>
 

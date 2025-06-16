@@ -1,17 +1,20 @@
 <script setup>
 import { ref, computed, shallowRef, inject } from 'vue'
-import { emnum } from '@/lib/api'
+import api, { emnum } from '@/lib/api'
 import { chunk } from 'lodash-es'
+import { useUserStore } from '@/stores'
 import FormTwoP from '@/components/FormTwoP.vue'
 import FormThreeP from '@/components/FormThreeP.vue'
 import FormFourP from '@/components/FormFourP.vue'
 import FormTwoX from '@/components/FormTwoX.vue'
 import FormThreeX from '@/components/FormThreeX.vue'
 import FormFourX from '@/components/FormFourX.vue'
+import { Message } from '@arco-design/web-vue'
 // QuickChooseView is
 defineOptions({
   name: 'QuickChooseView',
 })
+const userStore = useUserStore()
 const gameType = ref('20')
 const isMobile = inject('isMobile')
 const topCate = computed(() => {
@@ -55,6 +58,27 @@ const betBtnText = computed(() => {
   }
   return '确认下注'
 })
+
+const formObj = ref({
+  odds: '',
+  amount: '',
+})
+const totalAmount = computed(() => {
+  return list.value.length * formObj.value.amount
+})
+const submitHandle = async () => {
+  console.log('submit')
+  await api.tradeRecordBet({
+    drawNo: '0001',
+    betType: betType.value === 'bet' ? 'buy' : 'sell',
+    odds: formObj.value.odds,
+    tradeAmount: formObj.value.amount,
+    items: list.value,
+    userId: userStore.userInfo.id,
+  })
+  Message.success('下注成功')
+  resetHandle()
+}
 </script>
 
 <template>
@@ -78,17 +102,18 @@ const betBtnText = computed(() => {
           :bdClassName="isMobile ? 'flex-flow' : 'flex-cv'"
         >
           <form
+            @submit.prevent="submitHandle"
             class="flex-item flex-inline ptb6 plr4 gap10"
             :class="isMobile ? 'flex-flow' : 'flex-cv'"
           >
             <div class="flex-inline gap10">
               <label class="fs22 flex-inline gap4 flex-cv"
-                >赔率 <input class="w60 input-h36"
+                >赔率 <input v-model="formObj.odds" class="w60 input-h36"
               /></label>
               <label class="fs22 flex-inline gap4 flex-cv"
-                >金额 <input class="w60 input-h36"
+                >金额 <input v-model="formObj.amount" class="w60 input-h36"
               /></label>
-              <button class="pri-btn-h36">{{ betBtnText }}</button>
+              <button type="submit" class="pri-btn-h36">{{ betBtnText }}</button>
             </div>
             <!-- <template v-if="!showByX">
               <button class="pri-btn-h36">录入汇总表</button>
@@ -96,7 +121,7 @@ const betBtnText = computed(() => {
           </form>
           <div class="div-green-border" :class="isMobile ? 'flex-box' : ''">
             <div class="w130">笔数：{{ list.length }}</div>
-            <div class="w130">金额：0元</div>
+            <div class="w130">金额：{{ totalAmount }}元</div>
           </div>
         </CardBox>
       </div>

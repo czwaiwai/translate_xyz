@@ -10,7 +10,7 @@ const userStore = useUserStore()
         <tbody>
           <tr>
             <th>账号：</th>
-            <td>{{ userStore.userInfo.name }}</td>
+            <td>{{ userStore.userInfo.username }}</td>
           </tr>
           <tr>
             <th>

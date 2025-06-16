@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Message } from '@arco-design/web-vue'
 import { useUserStore } from '@/stores/index.js'
-import * as api from '@/lib/api.js'
+import api from '@/lib/api.js'
 
 defineOptions({
   name: 'LoginView',
@@ -26,24 +26,21 @@ const handleSubmit = async ({ values, errors }) => {
   if (errors) {
     return
   }
-  // let res = await api.login({
-  //   username: formData.value.username,
-  //   password: formData.value.password
-  // }).catch(err => {
-  //   Message.error('登录失败，请稍后再试');
-  //   return Promise.reject(err);
-  // })
+  let res = await api.login({
+    userName: formData.value.username,
+    password: formData.value.password,
+  })
   // console.log(res.data)
-  let res = {
-    data: {
-      name: 'y05',
-      token: 'xxxxxxx',
-      credit: 0,
-      used: 0,
-      canUse: 0,
-      serialNum: '25089',
-    },
-  }
+  // let res = {
+  //   data: {
+  //     name: 'y05',
+  //     token: 'xxxxxxx',
+  //     credit: 0,
+  //     used: 0,
+  //     canUse: 0,
+  //     serialNum: '25089',
+  //   },
+  // }
   userStore.setUserInfo(res.data)
   Message.success('登录成功')
   router.push('/home')

@@ -1,92 +1,94 @@
 <script setup>
-import { computed, inject } from 'vue';
+import { computed, inject } from 'vue'
 // TableBox is
 defineOptions({
-  name: "TableBox"
-});
+  name: 'TableBox',
+})
 let theme = inject('theme', 'blue')
 const props = defineProps({
   title: {
     type: Array,
-    default: () => [{
-      name: 'openTime',
-      value: '开奖时间',
-      width: '13%',
-    },
-    {
-      name: 'issue',
-      value: '期号',
-      width: '10%'
-    },
-    {
-      name: 'qian',
-      value: '仟',
-      width: '10%'
-    },
-    {
-      name: 'bai',
-      value: '佰',
-      width: '10%'
-    },
-    {
-      name: 'shi',
-      value: '拾',
-      width: '10%'
-    },
-    {
-      name: 'ge',
-      value: '个',
-      width: '10%'
-    },
-    {
-      name: 'ball5',
-      value: '球5',
-      width: '10%'
-    }]
+    default: () => [
+      {
+        name: 'openTime',
+        value: '开奖时间',
+        width: '13%',
+      },
+      {
+        name: 'issue',
+        value: '期号',
+        width: '10%',
+      },
+      {
+        name: 'qian',
+        value: '仟',
+        width: '10%',
+      },
+      {
+        name: 'bai',
+        value: '佰',
+        width: '10%',
+      },
+      {
+        name: 'shi',
+        value: '拾',
+        width: '10%',
+      },
+      {
+        name: 'ge',
+        value: '个',
+        width: '10%',
+      },
+      {
+        name: 'ball5',
+        value: '球5',
+        width: '10%',
+      },
+    ],
   },
   data: {
     type: Array,
-    default: () => []
+    default: () => [],
   },
   center: Boolean,
-});
+})
 const formatData = computed(() => {
-  return props.data.map(item => {
+  return props.data.map((item) => {
     const newItem = {
-      list: []
-    };
-    props.title.forEach(titleItem => {
+      list: [],
+    }
+    props.title.forEach((titleItem) => {
       if (titleItem.colspan && titleItem.colspan.length) {
-        return titleItem.colspan.forEach(col => {
+        return titleItem.colspan.forEach((col) => {
           newItem.list.push({
             name: col,
             value: item[col],
-          });
-        });
+          })
+        })
       }
       newItem.list.push({
         name: titleItem.name,
         value: item[titleItem.name],
-      });
-    });
-    return newItem;
-  });
-});
+      })
+    })
+    return newItem
+  })
+})
 const withOutProp = (item) => {
-  const { name, value, colspan, ...rest } = item;
+  const { name, value, colspan, ...rest } = item
   if (colspan && colspan.length) {
-    rest.colspan = colspan.length;
+    rest.colspan = colspan.length
   }
   return {
     ...rest,
-  };
+  }
 }
 const frontClass = computed(() => {
   let tmp = ''
-  if(theme === 'green') {
+  if (theme === 'green') {
     tmp += 'front'
   }
-  if(props.center) {
+  if (props.center) {
     tmp += ' center'
   }
   return tmp
@@ -97,11 +99,11 @@ const frontClass = computed(() => {
   <div class="table-box" :class="frontClass">
     <table class="table-wrap">
       <slot name="header" :title="title">
-        <thead class="table-hd" >
+        <thead class="table-hd">
           <tr class="table-hd-tr">
             <template v-for="(item, index) in title" :key="index">
               <th class="table-hd-th" v-bind="withOutProp(item)">
-                <slot :name="'title_'+item.name" :item="item">{{ item.value }}</slot>
+                <slot :name="'title_' + item.name" :item="item">{{ item.value }}</slot>
               </th>
             </template>
           </tr>
@@ -145,18 +147,16 @@ const frontClass = computed(() => {
 
   /* Add your styles here */
   .table-hd {
-
     // #5cafcf
     background-image: linear-gradient(to bottom, #52a5c5, #1698cc 20%);
     .table-hd-th {
       text-align: left;
-      color: #FFF;
+      color: #fff;
       font-weight: bold;
       height: 30px;
       padding: 0 4px;
     }
     // background-color: #1698cc;
-
   }
 
   td,
@@ -172,11 +172,11 @@ const frontClass = computed(() => {
     }
 
     td:nth-child(2n) {
-      background: #F1F5F8;
+      background: #f1f5f8;
     }
 
     tr {
-      background: #FFF;
+      background: #fff;
     }
 
     tr:hover {
@@ -188,8 +188,8 @@ const frontClass = computed(() => {
   }
   &.front {
     .table-hd {
-      background:#F0F0F0;
-      background-image:none;
+      background: #f0f0f0;
+      background-image: none;
       .table-hd-th {
         text-align: center;
         color: #333;
@@ -200,8 +200,8 @@ const frontClass = computed(() => {
     }
     :slotted(.table-ft) {
       tr {
-        background:#F0F0F0;
-        background-image:none;
+        background: #f0f0f0;
+        background-image: none;
       }
       td {
         text-align: center;
@@ -219,7 +219,7 @@ const frontClass = computed(() => {
     }
     td,
     th {
-      border: 1px solid #bdf0bc;
+      border: 1px solid var(--table-border-color);
     }
   }
   &.center {

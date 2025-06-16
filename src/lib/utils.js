@@ -16,6 +16,11 @@ import {
 } from 'lodash-es'
 const units = ['仟', '佰', '拾', '个']
 const unitsEn = ['q', 'b', 's', 'g']
+
+// 过滤掉数组中value为0的项
+export function filterZero(arr) {
+  return arr.filter((item) => item.value !== '0')
+}
 export function getZhUnit(chars = '口XX口') {
   return chars.split('').reduce((before, char, index) => {
     if (char === '口') {
@@ -332,16 +337,16 @@ export function generateAllCombinations(...args) {
 }
 // 入参为2位3位4位
 
-export function generateAllTransform(...args) {
-  if (args.length < 2) return new Error('入参需要大于1')
-  if (args.length > 4) return new Error('入参需要小于等于4')
-  // const digitArrays = args.map(nums => (nums ? nums: 'X'))
-  return uniq(
-    getCombinations(...args)
-      .map((num) => getPermutations(num + repeat('X', 4 - num.length)))
-      .flatMap((nums) => nums),
-  )
-}
+// export function generateAllTransform(...args) {
+//   if (args.length < 2) return new Error('入参需要大于1')
+//   if (args.length > 4) return new Error('入参需要小于等于4')
+//   // const digitArrays = args.map(nums => (nums ? nums: 'X'))
+//   return uniq(
+//     getCombinations(...args)
+//       .map((num) => getPermutations(num + repeat('X', 4 - num.length)))
+//       .flatMap((nums) => nums),
+//   )
+// }
 // 函数组合 传入多个处理函数，上一个函数的处理结果是下一个函数的入参
 // export function compose(...funcs) {
 //   return flow(funcs)
