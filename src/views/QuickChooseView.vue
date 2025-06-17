@@ -2,7 +2,7 @@
 import { ref, computed, shallowRef, inject } from 'vue'
 import api, { emnum } from '@/lib/api'
 import { chunk } from 'lodash-es'
-import { useUserStore } from '@/stores'
+import { useUserStore, useGameStore } from '@/stores'
 import FormTwoP from '@/components/FormTwoP.vue'
 import FormThreeP from '@/components/FormThreeP.vue'
 import FormFourP from '@/components/FormFourP.vue'
@@ -10,17 +10,16 @@ import FormTwoX from '@/components/FormTwoX.vue'
 import FormThreeX from '@/components/FormThreeX.vue'
 import FormFourX from '@/components/FormFourX.vue'
 import { Message } from '@arco-design/web-vue'
+import { filterZero } from '@/lib/utils'
 // QuickChooseView is
 defineOptions({
   name: 'QuickChooseView',
 })
 const userStore = useUserStore()
+const gameStore = useGameStore()
 const gameType = ref('20')
 const isMobile = inject('isMobile')
-const topCate = computed(() => {
-  const [all, ...arr] = emnum.topCate
-  return arr
-})
+const topCate = ref(filterZero(emnum.topCate))
 const tabsObj = {
   20: FormTwoP,
   30: FormThreeP,
@@ -69,7 +68,7 @@ const totalAmount = computed(() => {
 const submitHandle = async () => {
   console.log('submit')
   await api.tradeRecordBet({
-    drawNo: '0001',
+    drawNo: gameStore.gameInfo.serialNum,
     betType: betType.value === 'bet' ? 'buy' : 'sell',
     odds: formObj.value.odds,
     tradeAmount: formObj.value.amount,

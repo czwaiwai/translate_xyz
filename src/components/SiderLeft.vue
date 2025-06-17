@@ -1,6 +1,7 @@
 <script setup>
-import { useUserStore } from '@/stores/index.js'
+import { useUserStore, useGameStore } from '@/stores/index.js'
 const userStore = useUserStore()
+const gameStore = useGameStore()
 </script>
 
 <template>
@@ -29,7 +30,7 @@ const userStore = useUserStore()
             </th>
             <td>
               <div>{{ userStore.userInfo.canUse }}</div>
-              <div>{{ userStore.userInfo.serialNum }}</div>
+              <div>{{ gameStore.gameInfo.serialNum }}</div>
             </td>
           </tr>
         </tbody>

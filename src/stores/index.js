@@ -2,6 +2,7 @@ import { ref, computed, toRaw } from 'vue'
 import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash-es'
 import { mergeBets } from '@/lib/utils'
+import dayjs from 'dayjs'
 export const useCounterStore = defineStore('counter', () => {
   const count = ref(0)
   const doubleCount = computed(() => count.value * 2)
@@ -13,6 +14,7 @@ export const useCounterStore = defineStore('counter', () => {
 })
 
 export const useGameStore = defineStore('game', () => {
+  const serialNum = dayjs().format('YYYYMMDD') // 期号
   const packageInfo = ref({
     twoArr: [],
     threeArr: [],
@@ -20,7 +22,7 @@ export const useGameStore = defineStore('game', () => {
   })
   const gameInfo = ref({
     name: '',
-    serialNum: '25089',
+    serialNum: serialNum,
     status: 'close', // open or close
     statusTxt: '正在开盘中...',
     datetime: '',
