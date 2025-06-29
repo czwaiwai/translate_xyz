@@ -71,7 +71,7 @@ const submitHandle = async () => {
     drawNo: gameStore.gameInfo.serialNum,
     betType: betType.value === 'bet' ? 'buy' : 'sell',
     odds: formObj.value.odds,
-    tradeAmount: formObj.value.amount,
+    tradeAmount: +formObj.value.amount,
     items: list.value,
     userId: userStore.userInfo.id,
   })
