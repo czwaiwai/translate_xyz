@@ -7,8 +7,14 @@ export const apiEnum = {
   userSearch: '/user/search',
   userCreate: '/user/create',
   userDetail: '/user/detail/:id',
+  userUpdatePwd: '/user/update-password',
   userSettingSave: '/user-setting/save',
   userSettingById: '/user-setting/get/:id',
+  lotteryResult: '/lottery-result/confirm', // 添加赛果
+  lotterySearch: '/lottery-result/search', // 查询赛果
+  userLogSearch: '/user-log/search', // 越级操作日志
+  betPoolRecommend: '/trade-record/bet-pool-recommend', // 推荐彩池
+  betPool: '/trade-record/bet-pool', // 二字定下注彩池
 }
 export const emnum = {
   twoCate: [

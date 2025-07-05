@@ -1,59 +1,63 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
+import api from '@/lib/api'
+
 // LevelManage is 下级管理
 defineOptions({
-  name: "LevelManageList"
-});
-const tableTitle = [{
-  name: 'no',
-  value: '序号',
-  width: '40',
-},
-{
-  name: 'account',
-  value: '账号',
-  width: '11%'
-},
-{
-  name: 'nextName',
-  value: '代号',
-  width: '5%'
-},
-{
-  name: 'percentage',
-  value: '占成',
-  width: '20%'
-},
-{
-  name: 'credit',
-  value: '信用额度/现金馀额',
-  width: '8%'
-},
-{
-  name: 'updateTime',
-  value: '修改时间',
-  width: '8%'
-},
-{
-  name: 'updator',
-  value: '修改者',
-  width: '4%'
-},
-{
-  name: 'ip',
-  value: '股东IP',
-  width: '8%'
-},
-{
-  name: 'status',
-  value: '查看停用',
-  width: '10%'
-},
-{
-  name: 'opera',
-  value: '内容',
-  colspan: ['opera_a', 'opera_b', 'opera_c'],
-}]
+  name: 'LevelManageList',
+})
+const tableTitle = [
+  {
+    name: 'no',
+    value: '序号',
+    width: '40',
+  },
+  {
+    name: 'userName',
+    value: '账号',
+    width: '11%',
+  },
+  {
+    name: 'nickName',
+    value: '代号',
+    width: '5%',
+  },
+  {
+    name: 'percentage',
+    value: '占成',
+    width: '20%',
+  },
+  {
+    name: 'maxCredit',
+    value: '信用额度/现金馀额',
+    width: '8%',
+  },
+  {
+    name: 'updateTime',
+    value: '修改时间',
+    width: '8%',
+  },
+  {
+    name: 'updator',
+    value: '修改者',
+    width: '4%',
+  },
+  {
+    name: 'ip',
+    value: '股东IP',
+    width: '8%',
+  },
+  {
+    name: 'status',
+    value: '查看停用',
+    width: '10%',
+  },
+  {
+    name: 'opera',
+    value: '内容',
+    colspan: ['opera_a', 'opera_b', 'opera_c'],
+  },
+]
 const tableData = ref([
   {
     no: 1,
@@ -67,9 +71,18 @@ const tableData = ref([
     status: '查看',
     opera_a: true,
     opera_b: true,
-    opera_c: true
-  }
+    opera_c: true,
+  },
 ])
+const getList = async () => {
+  const res = await api.userSearch({
+    pageSize: 20,
+    pageNo: 1,
+  })
+  tableData.value = res.data.records
+  console.log(res)
+}
+getList()
 </script>
 
 <template>

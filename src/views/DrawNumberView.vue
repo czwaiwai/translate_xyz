@@ -1,73 +1,56 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
+import api from '@/lib/api'
 // DrawNumberView is 开奖号码
 defineOptions({
-  name: "DrawNumberView"
-});
-const tableTitle = [{
-  name: 'openTime',
-  value: '开奖时间',
-  width: '13%',
-},
-{
-  name: 'issue',
-  value: '期号',
-  width: '10%'
-},
-{
-  name: 'qian',
-  value: '仟',
-  width: '10%'
-},
-{
-  name: 'bai',
-  value: '佰',
-  width: '10%'
-},
-{
-  name: 'shi',
-  value: '拾',
-  width: '10%'
-},
-{
-  name: 'ge',
-  value: '个',
-  width: '10%'
-},
-{
-  name: 'ball5',
-  value: '球5',
-  width: '10%'
-}]
-const tableData = ref([
+  name: 'DrawNumberView',
+})
+const tableTitle = [
   {
-    openTime: '2023-10-01 12:00:00',
-    issue: '20231001',
-    qian: '1',
-    bai: '2',
-    shi: '3',
-    ge: '4',
-    ball5: '5'
+    name: 'openTime',
+    value: '开奖时间',
+    width: '13%',
   },
   {
-    openTime: '2023-10-02 12:00:00',
-    issue: '20231002',
-    qian: '2',
-    bai: '3',
-    shi: '4',
-    ge: '5',
-    ball5: '6'
+    name: 'drawNo',
+    value: '期号',
+    width: '10%',
   },
   {
-    openTime: '2023-10-03 12:00:00',
-    issue: '20231003',
-    qian: '3',
-    bai: '4',
-    shi: '5',
-    ge: '6',
-    ball5: '7'
-  }
-])
+    name: 'qian',
+    value: '仟',
+    width: '10%',
+  },
+  {
+    name: 'bai',
+    value: '佰',
+    width: '10%',
+  },
+  {
+    name: 'shi',
+    value: '拾',
+    width: '10%',
+  },
+  {
+    name: 'ge',
+    value: '个',
+    width: '10%',
+  },
+  {
+    name: 'ball5',
+    value: '球5',
+    width: '10%',
+  },
+]
+const tableData = ref([])
+const getList = async () => {
+  const res = await api.lotterySearch({
+    pageSize: 100,
+    pageNo: 1,
+  })
+  tableData.value = res.data.records
+}
+getList()
 </script>
 
 <template>
@@ -75,20 +58,20 @@ const tableData = ref([
     <CardBox title="开奖号码" padding="0">
       <TableBox :title="tableTitle" :data="tableData" center>
         <template #qian="{ item, index }">
-        <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
-      </template>
-      <template #bai="{ item, index }">
-        <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
-      </template>
-      <template #shi="{ item, index }">
-        <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
-      </template>
-      <template #ge="{ item, index }">
-        <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
-      </template>
-      <template #ball5="{ item }">
-        <Ball>{{ item.value }}</Ball>
-      </template>
+          <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
+        </template>
+        <template #bai="{ item, index }">
+          <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
+        </template>
+        <template #shi="{ item, index }">
+          <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
+        </template>
+        <template #ge="{ item, index }">
+          <Ball :color="index == 0 ? 'red' : 'blue'">{{ item.value }}</Ball>
+        </template>
+        <template #ball5="{ item }">
+          <Ball>{{ item.value }}</Ball>
+        </template>
       </TableBox>
     </CardBox>
   </PageLay>

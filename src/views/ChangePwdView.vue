@@ -1,67 +1,76 @@
 <script setup>
 import { ref } from 'vue'
+import api from '@/lib/api'
 import { Message } from '@arco-design/web-vue'
 // ChangePwdView is 修改密码
 defineOptions({
   name: 'ChangePwdView',
 })
+const formRef = ref()
 const form = ref({
-  oldPassword: '',
+  password: '',
   newPassword: '',
   confirmPassword: '',
 })
 const rules = {
-  oldPassword: [
+  password: [
     { required: true, message: '请输入旧密码' },
     { min: 6, max: 20, message: '密码长度在6到20个字符之间' },
   ],
   newPassword: [
     { required: true, message: '请输入新密码' },
     { min: 6, max: 20, message: '密码长度在6到20个字符之间' },
+    {
+      validator(rule, value) {
+        if (value !== form.value.confirmPassword) {
+          return new Error('新密码和确认密码必须一致')
+        }
+        return true
+      },
+      trigger: 'blur',
+    },
   ],
   confirmPassword: [
     { required: true, message: '请确认新密码' },
     { min: 6, max: 20, message: '密码长度在6到20个字符之间' },
+    {
+      validator(rule, value) {
+        if (value !== form.value.newPassword) {
+          return new Error('确认密码和新密码必须一致')
+        }
+        return true
+      },
+      trigger: 'blur',
+    },
   ],
 }
-const handleSubmit = async (values, errors) => {
+const handleSubmit = async ({ values, errors }) => {
   console.log('values:', values, '\nerrors:', errors)
   if (errors) {
     return
   }
+  await api.userUpdatePwd(values)
+  formRef.value.resetFields()
   Message.success({
     content: '提交成功',
     closable: true,
   })
-
-  // const { oldPassword, newPassword, confirmPassword } = form.value;
-  // if (newPassword !== confirmPassword) {
-  //   alert('新密码和确认密码不一致');
-  //   return;
-  // }
-  // // Call API to change password
-  // try {
-  //   // Simulate API call
-  //   await new Promise((resolve) => setTimeout(resolve, 1000));
-  //   alert('密码修改成功');
-  // } catch (error) {
-  //   alert('密码修改失败');
-  // }
 }
 </script>
 
 <template>
   <PageLay class="change-pwd-view">
-    <CardBox title="账户修改密码" :padding="['10px', '20px']">
+    <CardBox title="账户修改密码" :padding="'10px 20px'">
       <a-form
+        ref="formRef"
         :model="form"
         :rules="rules"
         @submit="handleSubmit"
         :style="{ maxWidth: '600px', width: '100%' }"
         layout="vertical"
       >
-        <a-form-item label="旧密码" field="oldPassword">
-          <a-input-password v-model="form.oldPassword" placeholder="请输入旧密码" />
+        <a-form-item label="旧密码" field="password">
+          <a-input-password v-model="form.password" placeholder="请输入旧密码" />
         </a-form-item>
         <a-form-item label="新密码" field="newPassword">
           <a-input-password v-model="form.newPassword" placeholder="请输入新密码" />
@@ -70,7 +79,7 @@ const handleSubmit = async (values, errors) => {
           <a-input-password v-model="form.confirmPassword" placeholder="请确认新密码" />
         </a-form-item>
         <a-form-item>
-          <a-button type="primary" status="success" html-type="submit" long>提交</a-button>
+          <a-button type="primary" html-type="submit" long>提交</a-button>
         </a-form-item>
       </a-form>
       <a-alert class="password-rules">

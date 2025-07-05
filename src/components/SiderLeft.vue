@@ -19,8 +19,8 @@ const gameStore = useGameStore()
               <div>已用：</div>
             </th>
             <td>
-              <div>{{ userStore.userInfo.credit }}</div>
-              <div>{{ userStore.userInfo.used }}</div>
+              <div>{{ userStore.userInfo.creditMax }}</div>
+              <div>{{ userStore.userInfo.usedCredit }}</div>
             </td>
           </tr>
           <tr>
@@ -29,7 +29,7 @@ const gameStore = useGameStore()
               <div>期号：</div>
             </th>
             <td>
-              <div>{{ userStore.userInfo.canUse }}</div>
+              <div>{{ userStore.userInfo.balance }}</div>
               <div>{{ gameStore.gameInfo.serialNum }}</div>
             </td>
           </tr>

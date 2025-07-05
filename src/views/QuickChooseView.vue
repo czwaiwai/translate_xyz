@@ -70,9 +70,15 @@ const submitHandle = async () => {
   await api.tradeRecordBet({
     drawNo: gameStore.gameInfo.serialNum,
     betType: betType.value === 'bet' ? 'buy' : 'sell',
-    odds: formObj.value.odds,
-    tradeAmount: +formObj.value.amount,
-    items: list.value,
+    items: list.value.map((item) => {
+      return {
+        code: item,
+        category: gameType.value,
+        gameType: '1',
+        amount: formObj.value.amount,
+        odds: formObj.value.odds,
+      }
+    }),
     userId: userStore.userInfo.id,
   })
   Message.success('下注成功')
@@ -98,20 +104,20 @@ const submitHandle = async () => {
           title="发送框"
           flexBox
           padding="0"
-          :bdClassName="isMobile ? 'flex-flow' : 'flex-cv'"
-        >
+          :bdClassName="isMobile ? 'flex-flow' : 'flex-cv'">
           <form
             @submit.prevent="submitHandle"
             class="flex-item flex-inline ptb6 plr4 gap10"
-            :class="isMobile ? 'flex-flow' : 'flex-cv'"
-          >
+            :class="isMobile ? 'flex-flow' : 'flex-cv'">
             <div class="flex-inline gap10">
-              <label class="fs22 flex-inline gap4 flex-cv"
-                >赔率 <input v-model="formObj.odds" class="w60 input-h36"
-              /></label>
-              <label class="fs22 flex-inline gap4 flex-cv"
-                >金额 <input v-model="formObj.amount" class="w60 input-h36"
-              /></label>
+              <label class="fs22 flex-inline gap4 flex-cv">
+                赔率
+                <input v-model="formObj.odds" class="w60 input-h36" />
+              </label>
+              <label class="fs22 flex-inline gap4 flex-cv">
+                金额
+                <input v-model="formObj.amount" class="w60 input-h36" />
+              </label>
               <button type="submit" class="pri-btn-h36">{{ betBtnText }}</button>
             </div>
             <!-- <template v-if="!showByX">

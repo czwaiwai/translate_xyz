@@ -20,7 +20,9 @@ api.userSettingById({ id: userStore.userInfo.id }).then((res) => {
   let list = res.data
   console.log(list)
   cateTop.value = topCate.map((item) => {
-    let itemData = list.find((sub) => sub.type === item.label)
+    console.log(item, list)
+    let itemData = list.find((sub) => sub.gameType + '' === item.value)
+    console.log(itemData)
     if (itemData) {
       return {
         ...item,
@@ -29,8 +31,9 @@ api.userSettingById({ id: userStore.userInfo.id }).then((res) => {
     }
     return item
   })
+  console.log(cateTop.value, 'topTop.value===')
   cateTwo.value = twoCate.map((item) => {
-    let itemData = list.find((sub) => sub.type === item.label)
+    let itemData = list.find((sub) => sub.gameType + '' === item.value)
     if (itemData) {
       return {
         ...item,
@@ -40,7 +43,7 @@ api.userSettingById({ id: userStore.userInfo.id }).then((res) => {
     return item
   })
   cateThree.value = threeCate.map((item) => {
-    let itemData = list.find((sub) => sub.type === item.label)
+    let itemData = list.find((sub) => sub.gameType + '' === item.value)
     if (itemData) {
       return {
         ...item,
@@ -61,10 +64,12 @@ const submitHandle = async () => {
       let { label, value, belongto, ...obj } = item
       return obj
     })
+  console.log(arr, '========')
   let res = await api.userSettingSave(arr)
   Message.success('保存成功')
   console.log(res)
 }
+const options = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
 </script>
 
 <template>
@@ -84,7 +89,7 @@ const submitHandle = async () => {
               </tr>
               <tr>
                 <td>信用额度：</td>
-                <td>{{ userStore.userInfo.credit }}</td>
+                <td>{{ userStore.userInfo.creditMax }}</td>
               </tr>
             </tbody>
           </table>
@@ -139,7 +144,7 @@ const submitHandle = async () => {
           </thead>
           <tbody id="tbody">
             <template v-for="item in cateTop" :key="item.value">
-              <tr v-if="item.type" class="fn-hover">
+              <tr v-if="item.gameType" class="fn-hover">
                 <td width="6%"></td>
                 <td width="13%">{{ item.label }}</td>
                 <td width="10%">{{ item.betMin }}</td>
@@ -152,16 +157,18 @@ const submitHandle = async () => {
                     id="12"
                     index="11"
                     _name="return_water"
-                    class="w70 s_11"
-                  ></select>
+                    class="w70 s_11">
+                    <option v-for="option in options" :key="option" :value="option">
+                      {{ option }}
+                    </option>
+                  </select>
                 </td>
                 <td width="19%">
-                  <select
-                    v-model="item.oddsRate"
-                    index="11"
-                    _name="odds_limit"
-                    class="s_a s_11"
-                  ></select>
+                  <select v-model="item.oddsRate" index="11" _name="odds_limit" class="s_a s_11">
+                    <option v-for="option in options" :key="option" :value="option">
+                      {{ option }}
+                    </option>
+                  </select>
                 </td>
               </tr>
               <template v-else>
@@ -170,14 +177,12 @@ const submitHandle = async () => {
                     <span
                       href="javascript:void(0)"
                       class="fn-ico-switch btn-pointer"
-                      _target="td_erd"
-                    >
-                    </span>
+                      _target="td_erd"></span>
                   </td>
                   <td>
-                    <span href="javascript:void(0)" class="btn-pointer" status="1" act="erd">{{
-                      item.label
-                    }}</span>
+                    <span href="javascript:void(0)" class="btn-pointer" status="1" act="erd">
+                      {{ item.label }}
+                    </span>
                   </td>
                   <td></td>
                   <td></td>
@@ -205,8 +210,11 @@ const submitHandle = async () => {
                               first="1"
                               selectall="1"
                               _name="return_water"
-                              class="w70 s_erd"
-                            ></select>
+                              class="w70 s_erd">
+                              <option v-for="option in options" :key="option" :value="option">
+                                {{ option }}
+                              </option>
+                            </select>
                           </td>
                           <td width="19%">
                             <select
@@ -214,8 +222,11 @@ const submitHandle = async () => {
                               v-model="sub.oddsRate"
                               selectall="1"
                               _name="odds_limit"
-                              class="s_a s_erd"
-                            ></select>
+                              class="s_a s_erd">
+                              <option v-for="option in options" :key="option" :value="option">
+                                {{ option }}
+                              </option>
+                            </select>
                           </td>
                         </tr>
                       </tbody>
@@ -241,8 +252,11 @@ const submitHandle = async () => {
                               first="1"
                               selectall="1"
                               _name="return_water"
-                              class="w70 s_erd"
-                            ></select>
+                              class="w70 s_erd">
+                              <option v-for="option in options" :key="option" :value="option">
+                                {{ option }}
+                              </option>
+                            </select>
                           </td>
                           <td width="19%">
                             <select
@@ -250,8 +264,11 @@ const submitHandle = async () => {
                               v-model="sub.oddsRate"
                               selectall="1"
                               _name="odds_limit"
-                              class="s_a s_erd"
-                            ></select>
+                              class="s_a s_erd">
+                              <option v-for="option in options" :key="option" :value="option">
+                                {{ option }}
+                              </option>
+                            </select>
                           </td>
                         </tr>
                       </tbody>

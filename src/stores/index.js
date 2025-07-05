@@ -69,6 +69,9 @@ export const useUserStore = defineStore(
       credit: 0,
       used: 0,
       canUse: 0,
+      balance: 0,
+      creditMax: 0,
+      usedCredit: 0,
       // serialNum: '',
     }
     const userInfo = ref(userdefault)
@@ -82,6 +85,9 @@ export const useUserStore = defineStore(
       userInfo.value.credit = obj.balance // 剩余
       userInfo.value.used = obj.usedCredit // 已使用
       userInfo.value.canUse = obj.creditMax // 最大限额
+      userInfo.value.balance = obj.balance // 可用
+      userInfo.value.creditMax = obj.creditMax // 最大限额
+      userInfo.value.usedCredit = obj.usedCredit // 已使用
       // userInfo.value.serialNum = obj.serialNum
       token.value = accessToken
       refreshToken.value = longToken

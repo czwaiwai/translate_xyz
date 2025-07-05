@@ -1,42 +1,54 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
+import api from '@/lib/api'
 // SelfLog is
 defineOptions({
-  name: "SelfLog"
-});
-const selfLog = ref();
-console.log(selfLog);
-const form = ref({
-  account: "",
-  startdate: "",
-  enddate: ""
+  name: 'SelfLog',
 })
-const tableTitle = [{
-  name: 'no',
-  value: '操作账号',
-  width: '130',
-},
-{
-  name: 'account',
-  value: '被操作账号',
-  width: '190'
-},
-{
-  name: 'nextName',
-  value: '操作内容',
-},
-{
-  name: 'percentage',
-  value: '操作时间',
-  width: '130'
-},
-{
-  name: 'ip',
-  value: '操作Ip',
-  width: '130'
-},
+const selfLog = ref()
+console.log(selfLog)
+const form = ref({
+  account: '',
+  startdate: '',
+  enddate: '',
+})
+const tableTitle = [
+  {
+    name: 'operator',
+    value: '操作账号',
+    width: '130',
+  },
+  {
+    name: 'operatedAccount',
+    value: '被操作账号',
+    width: '190',
+  },
+  {
+    name: 'content',
+    value: '操作内容',
+  },
+  {
+    name: 'operateTime',
+    value: '操作时间',
+    width: '130',
+  },
+  {
+    name: 'ip',
+    value: '操作Ip',
+    width: '130',
+  },
 ]
 const tableData = ref([])
+const getLogList = async () => {
+  let res = await api.userLogSearch({
+    pageSize: 20,
+    pageNo: 1,
+  })
+  console.log(res)
+  // 获取日志列表
+  tableData.value = res.data.records
+}
+getLogList()
 </script>
 
 <template>
@@ -60,8 +72,7 @@ const tableData = ref([])
         </a-form-item>
       </a-form>
     </CardBox>
-    <TableBox class="mt10" :title="tableTitle" :data="tableData">
-    </TableBox>
+    <TableBox class="mt10" :title="tableTitle" :data="tableData"> </TableBox>
   </PageLay>
 </template>
 
