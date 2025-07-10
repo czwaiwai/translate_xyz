@@ -1,22 +1,22 @@
 <script setup>
-import { computed, inject } from 'vue';
-import { emnum } from '@/lib/api';
+import { computed, inject } from 'vue'
+import { emnum } from '@/lib/api'
 // TwoSetView is 二字定
 defineOptions({
-  name: "GameBox"
-});
+  name: 'GameBox',
+})
 const active = defineModel('active', {
   type: Boolean,
-  default: false
+  default: false,
 })
 const type = defineModel('type', {
   type: String,
-  default: '3'
+  default: '3',
 })
 const props = defineProps({
   index: {
     type: Number,
-    default: 0
+    default: 0,
   },
   odds: {
     type: String,
@@ -25,7 +25,7 @@ const props = defineProps({
   // active: Boolean,
   num: {
     type: String,
-    default: ''
+    default: '',
   },
   // type: {
   //   type: String,
@@ -33,12 +33,12 @@ const props = defineProps({
   // },
   posiH: {
     type: Number,
-    default: 0
+    default: 0,
   },
   posiV: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 })
 const emit = defineEmits(['click'])
 const typeObj = emnum.twoCate.reduce((before, item) => {
@@ -46,33 +46,43 @@ const typeObj = emnum.twoCate.reduce((before, item) => {
   return before
 }, {})
 const signStr = computed(() => {
-  if(!props.num) return ''
+  if (!props.num) return ''
   let strArr = props.num.split('')
   // return typeObj[props.type]
   // return typeObj[props.type]
   return typeObj[type.value].replace('口', strArr[0]).replace('口', strArr[1])
 })
 const activeClass = computed(() => {
-  return props.active? 'active': ''
+  return props.active ? 'active' : ''
 })
 const addGameBox = inject('addGameBox')
 const toggle = (bool) => {
-  if(typeof bool === 'boolean') {
-    return active.value = bool
+  if (typeof bool === 'boolean') {
+    return (active.value = bool)
   }
   active.value = !active.value
+}
+// 获取选中状态
+const getActive = () => {
+  return active.value
+}
+// 获取号码
+const getCode = () => {
+  return signStr.value
 }
 const changeType = (newType) => {
   type.value = newType
 }
 addGameBox({
   ...props,
+  getCode,
+  getActive,
   toggle,
   changeType,
 })
 const clickHandle = () => {
   emit('click', {
-    ...props
+    ...props,
   })
 }
 </script>
@@ -90,10 +100,10 @@ const clickHandle = () => {
   padding: 4px;
   cursor: pointer;
   &.active {
-    background:yellow;
+    background: yellow;
   }
   .odds {
-    color:red;
+    color: red;
   }
 }
 </style>

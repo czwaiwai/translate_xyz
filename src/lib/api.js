@@ -2,6 +2,7 @@ import request from './request.js'
 
 export const apiEnum = {
   login: '/auth/login',
+  logout: '/auth/logout',
   token: '/token/refresh',
   tradeRecordBet: '/trade-record/bet',
   userSearch: '/user/search',
@@ -15,6 +16,12 @@ export const apiEnum = {
   userLogSearch: '/user-log/search', // 越级操作日志
   betPoolRecommend: '/trade-record/bet-pool-recommend', // 推荐彩池
   betPool: '/trade-record/bet-pool', // 二字定下注彩池
+  reportWeek: '/report/week', // 周报表
+  reportSummary: '/report/summary', // 汇总表
+  reportMonth: '/report/month', // 月报表
+  reportLedger: '/report/ledger', // 台账
+  reportHistory: '/report/history', // 历史报表
+  reportDaily: '/report/daily', // 日报表
 }
 export const emnum = {
   twoCate: [

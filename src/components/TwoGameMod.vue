@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide, computed, inject } from 'vue'
+import { ref, provide, computed, inject, watch, nextTick } from 'vue'
 import { range, padStart, chunk } from 'lodash-es'
 // 二字定模式2
 defineOptions({
@@ -15,6 +15,7 @@ const props = defineProps({
     default: () => [],
   },
 })
+const emit = defineEmits(['change'])
 const arr = range(100)
 let data = arr.map((num, index) => {
   return {
@@ -62,6 +63,16 @@ const listFormat = computed(() => {
   // })
   return chunk(list.value, 10)
 })
+watch(
+  list,
+  () => {
+    console.log(list.value.filter((item) => item.active))
+    nextTick(() => {
+      emit('change')
+    })
+  },
+  { deep: true },
+)
 const getValues = () => {
   return Array.from(dataMap.values())
 }
@@ -71,15 +82,15 @@ const restActive = () => {
 }
 // 获取所有选中
 const getActives = () => {
-  return Array.from(dataMap.values()).filter((item) => item.active)
+  return Array.from(dataMap.values()).filter((item) => item.getActive())
 }
 // 取消所选
 const cancelHandle = () => {
   restActive()
 }
-const submitHandle = () => {
-  console.log('提交所选')
-}
+// const submitHandle = () => {
+//   console.log('提交所选')
+// }
 const betType = inject('betType', '')
 const betBtnText = computed(() => {
   if (betType.value === 'bet') {
@@ -90,7 +101,7 @@ const betBtnText = computed(() => {
   }
   return '确认下注'
 })
-defineExpose({ getActives, restActive })
+defineExpose({ getActives, restActive, cancelHandle })
 </script>
 <template>
   <div class="two-game-mod">
@@ -185,8 +196,7 @@ defineExpose({ getActives, restActive })
               v-model:active="item.active"
               :posiH="sIndex"
               :posiV="index"
-              :type="props.gameType"
-            ></GameBox>
+              :type="props.gameType"></GameBox>
           </td>
         </tr>
       </tbody>

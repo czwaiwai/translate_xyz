@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, shallowRef, inject } from 'vue'
+import { ref, computed, shallowRef, inject, watchEffect, watch } from 'vue'
 import api, { emnum } from '@/lib/api'
 import { chunk } from 'lodash-es'
 import { useUserStore, useGameStore } from '@/stores'
@@ -30,6 +30,10 @@ const tabsObj = {
 }
 const formRef = ref()
 const list = ref([])
+
+watch(gameType, () => {
+  resetHandle()
+})
 const genNoHandle = () => {
   formRef.value.toSubmit()
 }
@@ -90,7 +94,7 @@ const submitHandle = async () => {
   <PageLay class="quick-choose-view">
     <div class="flex-box gap6" :class="isMobile ? 'flex-wrap' : ''">
       <div class="flex-item">
-        <CardBox class="flex-item" title="生成号码框" padding="0" minHeight="300px">
+        <CardBox class="flex-item gen-nums-bl" title="生成号码框" padding="0" minHeight="300px">
           <table class="nums-table">
             <tbody>
               <tr v-for="(items, index) in listFormat" :key="index">
@@ -158,6 +162,12 @@ const submitHandle = async () => {
 
 <style lang="less" scoped>
 .quick-choose-view {
+  .gen-nums-bl {
+    :deep(.card-box-bd) {
+      height: 300px;
+      overflow: auto;
+    }
+  }
   .tab_radio {
     display: flex;
     :deep(.arco-radio) {

@@ -1,18 +1,18 @@
 <script setup>
-import { ref, computed, inject } from 'vue';
-import {getTwoLabelNum} from '@/lib/utils'
+import { ref, computed, inject } from 'vue'
+import { getTwoLabelNum } from '@/lib/utils'
 // TwoSetView is 二字定
 defineOptions({
-  name: "GameInputBox"
-});
+  name: 'GameInputBox',
+})
 const model = defineModel({
   type: String,
-  default: false
+  default: false,
 })
 const props = defineProps({
   index: {
     type: Number,
-    default: 0
+    default: 0,
   },
   odds: {
     type: String,
@@ -21,47 +21,49 @@ const props = defineProps({
   // active: Boolean,
   num: {
     type: String,
-    default: ''
+    default: '',
   },
   type: {
     type: String,
-    default: '3'
+    default: '3',
   },
   posiH: {
     type: Number,
-    default: 0
+    default: 0,
   },
   posiV: {
     type: Number,
-    default: 0
-  }
+    default: 0,
+  },
 })
-// const typeObj = emnum.twoCate.reduce((before, item) => {
-//   before[item.value] = item.label
-//   return before
-// }, {})
 const signStr = computed(() => {
-  if(!props.num) return ''
+  if (!props.num) return ''
   return getTwoLabelNum(props.num, props.type)
-  // let strArr = props.num.split('')
-  // // return typeObj[props.type]
-  // // return typeObj[props.type]
-  // return typeObj[props.type].replace('口', strArr[0]).replace('口', strArr[1])
 })
 const activeClass = computed(() => {
-  return props.active? 'active': ''
+  return model.value ? 'active' : ''
 })
 const addGameBox = inject('addGameBox')
 const setInput = (val) => {
   model.value = val
 }
+
+// 获取所有选中
+const getActive = () => {
+  return model.value
+}
 const getInput = () => {
-  return model.value;
+  return model.value
+}
+const getCode = () => {
+  return signStr.value
 }
 addGameBox({
   ...props,
+  getCode,
+  getActive,
   setInput,
-  getInput
+  getInput,
 })
 const input = ref()
 const clickHandle = () => {
@@ -73,10 +75,10 @@ const clickHandle = () => {
   <div @click="clickHandle" class="game-box" :class="activeClass">
     <div class="flex-item tl">
       <div class="red">{{ odds }}</div>
-      <div >{{ signStr }}</div>
+      <div>{{ signStr }}</div>
     </div>
     <div class="flex-item tc">
-      <input ref="input" class="w60" v-model="model">
+      <input ref="input" class="w60" v-model="model" />
     </div>
   </div>
 </template>
@@ -87,10 +89,10 @@ const clickHandle = () => {
   padding: 4px;
   cursor: pointer;
   &.active {
-    background:yellow;
+    background: yellow;
   }
   .odds {
-    color:red;
+    color: red;
   }
 }
 </style>
