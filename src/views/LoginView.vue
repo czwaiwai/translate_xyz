@@ -26,21 +26,29 @@ const handleSubmit = async ({ values, errors }) => {
   if (errors) {
     return
   }
-  let res = await api.login({
-    userName: formData.value.username,
-    password: formData.value.password,
-  })
+  // let res = await api.login({
+  //   userName: formData.value.username,
+  //   password: formData.value.password,
+  // })
   // console.log(res.data)
-  // let res = {
-  //   data: {
-  //     name: 'y05',
-  //     token: 'xxxxxxx',
-  //     credit: 0,
-  //     used: 0,
-  //     canUse: 0,
-  //     serialNum: '25089',
-  //   },
-  // }
+  let res = {
+    data: {
+      userInfo: {
+        userId: '132432',
+        nackName: 'y05',
+        userName: 'y05',
+      },
+      userId: '132432',
+      name: 'y05',
+      accessToken: 'xxxxxxx',
+      refreshToken: 'xxxxx',
+      credit: 0,
+      used: 0,
+      canUse: 0,
+      nickName: '',
+      serialNum: '25089',
+    },
+  }
   userStore.setUserInfo(res.data)
   Message.success('登录成功')
   router.push('/home')

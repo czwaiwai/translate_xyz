@@ -59,7 +59,8 @@ export default defineConfig(({ command }) => {
     server: {
       proxy: {
         '/api': {
-          target: 'http://47.107.145.91:7890', // 替换为你的后端地址
+          // target: 'http://47.107.145.91:7890', // 替换为你的后端地址
+          target: 'http://localhost:5173',
           changeOrigin: true, // 是否修改请求的源
           rewrite: (path) => path.replace(/^\/api/, ''), // 去掉 /api 前缀
         },
